@@ -1,0 +1,33 @@
+version: '3.7'
+
+services:
+  web:
+    build: .
+    command: python manage.py runserver 0.0.0.0:8000
+    volumes:
+      - .:/usr/src/app/
+    ports:
+      - 8000:8000
+    env_file:
+      - ./.env.dev
+  cache:
+    image: memcached:alpine
+  celery:
+    build: .
+    command: celery -A backend worker --loglevel DEBUG
+    volumes:
+      - .:/usr/src/app/
+    env_file:
+      - ./.env.dev
+  redis:
+    image: redis
+    expose:
+      - 6379
+  db:
+    image: postgres:12.0-alpine
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+    env_file:
+      - ./.env.dev
+volumes:
+  postgres_data:
