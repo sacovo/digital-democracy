@@ -1,0 +1,23 @@
+{% extends 'papers/base.html' %}
+
+{% load i18n %}
+
+{% block title %}{% trans 'Create new paper' %}{% endblock %}
+
+{% block head %}
+{{form.media}}
+{% endblock %}
+
+{% block content %}
+<h1>{% trans 'Create new paper' %}</h1>
+<form action="" method="POST">
+    {% csrf_token %}
+    <table>
+    {{form.as_table}}
+    </table>
+    <button type="submit">{% trans 'submit' %}</button>
+</form>
+<a href="{% url "paper-list" %}">
+    {% trans "all papers" %}
+</a>
+{% endblock %}

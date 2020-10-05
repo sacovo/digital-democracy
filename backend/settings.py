@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/3.0/ref/settings/
 """
 
 import os
+from django.utils.translation import gettext_lazy as _
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -38,6 +39,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     "django_celery_results",
+    'ckeditor',
+    'papers',
 ]
 
 MIDDLEWARE = [
@@ -107,7 +110,13 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/3.0/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'de'
+
+LANGUAGES = [
+    ('de', _("German")),
+    ('fr', _("French")),
+    ('it', _("Italian")),
+]
 
 TIME_ZONE = 'UTC'
 
@@ -143,3 +152,12 @@ CELERY_BROKER_URL = "redis://redis:6379"
 
 CELERY_RESULT_BACKEND = "django-db"
 CELERY_CACHE_BACKEND = "django-cache"
+
+CKEDITOR_CONFIGS = {
+    'basic_editor': {
+        'toolbar': 'Basic',
+    },
+    'default': {
+        'toolbar': 'Basic',
+    },
+}

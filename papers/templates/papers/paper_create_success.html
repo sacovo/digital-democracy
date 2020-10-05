@@ -1,0 +1,10 @@
+{% extends 'papers/base.html' %}
+{% load i18n %}
+
+{% block title %}{% blocktrans %}{{paper.working_title}} created! {% endblocktrans %}{% endblock %}
+
+
+{% block content %}
+<h1>{{paper.working_title}}</h1>
+<a href="{% url 'paper-list' %}">{% trans 'all papers' %}</a>
+{% endblock %}
