@@ -41,11 +41,12 @@ def paper_create(request):
             title = form.cleaned_data['title']
             content = form.cleaned_data['content']
             language_code = form.cleaned_data['language_code']
+            state = form.cleaned_data['state']
 
             paper = models.Paper.objects.create(
                 amendmend_deadline=timezone.now(),
                 working_title=title,
-                state='draft',
+                state=state,
             )
             translation = models.PaperTranslation.objects.create(
                 paper=paper,
