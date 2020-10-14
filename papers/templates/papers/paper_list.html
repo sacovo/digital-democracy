@@ -1,0 +1,40 @@
+{% extends 'papers/base.html' %}
+{% load i18n %}
+
+{% block title %}{% trans 'Papers' %}{% endblock %}
+
+{% block content %}
+
+<h1>{% trans 'Papers' %}</h1>
+
+<table>
+    <thead>
+        <tr>
+            <th>
+                {% trans 'Title' %}
+            </th>
+            <th>
+                {% trans 'Created at' %}
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            {% for paper in paper_list %}
+            <tr>
+                <td>
+                    <a href="{% url 'paper-detail' paper.pk %}">
+                        {{paper}}
+                    </a>
+                </td>
+                <td>
+                    {{paper.created_at}}
+                </td>
+            </tr>
+            {% endfor %}
+        </tr>
+    </tbody>
+</table>
+
+<a href="{% url 'paper-create' %}">{% trans 'create new paper' %}</a>
+{% endblock %}

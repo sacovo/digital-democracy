@@ -1,0 +1,9 @@
+<ul>
+    {% for translation in paper.translation_set.all %}
+    <li>
+        <a href="{% url 'paper-translation-detail' paper.pk translation.language_code %}">
+            {{translation.get_language_code_display}} - {{translation.title}}
+        </a>
+    </li>
+    {% endfor %}
+</ul>
