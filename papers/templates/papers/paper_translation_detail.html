@@ -1,0 +1,18 @@
+{% extends 'papers/base.html' %}
+{% load i18n %}
+{% block title %}{{translation.title}}{% endblock %}
+
+
+{% block content %}
+    <h1>{{translation.title}}</h1>
+<article>
+    <div>
+        {{translation.content_safe}}
+    </div>
+</article>
+
+{% include 'papers/includes/translation_list.html' %}
+<a href="{% url "paper-list" %}">
+    {% trans "all papers" %}
+</a>
+{% endblock %}
