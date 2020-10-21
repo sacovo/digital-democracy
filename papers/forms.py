@@ -1,7 +1,6 @@
+from ckeditor.widgets import CKEditorWidget
 from django import forms
 from django.conf import settings
-from ckeditor.widgets import CKEditorWidget
-
 
 from papers import models
 

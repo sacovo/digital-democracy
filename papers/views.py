@@ -1,7 +1,7 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import redirect, render
 from django.utils import timezone
 
-from papers import models, forms
+from papers import forms, models
 
 # Create your views here.
 
