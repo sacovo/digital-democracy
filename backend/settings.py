@@ -157,6 +157,9 @@ CELERY_CACHE_BACKEND = "django-cache"
 CKEDITOR_CONFIGS = {
     'default': {
     },
+    'basic': {
+        'toolbar': "Basic"
+    },
     'track-changes': {
         'extraPlugins': ','.join(['lite']),
     }
