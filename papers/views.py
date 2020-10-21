@@ -32,6 +32,20 @@ def paper_translation_detail(request, pk, language_code):
     })
 
 
+def paper_edit(request, pk, language_code):
+    paper = models.Paper.objects.get(pk=pk)
+    translation = paper.translation_set.get(language_code=language_code)
+
+    form = forms.AmendmendForm(translation=translation)
+
+
+    return render(request, 'papers/paper_edit_view.html', {
+        'paper': paper,
+        'form': form,
+        'translation': translation,
+    })
+
+
 def paper_create(request):
     form = forms.PaperCreateForm()
 

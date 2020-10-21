@@ -12,6 +12,11 @@
 </article>
 
 {% include 'papers/includes/translation_list.html' %}
+
+<form action="/paper/{{translation.id}}/{{translation.language_code}}/edit/" method="GET">
+    <input type="submit" value="Edit Entry">
+</form>
+<br>
 <a href="{% url "paper-list" %}">
     {% trans "all papers" %}
 </a>
