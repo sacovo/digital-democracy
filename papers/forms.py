@@ -13,12 +13,18 @@ class PaperCreateForm(forms.Form):
 
 
 class AmendmendForm(forms.Form):
-    title = forms.CharField()
     content = forms.CharField(widget=CKEditorWidget(config_name="track-changes"))
+    reason = forms.CharField(widget=CKEditorWidget(config_name="basic"))
+    author = forms.CharField()
 
 
     def __init__(self, *args, **kwargs):
-        self.translation = kwargs.pop('translation')
+        self.translation = kwargs.pop('translation', None)
+        self.amendmend = kwargs.pop('amendmend', None)
         super().__init__(*args, **kwargs)
-        self.fields['content'].initial = self.translation.content
-        self.fields['title'].initial = self.translation.title
+        if self.translation:
+            self.fields['content'].initial = self.translation.content
+        elif self.amendmend:
+            self.fields['content'].initial = self.amendmend.content
+            self.fields['reason'].initial = self.amendmend.reason
+            self.fields['author'].initial = self.amendmend.author.name

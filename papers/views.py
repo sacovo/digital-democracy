@@ -26,9 +26,12 @@ def paper_translation_detail(request, pk, language_code):
     paper = models.Paper.objects.get(pk=pk)
     translation = paper.translation_set.get(language_code=language_code)
 
+    amendmend_list = models.Amendmend.objects.filter(paper=paper, language_code=language_code, state='public')
+
     return render(request, 'papers/paper_translation_detail.html', {
         'paper': paper,
         'translation': translation,
+        'amendmend_list': amendmend_list,
     })
 
 
@@ -37,6 +40,27 @@ def paper_edit(request, pk, language_code):
     translation = paper.translation_set.get(language_code=language_code)
 
     form = forms.AmendmendForm(translation=translation)
+
+    if request.POST:
+        form = forms.AmendmendForm(request.POST, translation=translation)
+
+        if form.is_valid():
+            content = form.cleaned_data['content']
+            author_name = form.cleaned_data['author']
+            reason = form.cleaned_data['reason']
+
+            author = models.Author.objects.create(name=author_name)
+
+            amendmend = models.Amendmend.objects.create(
+                paper=paper,
+                language_code=language_code,
+                author=author,
+                content=content,
+                state='draft',
+                reason=reason,
+            )
+
+            return redirect('amendmend-detail', amendmend.pk)
 
 
     return render(request, 'papers/paper_edit_view.html', {
@@ -75,6 +99,44 @@ def paper_create(request):
 
     return render(request, 'papers/paper_create.html', {
         'form': form
+    })
+
+
+def amendmend_detail(request, pk):
+    amendmend = models.Amendmend.objects.get(pk=pk)
+
+    if request.method == 'POST':
+        amendmend.state = 'public'
+        amendmend.save()
+
+        return redirect('amendmend-detail', amendmend.pk)
+
+    return render(request, 'papers/amendmend_detail.html', {
+        'amendmend': amendmend,
+    })
+
+def amendmend_edit(request, pk):
+    amendmend = models.Amendmend.objects.get(pk=pk)
+
+    form = forms.AmendmendForm(amendmend=amendmend)
+
+    if request.method == 'POST':
+        form = forms.AmendmendForm(request.POST)
+
+        if form.is_valid():
+            content = form.cleaned_data.get('content')
+            reason = form.cleaned_data.get('reason')
+
+            amendmend.content = content
+            amendmend.reason = reason
+            amendmend.save()
+
+            return redirect('amendmend-detail', amendmend.pk)
+
+
+    return render(request, 'papers/amendmend_edit.html', {
+        'form': form,
+        'amendmend': amendmend,
     })
 
 

@@ -43,10 +43,25 @@ class PaperTranslation(models.Model):
     language_code = models.CharField(max_length=7, verbose_name=_("language code"), choices=settings.LANGUAGES)
 
     title = models.CharField(max_length=180, verbose_name=_("title"))
-    content = RichTextField(config_name="basic_editor", verbose_name=_("content"))
+    content = RichTextField(config_name="basic", verbose_name=_("content"))
 
     def __str__(self):
         return self.title
 
     def content_safe(self):
         return mark_safe(self.content)
+
+
+class Amendmend(models.Model):
+    paper = models.ForeignKey(Paper, models.CASCADE, verbose_name=_("paper"))
+    language_code = models.CharField(max_length=7, verbose_name=_("language code"), choices=settings.LANGUAGES)
+
+    content = models.TextField()
+    author = models.ForeignKey(Author, models.CASCADE, verbose_name=_("author"))
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    state = models.CharField(max_length=7, verbose_name=_("state"), choices=STATES)
+    reason = RichTextField(config_name="basic", verbose_name=_("reason"))
+
+    def translation(self):
+        self.paper.translation_set.get(language_code=self.language_code)

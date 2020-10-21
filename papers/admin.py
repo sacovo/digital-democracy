@@ -34,3 +34,9 @@ class PaperAdmin(admin.ModelAdmin):
 class AuthorsAdmin(admin.ModelAdmin):
     fields = ['name']
     search_fields = ['name']
+
+
+@admin.register(models.Amendmend)
+class AmendmendedAdmin(admin.ModelAdmin):
+    fields = ['author', 'paper', 'state', 'content']
+    list_display = ['paper', 'state', 'author']
