@@ -28,7 +28,7 @@ docker-build:
     - master
 
 black:
-  stage: static-analysis
+  stage: .pre
   image: milansuk/python-black:latest
   script:
     - black --check . 
