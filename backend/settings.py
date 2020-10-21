@@ -95,9 +95,15 @@ AUTH_PASSWORD_VALIDATORS = [
     {
         "NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator",
     },
-    {"NAME": "django.contrib.auth.password_validation.MinimumLengthValidator",},
-    {"NAME": "django.contrib.auth.password_validation.CommonPasswordValidator",},
-    {"NAME": "django.contrib.auth.password_validation.NumericPasswordValidator",},
+    {
+        "NAME": "django.contrib.auth.password_validation.MinimumLengthValidator",
+    },
+    {
+        "NAME": "django.contrib.auth.password_validation.CommonPasswordValidator",
+    },
+    {
+        "NAME": "django.contrib.auth.password_validation.NumericPasswordValidator",
+    },
 ]
 
 
@@ -151,5 +157,7 @@ CELERY_CACHE_BACKEND = "django-cache"
 CKEDITOR_CONFIGS = {
     "default": {},
     "basic": {"toolbar": "Basic"},
-    "track-changes": {"extraPlugins": ",".join(["lite"]),},
+    "track-changes": {
+        "extraPlugins": ",".join(["lite"]),
+    },
 }
