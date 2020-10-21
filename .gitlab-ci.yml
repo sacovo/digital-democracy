@@ -32,3 +32,9 @@ black:
   image: milansuk/python-black:latest
   script:
     - black --check . 
+
+isort:
+  stage: .pre
+  script:
+    - isort --check . 
+
