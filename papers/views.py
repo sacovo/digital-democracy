@@ -9,30 +9,28 @@ from papers import models, forms
 def paper_list(request):
     papers = models.Paper.objects.all()
 
-    return render(request, 'papers/paper_list.html', {
-        'paper_list': papers,
-    })
+    return render(request, "papers/paper_list.html", {"paper_list": papers,})
 
 
 def paper_detail(request, pk):
     paper = models.Paper.objects.get(pk=pk)
 
-    return render(request, 'papers/paper_detail.html', {
-        'paper': paper,
-    })
+    return render(request, "papers/paper_detail.html", {"paper": paper,})
 
 
 def paper_translation_detail(request, pk, language_code):
     paper = models.Paper.objects.get(pk=pk)
     translation = paper.translation_set.get(language_code=language_code)
 
-    amendmend_list = models.Amendmend.objects.filter(paper=paper, language_code=language_code, state='public')
+    amendmend_list = models.Amendmend.objects.filter(
+        paper=paper, language_code=language_code, state="public"
+    )
 
-    return render(request, 'papers/paper_translation_detail.html', {
-        'paper': paper,
-        'translation': translation,
-        'amendmend_list': amendmend_list,
-    })
+    return render(
+        request,
+        "papers/paper_translation_detail.html",
+        {"paper": paper, "translation": translation, "amendmend_list": amendmend_list,},
+    )
 
 
 def paper_edit(request, pk, language_code):
@@ -45,9 +43,9 @@ def paper_edit(request, pk, language_code):
         form = forms.AmendmendForm(request.POST, translation=translation)
 
         if form.is_valid():
-            content = form.cleaned_data['content']
-            author_name = form.cleaned_data['author']
-            reason = form.cleaned_data['reason']
+            content = form.cleaned_data["content"]
+            author_name = form.cleaned_data["author"]
+            reason = form.cleaned_data["reason"]
 
             author = models.Author.objects.create(name=author_name)
 
@@ -56,18 +54,17 @@ def paper_edit(request, pk, language_code):
                 language_code=language_code,
                 author=author,
                 content=content,
-                state='draft',
+                state="draft",
                 reason=reason,
             )
 
-            return redirect('amendmend-detail', amendmend.pk)
+            return redirect("amendmend-detail", amendmend.pk)
 
-
-    return render(request, 'papers/paper_edit_view.html', {
-        'paper': paper,
-        'form': form,
-        'translation': translation,
-    })
+    return render(
+        request,
+        "papers/paper_edit_view.html",
+        {"paper": paper, "form": form, "translation": translation,},
+    )
 
 
 def paper_create(request):
@@ -76,68 +73,59 @@ def paper_create(request):
     if request.POST:
         form = forms.PaperCreateForm(request.POST)
         if form.is_valid():
-            title = form.cleaned_data['title']
-            content = form.cleaned_data['content']
-            language_code = form.cleaned_data['language_code']
-            state = form.cleaned_data['state']
+            title = form.cleaned_data["title"]
+            content = form.cleaned_data["content"]
+            language_code = form.cleaned_data["language_code"]
+            state = form.cleaned_data["state"]
 
             paper = models.Paper.objects.create(
-                amendmend_deadline=timezone.now(),
-                working_title=title,
-                state=state,
+                amendmend_deadline=timezone.now(), working_title=title, state=state,
             )
             translation = models.PaperTranslation.objects.create(
-                paper=paper,
-                language_code=language_code,
-                title=title,
-                content=content,
+                paper=paper, language_code=language_code, title=title, content=content,
             )
-            return render(request, 'papers/paper_create_success.html', {
-                'paper': paper,
-                'translation': translation,
-            })
+            return render(
+                request,
+                "papers/paper_create_success.html",
+                {"paper": paper, "translation": translation,},
+            )
 
-    return render(request, 'papers/paper_create.html', {
-        'form': form
-    })
+    return render(request, "papers/paper_create.html", {"form": form})
 
 
 def amendmend_detail(request, pk):
     amendmend = models.Amendmend.objects.get(pk=pk)
 
-    if request.method == 'POST':
-        amendmend.state = 'public'
+    if request.method == "POST":
+        amendmend.state = "public"
         amendmend.save()
 
-        return redirect('amendmend-detail', amendmend.pk)
+        return redirect("amendmend-detail", amendmend.pk)
 
-    return render(request, 'papers/amendmend_detail.html', {
-        'amendmend': amendmend,
-    })
+    return render(request, "papers/amendmend_detail.html", {"amendmend": amendmend,})
+
 
 def amendmend_edit(request, pk):
     amendmend = models.Amendmend.objects.get(pk=pk)
 
     form = forms.AmendmendForm(amendmend=amendmend)
 
-    if request.method == 'POST':
+    if request.method == "POST":
         form = forms.AmendmendForm(request.POST)
 
         if form.is_valid():
-            content = form.cleaned_data.get('content')
-            reason = form.cleaned_data.get('reason')
+            content = form.cleaned_data.get("content")
+            reason = form.cleaned_data.get("reason")
 
             amendmend.content = content
             amendmend.reason = reason
             amendmend.save()
 
-            return redirect('amendmend-detail', amendmend.pk)
+            return redirect("amendmend-detail", amendmend.pk)
 
-
-    return render(request, 'papers/amendmend_edit.html', {
-        'form': form,
-        'amendmend': amendmend,
-    })
+    return render(
+        request, "papers/amendmend_edit.html", {"form": form, "amendmend": amendmend,}
+    )
 
 
 def paper_update(request, pk):

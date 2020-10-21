@@ -7,9 +7,9 @@ from ckeditor.fields import RichTextField
 # Create your models here.
 
 STATES = (
-    ('draft', _("Draft")),
-    ('public', _("Published")),
-    ('final', _("Finalized")),
+    ("draft", _("Draft")),
+    ("public", _("Published")),
+    ("final", _("Finalized")),
 )
 
 
@@ -21,6 +21,7 @@ class Paper(models.Model):
     """
     Collects the information about a paper.
     """
+
     created_at = models.DateTimeField(auto_now_add=True, verbose_name=_("created at"))
     edited_at = models.DateTimeField(auto_now=True, verbose_name=_("edited at"))
     amendmend_deadline = models.DateTimeField(verbose_name=_("deadline"))
@@ -39,8 +40,13 @@ class PaperTranslation(models.Model):
     """
     The content of a paper in a specific language.
     """
-    paper = models.ForeignKey(Paper, models.CASCADE, verbose_name=_("paper"), related_name='translation_set')
-    language_code = models.CharField(max_length=7, verbose_name=_("language code"), choices=settings.LANGUAGES)
+
+    paper = models.ForeignKey(
+        Paper, models.CASCADE, verbose_name=_("paper"), related_name="translation_set"
+    )
+    language_code = models.CharField(
+        max_length=7, verbose_name=_("language code"), choices=settings.LANGUAGES
+    )
 
     title = models.CharField(max_length=180, verbose_name=_("title"))
     content = RichTextField(config_name="basic", verbose_name=_("content"))
@@ -54,7 +60,9 @@ class PaperTranslation(models.Model):
 
 class Amendmend(models.Model):
     paper = models.ForeignKey(Paper, models.CASCADE, verbose_name=_("paper"))
-    language_code = models.CharField(max_length=7, verbose_name=_("language code"), choices=settings.LANGUAGES)
+    language_code = models.CharField(
+        max_length=7, verbose_name=_("language code"), choices=settings.LANGUAGES
+    )
 
     content = models.TextField()
     author = models.ForeignKey(Author, models.CASCADE, verbose_name=_("author"))

@@ -8,26 +8,66 @@ import django.db.models.deletion
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('papers', '0004_auto_20201005_1157'),
+        ("papers", "0004_auto_20201005_1157"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='papertranslation',
-            name='content',
-            field=ckeditor.fields.RichTextField(verbose_name='content'),
+            model_name="papertranslation",
+            name="content",
+            field=ckeditor.fields.RichTextField(verbose_name="content"),
         ),
         migrations.CreateModel(
-            name='Amendmended',
+            name="Amendmended",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('language_code', models.CharField(choices=[('de', 'German'), ('fr', 'French'), ('it', 'Italian')], max_length=7, verbose_name='language code')),
-                ('content', models.TextField()),
-                ('created_at', models.DateTimeField(auto_now_add=True)),
-                ('state', models.CharField(choices=[('draft', 'Draft'), ('public', 'Published'), ('final', 'Finalized')], max_length=7, verbose_name='state')),
-                ('reason', ckeditor.fields.RichTextField(verbose_name='reason')),
-                ('author', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='papers.author', verbose_name='author')),
-                ('paper', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='papers.paper', verbose_name='paper')),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                (
+                    "language_code",
+                    models.CharField(
+                        choices=[("de", "German"), ("fr", "French"), ("it", "Italian")],
+                        max_length=7,
+                        verbose_name="language code",
+                    ),
+                ),
+                ("content", models.TextField()),
+                ("created_at", models.DateTimeField(auto_now_add=True)),
+                (
+                    "state",
+                    models.CharField(
+                        choices=[
+                            ("draft", "Draft"),
+                            ("public", "Published"),
+                            ("final", "Finalized"),
+                        ],
+                        max_length=7,
+                        verbose_name="state",
+                    ),
+                ),
+                ("reason", ckeditor.fields.RichTextField(verbose_name="reason")),
+                (
+                    "author",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        to="papers.author",
+                        verbose_name="author",
+                    ),
+                ),
+                (
+                    "paper",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        to="papers.paper",
+                        verbose_name="paper",
+                    ),
+                ),
             ],
         ),
     ]

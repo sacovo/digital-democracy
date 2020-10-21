@@ -7,9 +7,9 @@ from papers import models
 class PaperTranslationInline(admin.StackedInline):
     model = models.PaperTranslation
     fields = [
-        'language_code',
-        'title',
-        'content',
+        "language_code",
+        "title",
+        "content",
     ]
 
     extra = 1
@@ -18,25 +18,23 @@ class PaperTranslationInline(admin.StackedInline):
 @admin.register(models.Paper)
 class PaperAdmin(admin.ModelAdmin):
     fields = [
-        'amendmend_deadline',
-        'state',
-        'authors',
+        "amendmend_deadline",
+        "state",
+        "authors",
     ]
 
-    autocomplete_fields = [
-        'authors'
-    ]
+    autocomplete_fields = ["authors"]
 
     inlines = [PaperTranslationInline]
 
 
 @admin.register(models.Author)
 class AuthorsAdmin(admin.ModelAdmin):
-    fields = ['name']
-    search_fields = ['name']
+    fields = ["name"]
+    search_fields = ["name"]
 
 
 @admin.register(models.Amendmend)
 class AmendmendedAdmin(admin.ModelAdmin):
-    fields = ['author', 'paper', 'state', 'content']
-    list_display = ['paper', 'state', 'author']
+    fields = ["author", "paper", "state", "content"]
+    list_display = ["paper", "state", "author"]

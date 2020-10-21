@@ -5,6 +5,7 @@ from ckeditor.widgets import CKEditorWidget
 
 from papers import models
 
+
 class PaperCreateForm(forms.Form):
     title = forms.CharField()
     content = forms.CharField(widget=CKEditorWidget)
@@ -17,14 +18,13 @@ class AmendmendForm(forms.Form):
     reason = forms.CharField(widget=CKEditorWidget(config_name="basic"))
     author = forms.CharField()
 
-
     def __init__(self, *args, **kwargs):
-        self.translation = kwargs.pop('translation', None)
-        self.amendmend = kwargs.pop('amendmend', None)
+        self.translation = kwargs.pop("translation", None)
+        self.amendmend = kwargs.pop("amendmend", None)
         super().__init__(*args, **kwargs)
         if self.translation:
-            self.fields['content'].initial = self.translation.content
+            self.fields["content"].initial = self.translation.content
         elif self.amendmend:
-            self.fields['content'].initial = self.amendmend.content
-            self.fields['reason'].initial = self.amendmend.reason
-            self.fields['author'].initial = self.amendmend.author.name
+            self.fields["content"].initial = self.amendmend.content
+            self.fields["reason"].initial = self.amendmend.reason
+            self.fields["author"].initial = self.amendmend.author.name
