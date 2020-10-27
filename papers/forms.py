@@ -6,21 +6,22 @@ from django.template.defaultfilters import mark_safe
 
 from papers import models
 
+
 class PaperCreateForm(forms.Form):
-    title = forms.CharField()    
-    language_code = forms.MultipleChoiceField(label =' ', widget=forms.RadioSelect, choices=settings.LANGUAGES)
+    title = forms.CharField()
+    language_code = forms.ChoiceField(
+        label=" ", widget=forms.RadioSelect, choices=settings.LANGUAGES
+    )
     content = forms.CharField(widget=CKEditorWidget)
-    state = forms.MultipleChoiceField(widget=forms.RadioSelect, choices=models.STATES)
-    
+    state = forms.ChoiceField(widget=forms.RadioSelect, choices=models.STATES)
 
 
 class AmendmendForm(forms.Form):
     title = forms.CharField()
     content = forms.CharField(widget=CKEditorWidget(config_name="track-changes"))
 
-
     def __init__(self, *args, **kwargs):
-        self.translation = kwargs.pop('translation')
+        self.translation = kwargs.pop("translation")
         super().__init__(*args, **kwargs)
-        self.fields['content'].initial = self.translation.content
-        self.fields['title'].initial = self.translation.title
+        self.fields["content"].initial = self.translation.content
+        self.fields["title"].initial = self.translation.title
