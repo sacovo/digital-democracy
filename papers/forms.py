@@ -1,10 +1,7 @@
 from ckeditor.widgets import CKEditorWidget
 from django import forms
 from django.conf import settings
-
-from ckeditor.widgets import CKEditorWidget
 from django.template.defaultfilters import mark_safe
-
 
 from papers import models
 
