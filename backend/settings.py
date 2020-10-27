@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     "django_celery_results",
     "ckeditor",
     "papers",
+    "bootstrap4",
 ]
 
 MIDDLEWARE = [
@@ -156,7 +157,9 @@ CELERY_RESULT_BACKEND = "django-db"
 CELERY_CACHE_BACKEND = "django-cache"
 
 CKEDITOR_CONFIGS = {
-    "default": {},
+    "default": {
+        "width": "100%",
+    },
     "basic": {"toolbar": "Basic"},
     "track-changes": {
         "extraPlugins": ",".join(["lite"]),
