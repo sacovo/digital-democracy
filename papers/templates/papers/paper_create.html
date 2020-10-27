@@ -1,5 +1,5 @@
 {% extends 'papers/base.html' %}
-
+{% load bootstrap4 %}
 {% load i18n %}
 
 {% block title %}{% trans 'Create new paper' %}{% endblock %}
@@ -9,15 +9,22 @@
 {% endblock %}
 
 {% block content %}
-<h1>{% trans 'Create new paper' %}</h1>
-<form action="" method="POST">
+<!--<h1>{% trans 'Create new paper' %}</h1>-->
+<form action="" method="POST" id="createPapperForm">
     {% csrf_token %}
-    <table>
-    {{form.as_table}}
-    </table>
-    <button type="submit">{% trans 'submit' %}</button>
+    {% bootstrap_form form  form_group_class='form-group'%}
+    {% buttons %}
+    <div class="row">
+        <div class="col">
+            <button type="cancel" class="btn btn-sm btn-block cancelButton">cancel</button>
+        </div>
+        <div class="col">
+            <button type="submit" class="btn btn-sm btn-block submitButton">Submit</button>
+        </div>
+    </div>
+    {% endbuttons %}
 </form>
 <a href="{% url "paper-list" %}">
     {% trans "all papers" %}
 </a>
-{% endblock %}
+{% endblock %}    

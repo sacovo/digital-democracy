@@ -1,15 +1,17 @@
 from django import forms
 from django.conf import settings
 from ckeditor.widgets import CKEditorWidget
+from django.template.defaultfilters import mark_safe
 
 
 from papers import models
 
 class PaperCreateForm(forms.Form):
-    title = forms.CharField()
+    title = forms.CharField()    
+    language_code = forms.MultipleChoiceField(label =' ', widget=forms.RadioSelect, choices=settings.LANGUAGES)
     content = forms.CharField(widget=CKEditorWidget)
-    language_code = forms.ChoiceField(choices=settings.LANGUAGES)
-    state = forms.ChoiceField(choices=models.STATES)
+    state = forms.MultipleChoiceField(widget=forms.RadioSelect, choices=models.STATES)
+    
 
 
 class AmendmendForm(forms.Form):

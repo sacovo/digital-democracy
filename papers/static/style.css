@@ -1,0 +1,81 @@
+a{
+    text-decoration:none; 
+}
+a:hover{
+    text-decoration:none;
+    color:#E53136;
+}
+#navBarItem:hover{
+    color:#E53136 ;
+    text-decoration:none;
+}
+#navBarItem{
+    text-decoration:none;
+}
+.primaryColor{   
+    color: #E53136;
+}
+.blackColor{
+    color: black;
+}
+#createPapperForm{
+    margin-right: 50px;
+    margin-left: 50px;
+}
+.form-group{
+  display: block;
+}
+.form-group label{
+    color:#E53136;
+    display: inline;
+}
+.form-group input{
+    border: 1px solid black;
+}
+.form-group .form-control:focus{
+    border: 1px solid #E53136;
+    box-shadow: 0 0 0 0.2rem rgba(228,2,45,.25);
+}
+
+.radio .form-check{
+    display: inline-block;
+    float: right;
+    padding-right: 20px;
+}
+#id_state .form-check{
+    display: inline;
+    float: left;
+}
+
+.form-group .radio .form-check label{
+    color: black;
+}
+.django-ckeditor-widget{
+    display: block;
+    width: 100%;
+    margin-top: 10px;
+}
+.cke_chrome {
+    border-radius: 5px;
+    border: 1px solid black !important;
+    border-width: thick;        
+}
+.row{
+    margin-top: 50px;
+}
+.btn{
+    border-color: #E53136 !important;
+}
+.submitButton{
+    color: white;
+    background-color: #E53136;
+}
+.cancelButton{
+    color: #E53136;
+    background-color: white;
+}
+.form-group #id_state{
+    display: inline-block !important;
+    margin-left: 30px;
+    vertical-align: middle;
+}
