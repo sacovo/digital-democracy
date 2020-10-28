@@ -1,3 +1,8 @@
+body{
+    margin-right:40px !important;
+    margin-left: 40px !important;
+    margin-bottom: 20px !important;
+}
 a{
     text-decoration:none; 
 }
@@ -32,8 +37,7 @@ footer #languages a:hover{
     color: #E53136;
 }
 #createPapperForm{
-    margin-right: 50px;
-    margin-left: 50px;
+    
 }
 .form-group{
   display: block;
