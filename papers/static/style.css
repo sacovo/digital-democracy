@@ -18,6 +18,19 @@ a:hover{
 .blackColor{
     color: black;
 }
+footer #languages{
+    display: inline-block;
+    float: right;
+    margin-right: 20px;
+}
+footer #languages a{
+    border-right: 1px solid black;
+    padding-right: 5px;
+    padding-left: 5px;
+}
+footer #languages a:hover{
+    color: #E53136;
+}
 #createPapperForm{
     margin-right: 50px;
     margin-left: 50px;
