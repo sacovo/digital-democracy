@@ -5,23 +5,26 @@
 
 {% block content %}
 
-<h1>{% trans 'Papers' %}</h1>
+<h2 id="paperLabel">{% trans 'Papers' %}</h2>
 
-<table>
+<table class="table">
     <thead>
         <tr>
-            <th>
+            <th scope="col">
                 {% trans 'Title' %}
             </th>
-            <th>
+            <th scope="col">
                 {% trans 'Created at' %}
+            </th>
+            <th scope="col">
+               Created by
             </th>
         </tr>
     </thead>
     <tbody>
         <tr>
             {% for paper in paper_list %}
-            <tr>
+            <tr scope="row">
                 <td>
                     <a href="{% url 'paper-detail' paper.pk %}">
                         {{paper}}
@@ -30,6 +33,14 @@
                 <td>
                     {{paper.created_at}}
                 </td>
+                <td>
+                    author
+                </td>
+                    {% for author in paper.authors.all %}
+                        <td>
+                        {{author.name}} hello 
+                        </td>
+                    {% endfor %}
             </tr>
             {% endfor %}
         </tr>

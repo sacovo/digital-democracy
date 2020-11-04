@@ -11,6 +11,17 @@
     </div>
 </article>
 
+<h2>{% trans 'amendmends' %}</h2>
+<ul>
+    {% for amendmend in amendmend_list %}
+    <li><a href="{% url 'amendmend-detail' amendmend.pk %}">
+            #{{amendmend.pk}}
+        </a>
+    </li>
+    {% endfor %}
+</ul>
+
+<h2>{% trans 'languages' %}</h2>
 {% include 'papers/includes/translation_list.html' %}
 
 <form action="/paper/{{translation.id}}/{{translation.language_code}}/edit/" method="GET">

@@ -26,3 +26,15 @@ docker-build:
     - docker push "$CI_REGISTRY_IMAGE:$CI_COMMIT_REF_SLUG"
   except:
     - master
+
+black:
+  stage: .pre
+  image: milansuk/python-black:latest
+  script:
+    - black --check . 
+
+isort:
+  stage: .pre
+  script:
+    - isort --check . 
+

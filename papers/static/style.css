@@ -1,7 +1,7 @@
-body{
-    margin-right:40px !important;
-    margin-left: 40px !important;
-    margin-bottom: 20px !important;
+/* template */
+#body{
+    min-height: 100%;
+    width: 100%;
 }
 a{
     text-decoration:none; 
@@ -39,6 +39,8 @@ footer #languages a:hover{
 #createPapperForm{
     
 }
+
+/*create new form page*/
 .form-group{
   display: block;
 }
@@ -46,14 +48,11 @@ footer #languages a:hover{
     color:#E53136;
     display: inline;
 }
-.form-group input{
-    border: 1px solid black;
-}
 .form-group .form-control:focus{
-    border: 1px solid #E53136;
-    box-shadow: 0 0 0 0.2rem rgba(228,2,45,.25);
+    border: 1px solid black;
+    box-shadow: none;
+    
 }
-
 .radio .form-check{
     display: inline-block;
     float: right;
@@ -63,8 +62,7 @@ footer #languages a:hover{
     display: inline;
     float: left;
 }
-
-.form-group .radio .form-check label{
+.form-group .radio .form-check label, #id_state .form-check label{
     color: black;
 }
 .django-ckeditor-widget{
@@ -74,8 +72,10 @@ footer #languages a:hover{
 }
 .cke_chrome {
     border-radius: 5px;
-    border: 1px solid black !important;
     border-width: thick;        
+}
+.cke_chrome:hover {
+    border: 1px solid black !important;
 }
 .row{
     margin-top: 50px;
@@ -96,3 +96,26 @@ footer #languages a:hover{
     margin-left: 30px;
     vertical-align: middle;
 }
+ /* paper list page*/
+ #paperLabel{
+    color: #E53136;
+}
+.table thead tr th{
+    border-top-color: #E53136 !important;
+    border-bottom-color: black;
+    color: #E53136;
+    padding-top: 40px;
+}
+.table td {
+    border-top-color: black !important;
+}
+.table td a{
+    color: black;
+}
+.table td a:hover{
+    color: #E53136;
+    text-decoration: none;
+}
+/*paper detail*/
+
+
