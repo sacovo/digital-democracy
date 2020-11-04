@@ -12,7 +12,7 @@ class PaperCreateForm(forms.Form):
         label=" ", widget=forms.RadioSelect, choices=settings.LANGUAGES
     )
     content = forms.CharField(widget=CKEditorWidget)
-    state = forms.ChoiceField(widget=forms.RadioSelect, choices=models.STATES)
+    state = forms.ChoiceField(widget=forms.RadioSelect(attrs= {'class' : 'radioSelection'}), choices=models.STATES)
 
 
 class AmendmendForm(forms.Form):

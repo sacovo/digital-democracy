@@ -5,9 +5,20 @@
 
 
 {% block content %}
-<h1>{{paper.working_title}}</h1>
-{% include 'papers/includes/translation_list.html' %}
-<a href="{% url "paper-list" %}">
-    {% trans "all papers" %}
-</a>
+<div>
+    <div class="row">
+        <div class="col">
+            <div class="row">
+                <h1>{{paper.working_title}}</h1>
+            </div>
+            <div class="row">
+                <p>helllo world</p>
+            </div>     
+        </div>
+        <div class="col">
+            {% include 'papers/includes/translation_list.html' %}
+        </div>
+    </div>
+</div>
+
 {% endblock %}
