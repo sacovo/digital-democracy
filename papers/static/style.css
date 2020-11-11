@@ -1,7 +1,11 @@
 /* template */
+html{
+    height: 100% !important;
+}
 body{
     min-height: 100% !important;
     width: 100% !important;
+    height: 100% !important;
 }
 a{
     text-decoration:none; 
@@ -10,6 +14,21 @@ a:hover{
     text-decoration:none;
     color:#E53136;
 }
+.primaryColor{   
+    color: #E53136;
+}
+.blackColor{
+    color: black;
+}
+#wrapper {
+    height: 100%;    
+    position: relative;
+}
+.container{
+    height: 100%;
+    position: relative;
+    margin-bottom: 100px;
+}
 #navBarItem:hover{
     color:#E53136 ;
     text-decoration:none;
@@ -17,11 +36,10 @@ a:hover{
 #navBarItem{
     text-decoration:none;
 }
-.primaryColor{   
-    color: #E53136;
-}
-.blackColor{
-    color: black;
+footer{
+    width: 100%;
+    margin-top: auto;
+    position: relative;
 }
 footer #languages{
     display: inline-block;
