@@ -1,9 +1,30 @@
+html{
+    min-height: 100vh;
+}
+body{
+    min-height: 100vh;
+}
 a{
     text-decoration:none; 
 }
 a:hover{
     text-decoration:none;
     color:#E53136;
+}
+.primaryColor{   
+    color: #E53136;
+}
+.blackColor{
+    color: black;
+}
+#wrapper {
+    height: 100%;    
+    position: relative;
+}
+.container{
+    height: 100%;
+    position: relative;
+    margin-bottom: 100px;
 }
 #navBarItem:hover{
     color:#E53136 ;
@@ -12,12 +33,25 @@ a:hover{
 #navBarItem{
     text-decoration:none;
 }
-.primaryColor{   
+footer{
+    width: 100%;
+    margin-top: auto;
+    position: relative;
+}
+footer #languages{
+    display: inline-block;
+    float: right;
+    margin-right: 20px;
+}
+footer #languages a{
+    border-right: 1px solid black;
+    padding-right: 5px;
+    padding-left: 5px;
+}
+footer #languages a:hover{
     color: #E53136;
 }
-.blackColor{
-    color: black;
-}
+
 #createPapperForm{
     margin-right: 50px;
     margin-left: 50px;

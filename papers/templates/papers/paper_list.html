@@ -7,7 +7,7 @@
 
 <h1>{% trans 'Papers' %}</h1>
 
-<table>
+<table class="table">
     <thead>
         <tr>
             <th>
@@ -36,5 +36,5 @@
     </tbody>
 </table>
 
-<a href="{% url 'paper-create' %}">{% trans 'create new paper' %}</a>
+<a href="{% url 'paper-create' %}" class="btn">{% trans 'create new paper' %}</a>
 {% endblock %}
