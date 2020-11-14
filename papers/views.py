@@ -123,19 +123,25 @@ def paper_create(request):
 
 def amendmend_detail(request, pk):
     amendmend = models.Amendmend.objects.get(pk=pk)
+    form = forms.CommentForm()
 
     if request.method == "POST":
         amendmend.state = "public"
         amendmend.save()
+        form = forms.CommentForm(request.POST)
 
-        return redirect("amendmend-detail", amendmend.pk)
+        if form.is_valid():
+            name = form.cleaned_data["name"]
+            body = form.cleaned_data["comment"]
+            comment = models.Comment.objects.create(
+                amendment=models.Amendmend.objects.get(pk=pk),
+                name=name,
+                body=body,
+            )
+            return redirect("amendmend-detail", amendmend.pk)
 
     return render(
-        request,
-        "papers/amendmend_detail.html",
-        {
-            "amendmend": amendmend,
-        },
+        request, "papers/amendmend_detail.html", {"amendmend": amendmend, "form": form}
     )
 
 
