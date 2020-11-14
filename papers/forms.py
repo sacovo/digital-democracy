@@ -30,3 +30,8 @@ class AmendmendForm(forms.Form):
             self.fields["content"].initial = self.amendmend.content
             self.fields["reason"].initial = self.amendmend.reason
             self.fields["author"].initial = self.amendmend.author.name
+
+
+class CommentForm(forms.Form):
+    name = forms.CharField()
+    comment = forms.CharField()
