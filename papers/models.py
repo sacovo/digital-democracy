@@ -35,6 +35,11 @@ class Paper(models.Model):
     def __str__(self):
         return self.working_title
 
+    def missing_translations(self):
+        for language in settings.LANGUAGES:
+            if not bool(self.translation_set.filter(language_code=language[0])):
+                yield language
+
 
 class PaperTranslation(models.Model):
     """
@@ -48,7 +53,7 @@ class PaperTranslation(models.Model):
         max_length=7, verbose_name=_("language code"), choices=settings.LANGUAGES
     )
     title = models.CharField(max_length=180, verbose_name=_("title"))
-    content = RichTextField(config_name="basic", verbose_name=_("content"))
+    content = RichTextField(config_name="basic", verbose_name=_("content"), blank=True)
 
     def __str__(self):
         return self.title

@@ -65,10 +65,13 @@ a:hover{
 }
 .btn{
     border-color: #E53136 !important;
+    margin: 0.5rem;
 }
-.submitButton{
+
+.submitButton,.btn-secondary{
     color: white;
-    background-color: #E53136;
+    background-color: #E53136 !important;
+    margin: 0.5rem;
 }
 .cancelButton{
     color: #E53136;

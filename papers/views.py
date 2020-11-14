@@ -181,5 +181,28 @@ def paper_create_translation(request, pk):
     pass
 
 
-def paper_update_translation(request, pk, language_code):
-    pass
+def translation_update(request, pk, language_code):
+    paper = models.Paper.objects.get(pk=pk)
+
+    translation, created = paper.translation_set.get_or_create(
+        language_code=language_code,
+        defaults={
+            "title": paper.working_title,
+            "content": "...",
+        },
+    )
+    if request.method == "POST":
+        form = forms.TranslationForm(request.POST, instance=translation)
+        if form.is_valid():
+            form.save()
+
+    form = forms.TranslationForm(instance=translation)
+
+    return render(
+        request,
+        "papers/translation_update.html",
+        {
+            "form": form,
+            "paper": paper,
+        },
+    )

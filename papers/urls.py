@@ -12,9 +12,14 @@ urlpatterns = [
         name="paper-translation-detail",
     ),
     path(
-        "paper/<int:pk>/<str:language_code>/edit/",
+        "paper/<int:pk>/<str:language_code>/create-amendmend/",
         views.paper_edit,
-        name="paper-translation-edit",
+        name="create-amendmend",
+    ),
+    path(
+        "paper/<int:pk>/<str:language_code>/update/",
+        views.translation_update,
+        name="paper-translation-update",
     ),
     path("amendmends/<int:pk>/", views.amendmend_detail, name="amendmend-detail"),
     path("amendmends/<int:pk>/edit/", views.amendmend_edit, name="amendmend-edit"),
