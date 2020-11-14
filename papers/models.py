@@ -53,7 +53,9 @@ class PaperTranslation(models.Model):
         max_length=7, verbose_name=_("language code"), choices=settings.LANGUAGES
     )
     title = models.CharField(max_length=180, verbose_name=_("title"))
-    content = RichTextField(config_name="basic", verbose_name=_("content"), blank=True)
+    content = RichTextField(
+        config_name="default", verbose_name=_("content"), blank=True
+    )
 
     def __str__(self):
         return self.title
