@@ -32,6 +32,12 @@ class AmendmendForm(forms.Form):
             self.fields["author"].initial = self.amendmend.author.name
 
 
+class TranslationForm(forms.ModelForm):
+    class Meta:
+        model = models.PaperTranslation
+        fields = ["title", "content"]
+
+
 class CommentForm(forms.Form):
     name = forms.CharField()
     comment = forms.CharField()
