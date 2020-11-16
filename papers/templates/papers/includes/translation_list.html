@@ -1,9 +1,33 @@
-<ul>
+{% load i18n %}
+<nav>
+  <div class="nav nav-tabs" id="nav-tab" role="tablist">
     {% for translation in paper.translation_set.all %}
+<<<<<<< HEAD
     <li>
         <a class="link "href="{% url 'paper-translation-detail' paper.pk translation.language_code %}">
             {{translation.get_language_code_display}} - {{translation.title}}
         </a>
     </li>
+=======
+    <a class="nav-link {% if forloop.first %}active{% endif %}" href="#{{translation.language_code}}" data-toggle="tab">
+      {{translation.get_language_code_display}} - {{translation.title}}
+    </a>
+>>>>>>> df9802659deebfba08b94e38a9d7c74ab9b34133
     {% endfor %}
-</ul>
+  </div>
+</nav>
+
+<div class="tab-content" id="nav-tab-content">
+  {% for translation in paper.translation_set.all %}
+  <div class="tab-pane {% if forloop.first %}active show{% endif %}" id="{{translation.language_code}}" role="tabpanel">
+    {{translation.content_safe}}
+
+    <div class="btn-group" role="group">
+      <a class="btn btn-secondary" href="{% url 'create-amendmend' translation.paper.pk translation.language_code %}">
+        {% trans 'create amendmend' %}
+      </a>
+    </div>
+
+  </div>
+  {% endfor %}
+</div>

@@ -123,19 +123,25 @@ def paper_create(request):
 
 def amendmend_detail(request, pk):
     amendmend = models.Amendmend.objects.get(pk=pk)
+    form = forms.CommentForm()
 
     if request.method == "POST":
         amendmend.state = "public"
         amendmend.save()
+        form = forms.CommentForm(request.POST)
 
-        return redirect("amendmend-detail", amendmend.pk)
+        if form.is_valid():
+            name = form.cleaned_data["name"]
+            body = form.cleaned_data["comment"]
+            comment = models.Comment.objects.create(
+                amendment=models.Amendmend.objects.get(pk=pk),
+                name=name,
+                body=body,
+            )
+            return redirect("amendmend-detail", amendmend.pk)
 
     return render(
-        request,
-        "papers/amendmend_detail.html",
-        {
-            "amendmend": amendmend,
-        },
+        request, "papers/amendmend_detail.html", {"amendmend": amendmend, "form": form}
     )
 
 
@@ -175,5 +181,28 @@ def paper_create_translation(request, pk):
     pass
 
 
-def paper_update_translation(request, pk, language_code):
-    pass
+def translation_update(request, pk, language_code):
+    paper = models.Paper.objects.get(pk=pk)
+
+    translation, created = paper.translation_set.get_or_create(
+        language_code=language_code,
+        defaults={
+            "title": paper.working_title,
+            "content": "...",
+        },
+    )
+    if request.method == "POST":
+        form = forms.TranslationForm(request.POST, instance=translation)
+        if form.is_valid():
+            form.save()
+
+    form = forms.TranslationForm(instance=translation)
+
+    return render(
+        request,
+        "papers/translation_update.html",
+        {
+            "form": form,
+            "paper": paper,
+        },
+    )

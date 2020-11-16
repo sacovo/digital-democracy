@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+{% load i18n %}
 <html lang="{{request.LANGUAGE_CODE}}">
   <head>
     <meta charset="UTF-8">
@@ -14,7 +15,7 @@
   </head>
   <body >
     <div id="wrapper">
-    <header class="navbar navbar-expand-lg navbar-light ">
+    <header class="navbar navbar-expand-lg navbar-light container">
         <a class="navbar-brand" href="/">
           <img src="/static/logo.png" width="50" height="50">
         </a>
@@ -37,7 +38,11 @@
       {% endblock %}
       
     </div>
+<<<<<<< HEAD
     <!--<footer>    
+=======
+    <footer class="navbar container">    
+>>>>>>> df9802659deebfba08b94e38a9d7c74ab9b34133
       <small>Impressum | © Copyright 2020 SP Schweiz</small>
       <span id="languages">
         <a>DE</a>

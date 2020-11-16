@@ -1,21 +1,24 @@
 {% extends 'papers/base.html' %}
 {% load i18n %}
+{% load bootstrap4 %}
 
 {% block content %}
 
 <h2>
-{% trans 'change' %}
+{% trans 'Change' %}
 </h2>
 <section class="change">
 {{amendmend.content|safe}}
 </section>
+<br>
 
 <h2>
-{% trans 'author' %}
+{% trans 'Author' %}
 </h2>
 {{amendmend.author.name}}
+<br><br>
 
-<h2>{% trans 'reason' %}</h2>
+<h2>{% trans 'Reason' %}</h2>
 <section class="reason">
 {{amendmend.reason|safe}}
 </section>
@@ -32,5 +35,46 @@
 <a href="{% url 'paper-translation-detail' amendmend.paper.pk amendmend.language_code %}">
     {{amendmend.paper.working_title}}
 </a>
+
+<!-- Implements Comment section-->
+<br><br>
+<hr/>
+
+<h2>{% trans 'Comments' %}</h2><br>
+{% if not  amendmend.comments.all%}
+    No Comments Yet...
+    <br><br>
+    {% else %}
+    {% for comment in amendmend.comments.all %}
+        <strong>
+            {{ comment.name }} -
+            {{ comment.created_on}}
+        </strong>
+        <br/>
+        {{ comment.body }}
+        <br/><br/>
+    {% endfor %}
+{% endif %}
+<br>
+{% block head %}
+{{form.media}}
+{% endblock %}
+
+{% block content2 %}
+<h5>{% trans 'Leave a comment' %}</h5>
+<form action="" method="POST" id="create_comment">
+    {% csrf_token %}
+    {% bootstrap_form form  form_group_class='form-group'%}
+    {% buttons %}
+    <div class="row">
+        <div class="col">
+            <button type="submit" class="btn btn-sm btn-block submitButton">Submit</button>
+        </div>
+    </div>
+    {% endbuttons %}
+</form>
+
+{% endblock %}
+<!-- Implements Comment section-->
 
 {% endblock %}

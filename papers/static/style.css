@@ -1,11 +1,8 @@
-/* template */
 html{
-    height: 100% !important;
+    min-height: 100vh;
 }
 body{
-    min-height: 100% !important;
-    width: 100% !important;
-    height: 100% !important;
+    min-height: 100vh;
 }
 a, .link{
     color: black;
@@ -54,11 +51,11 @@ footer #languages a{
 footer #languages a:hover{
     color: #E53136;
 }
-#createPapperForm{
-    
-}
 
-/*create new form page*/
+#createPapperForm{
+    margin-right: 50px;
+    margin-left: 50px;
+}
 .form-group{
   display: block;
 }
@@ -66,10 +63,18 @@ footer #languages a:hover{
     color:#E53136;
     display: inline;
 }
-.form-group .form-control:focus{
+.form-group input{
     border: 1px solid black;
+<<<<<<< HEAD
     box-shadow: none; 
+=======
+>>>>>>> df9802659deebfba08b94e38a9d7c74ab9b34133
 }
+.form-group .form-control:focus{
+    border: 1px solid #E53136;
+    box-shadow: 0 0 0 0.2rem rgba(228,2,45,.25);
+}
+
 .radio .form-check{
     display: inline-block;
     float: right;
@@ -79,7 +84,8 @@ footer #languages a:hover{
     display: inline;
     float: left;
 }
-.form-group .radio .form-check label, #id_state .form-check label{
+
+.form-group .radio .form-check label{
     color: black;
 }
 .django-ckeditor-widget{
@@ -89,20 +95,21 @@ footer #languages a:hover{
 }
 .cke_chrome {
     border-radius: 5px;
-    border-width: thick;        
-}
-.cke_chrome:hover {
     border: 1px solid black !important;
+    border-width: thick;        
 }
 .row{
     margin-top: 50px;
 }
 .btn{
     border-color: #E53136 !important;
+    margin: 0.5rem;
 }
-.submitButton{
+
+.submitButton,.btn-secondary{
     color: white;
-    background-color: #E53136;
+    background-color: #E53136 !important;
+    margin: 0.5rem;
 }
 .cancelButton{
     color: #E53136;
@@ -113,6 +120,7 @@ footer #languages a:hover{
     margin-left: 30px;
     vertical-align: middle;
 }
+<<<<<<< HEAD
  /* paper list page*/
  #paperLabel{
     color: #E53136;
@@ -166,3 +174,5 @@ footer #languages a:hover{
 
 
 
+=======
+>>>>>>> df9802659deebfba08b94e38a9d7c74ab9b34133

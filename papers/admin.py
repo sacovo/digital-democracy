@@ -39,3 +39,10 @@ class AuthorsAdmin(admin.ModelAdmin):
 class AmendmendedAdmin(admin.ModelAdmin):
     fields = ["author", "paper", "state", "content"]
     list_display = ["paper", "state", "author"]
+
+
+@admin.register(models.Comment)
+class CommentAdmin(admin.ModelAdmin):
+    list_display = ["name", "body", "amendment", "created_on"]
+    list_filter = ["created_on"]
+    search_fields = ["name", "body"]

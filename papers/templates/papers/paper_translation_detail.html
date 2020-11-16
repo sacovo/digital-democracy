@@ -4,6 +4,7 @@
 
 
 {% block content %}
+<<<<<<< HEAD
 <h2 id="paperTitle">{{translation.title}}</h2>
 {% include 'papers/includes/translation_list.html' %}
 <div id="paperDetail">
@@ -39,4 +40,32 @@
         </div>
     </div>
 </div>
+=======
+    <h1>{{translation.title}}</h1>
+<article>
+    <div>
+        {{translation.content_safe}}
+    </div>
+</article>
+
+<h2>{% trans 'amendmends' %}</h2>
+<ul>
+    {% for amendmend in amendmend_list %}
+    <li><a href="{% url 'amendmend-detail' amendmend.pk %}"#{{amendmend.pk}}
+        </a>
+    </li>
+    {% endfor %}
+</ul>
+
+<h2>{% trans 'languages' %}</h2>
+{% include 'papers/includes/translation_list.html' %}
+
+<a href="{% url 'create-amendmend' translation.paper.pk translation.language_code %}">
+  {% trans 'create amendmend' %}
+</a>
+<br>
+<a href="{% url "paper-list" %}">
+    {% trans "all papers" %}
+</a>
+>>>>>>> df9802659deebfba08b94e38a9d7c74ab9b34133
 {% endblock %}
