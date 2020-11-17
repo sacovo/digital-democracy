@@ -65,10 +65,7 @@ footer #languages a:hover{
 }
 .form-group input{
     border: 1px solid black;
-<<<<<<< HEAD
     box-shadow: none; 
-=======
->>>>>>> df9802659deebfba08b94e38a9d7c74ab9b34133
 }
 .form-group .form-control:focus{
     border: 1px solid #E53136;
@@ -111,16 +108,21 @@ footer #languages a:hover{
     background-color: #E53136 !important;
     margin: 0.5rem;
 }
+.submitButton:hover{
+    color: white;
+}
 .cancelButton{
     color: #E53136;
     background-color: white;
+}
+.cancelButton:hover{
+    color: #E53136;
 }
 .form-group #id_state{
     display: inline-block !important;
     margin-left: 30px;
     vertical-align: middle;
 }
-<<<<<<< HEAD
  /* paper list page*/
  #paperLabel{
     color: #E53136;
@@ -162,17 +164,19 @@ footer #languages a:hover{
     border: 1px solid black;
     border-radius: 10px;
 }
+#amandments{
+    text-align: center;
+}
 
 .amandmentListReason{
     border: 1px solid red ; 
     border-radius: 5px; 
     padding: 20px; 
     margin-bottom: 30px;
+    margin-top: 5px;
     
 }
 
 
 
 
-=======
->>>>>>> df9802659deebfba08b94e38a9d7c74ab9b34133

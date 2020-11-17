@@ -1,5 +1,6 @@
 {% extends 'papers/base.html' %}
 {% load static i18n %}
+{% load bootstrap4 %}
 
 
 {% block head %}
@@ -11,10 +12,8 @@
 
 <form method="POST">
     {% csrf_token %}
-    <table>
-    {{form.as_table}}
-    </table>
-    <button type="submit">{% trans 'submit' %}</button>
+    {% bootstrap_form form  form_group_class='form-group'%}
+    <button type="submit" class="btn btn-sm btn-block submitButton">{% trans 'submit' %}</button>
 </form>
 
 {% endblock %}

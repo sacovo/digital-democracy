@@ -32,10 +32,11 @@
         <h2>
           {{translation.title}}
         </h2>
-        <div class="content">
-        {{translation.content_safe}}
+        <div id="paperContent" class="content">
+          <article>
+            <div> {{translation.content_safe}}</div>
+          </article>
         </div>
-
         <div class="btn-group" role="group">
           <a class="btn btn-secondary" href="{% url 'create-amendmend' translation.paper.pk translation.language_code %}">
             {% trans 'create amendmend' %}
@@ -46,15 +47,13 @@
             </a>
             {%endif%}
         </div>
-
       </div>
       <div class="col-md-4">
-
         <h2>{% trans 'amendmends' %}</h2>
         <ul>
           {% for amendmend in amendmend_list %}
           <li><a href="{% url 'amendmend-detail' amendmend.pk %}">
-              #{{amendmend.pk}}
+              {{amendmend.pk}}
             </a>
           </li>
           {% endfor %}
