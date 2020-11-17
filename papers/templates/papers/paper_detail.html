@@ -49,13 +49,13 @@
         </div>
       </div>
       <div class="col-md-4">
-        <h2>{% trans 'amendmends' %}</h2>
+        <h2 id="amandments">{% trans 'amendmends' %}</h2>
         <ul>
           {% for amendmend in translation.amendmend_list %}
-          <li><a href="{% url 'amendmend-detail' amendmend.pk %}">
-              {{amendmend.pk}}
-            </a>
-          </li>
+          <a class="link" href="{% url 'amendmend-detail' amendmend.pk %}">
+            ‎{{amendmend.author.name|safe}} at {{amendmend.created_at}}‎
+            <div class="amandmentListReason" > {{amendmend.reason|safe}} </div>
+          </a>
           {% endfor %}
         </ul>
       </div>

@@ -22,7 +22,8 @@
             {% for amendmend in amendmend_list %}
                 <a class="link" href="{% url 'amendmend-detail' amendmend.pk %}">
                     ‎{{amendmend.author.name|safe}} at {{amendmend.created_at}}‎
-‎                <div class="amandmentListReason" > {{amendmend.reason|safe}} </div></a>‎
+                    <div class="amandmentListReason" > {{amendmend.reason|safe}} </div>
+                </a>‎
             {% endfor %}
         </ul>
     </div>
