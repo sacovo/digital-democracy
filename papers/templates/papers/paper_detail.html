@@ -51,7 +51,7 @@
       <div class="col-md-4">
         <h2>{% trans 'amendmends' %}</h2>
         <ul>
-          {% for amendmend in amendmend_list %}
+          {% for amendmend in translation.amendmend_list %}
           <li><a href="{% url 'amendmend-detail' amendmend.pk %}">
               {{amendmend.pk}}
             </a>
