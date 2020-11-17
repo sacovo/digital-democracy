@@ -63,6 +63,9 @@ class PaperTranslation(models.Model):
     def content_safe(self):
         return mark_safe(self.content)
 
+    def amendmend_list(self):
+        return self.paper.amendmend_set.filter(language_code=self.language_code)
+
 
 class Amendmend(models.Model):
     paper = models.ForeignKey(Paper, models.CASCADE, verbose_name=_("paper"))

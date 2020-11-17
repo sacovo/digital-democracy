@@ -4,30 +4,28 @@
 
 
 {% block content %}
-    <h1>{{translation.title}}</h1>
-<article>
-    <div>
-        {{translation.content_safe}}
+<div class="row mt-4">
+    <div class="col-md-8">
+        <h1>{{translation.title}}</h1>
+        <div id="paperContent" class="content">
+            <article>
+            <div> {{translation.content_safe}}</div>
+            </article>
+        </div>
+        <a class="btn btn-secondary" href="{% url 'create-amendmend' translation.paper.pk translation.language_code %}">
+            {% trans 'create amendmend' %}
+          </a>
     </div>
-</article>
+    <div class="col-md-4">
+        <h2 id="amandments">{% trans 'amendmends' %}</h2>
+        <ul>
+            {% for amendmend in amendmend_list %}
+                <a class="link" href="{% url 'amendmend-detail' amendmend.pk %}">
+                    ‎{{amendmend.author.name|safe}} at {{amendmend.created_at}}‎
+                    <div class="amandmentListReason" > {{amendmend.reason|safe}} </div>
+                </a>‎
+            {% endfor %}
+        </ul>
+    </div>
 
-<h2>{% trans 'amendmends' %}</h2>
-<ul>
-    {% for amendmend in amendmend_list %}
-    <li><a href="{% url 'amendmend-detail' amendmend.pk %}"#{{amendmend.pk}}
-        </a>
-    </li>
-    {% endfor %}
-</ul>
-
-<h2>{% trans 'languages' %}</h2>
-{% include 'papers/includes/translation_list.html' %}
-
-<a href="{% url 'create-amendmend' translation.paper.pk translation.language_code %}">
-  {% trans 'create amendmend' %}
-</a>
-<br>
-<a href="{% url "paper-list" %}">
-    {% trans "all papers" %}
-</a>
 {% endblock %}

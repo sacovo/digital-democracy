@@ -160,8 +160,9 @@ CKEDITOR_CONFIGS = {
     "default": {
         "width": "100%",
     },
-    "basic": {"toolbar": "Basic"},
+    "basic": {"toolbar": "Basic", "width": "100%"},
     "track-changes": {
         "extraPlugins": ",".join(["lite"]),
+        "width": "100%",
     },
 }
