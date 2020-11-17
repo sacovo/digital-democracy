@@ -2,17 +2,9 @@
 <nav>
   <div class="nav nav-tabs" id="nav-tab" role="tablist">
     {% for translation in paper.translation_set.all %}
-<<<<<<< HEAD
-    <li>
-        <a class="link "href="{% url 'paper-translation-detail' paper.pk translation.language_code %}">
-            {{translation.get_language_code_display}} - {{translation.title}}
-        </a>
-    </li>
-=======
     <a class="nav-link {% if forloop.first %}active{% endif %}" href="#{{translation.language_code}}" data-toggle="tab">
       {{translation.get_language_code_display}} - {{translation.title}}
     </a>
->>>>>>> df9802659deebfba08b94e38a9d7c74ab9b34133
     {% endfor %}
   </div>
 </nav>

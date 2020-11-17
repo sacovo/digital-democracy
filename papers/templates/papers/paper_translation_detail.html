@@ -4,43 +4,6 @@
 
 
 {% block content %}
-<<<<<<< HEAD
-<h2 id="paperTitle">{{translation.title}}</h2>
-{% include 'papers/includes/translation_list.html' %}
-<div id="paperDetail">
-    <div class="row">
-        <div class="col">
-            <div id="paperContent">
-                <article>
-                    <div>
-                        {{translation.content_safe}}
-                    </div>
-                </article>
-            </div>
-            <div id="commentForm" >
-                <form >
-                    <textarea class="form-control" style="margin-bottom: 10px; border-color: black;" placeholder="comment"></textarea>
-                    <button type="submit" class="btn btn-sm btn-block submitButton">Submit</button>
-                </form>
-            </div>     
-        </div>
-        <div class="col" >
-            <h2 style="text-align: center; ">{% trans 'amendmends' %}</h2>
-            <ul id="amandmentList" >
-                {% for amendmend in amendmend_list %}
-                    <a class="link" href="{% url 'amendmend-detail' amendmend.pk %}">
-                        {{amendmend.author.name|safe}} at {{amendmend.created_at}}
-                    </a>
-                   <div class="amandmentListReason"> {{amendmend.reason|safe}} </div>
-                {% endfor %}
-            </ul>
-            <form action="/paper/{{translation.id}}/{{translation.language_code}}/edit/" method="GET">
-                <button type="submit" class="btn btn-sm btn-inline-block submitButton">Add amandment</button>
-            </form>
-        </div>
-    </div>
-</div>
-=======
     <h1>{{translation.title}}</h1>
 <article>
     <div>
@@ -67,5 +30,4 @@
 <a href="{% url "paper-list" %}">
     {% trans "all papers" %}
 </a>
->>>>>>> df9802659deebfba08b94e38a9d7c74ab9b34133
 {% endblock %}
