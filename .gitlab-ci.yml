@@ -38,3 +38,24 @@ isort:
   script:
     - isort --check . 
 
+pylint:
+  stage: .pre
+  script:
+    - pip3 install pylint pylint-django --user
+    - pip3 install -r requirements.txt --user
+    - pylint --load-plugins pylint_django backend papers
+  allow_failure: true
+
+django-test-master:
+  stage: test
+  script:
+    - docker run "$CI_REGISTRY_IMAGE" python manage.py test
+  only:
+    - master
+
+django-test:
+  stage: test
+  script:
+    - docker run "$CI_REGISTRY_IMAGE:$CI_COMMIT_REF_SLUG" python manage.py test
+  except:
+    - master
