@@ -1,0 +1,14 @@
+{% extends 'papers/base.html' %}
+
+
+
+{% block title %}
+Sie sind eingeloggt
+{% endblock %}
+
+{% block content %}
+
+<p>Eingeloggt als: {{ user.get_username }}</p>
+<p><a href="/members/logout">Klicken Sie hier um sich auszuloggen</a></p>
+
+{% endblock %}
