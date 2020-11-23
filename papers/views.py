@@ -230,6 +230,20 @@ def translation_update(request, paper_pk, language_code):
     )
 
 
+def like_comment(request, comment_pk):
+    if request.method == "POST":
+        comment = models.Comment.objects.get(pk=comment_pk)
+        user = request.user
+
+        if comment.likes.filter(pk=user.pk):
+            comment.likes.remove(user.pk)
+
+        else:
+            comment.likes.add(user.pk)
+
+    return redirect("amendmend-detail", comment.amendment.pk)
+
+
 @login_required
 def members_profile(request):
     """

@@ -5,20 +5,19 @@
 {% block content %}
 
 <div class="row mt-4">
-  <div class="col-md-8">
+  <div class="col-md-7">
     <span><strong>{% trans 'By' %}</strong></span>
     {{amendmend.author.name|safe}} at {{amendmend.created_at}}
     <div id="paperContent" class="content">
       <article>
-        <div>
-          {{amendmend.extract_content|safe}}
+        <div> {{amendmend.content|safe}}
         </div>
       </article>
-    </div>        
+    </div>
     <h2>{% trans 'Reason' %}</h2>
     <section class="reason">
       {{amendmend.reason|safe}}
-    </section> 
+    </section>
     {% if amendmend.state == 'draft' %}
     <form method="POST">
       {% csrf_token %}
@@ -28,9 +27,9 @@
     <a class="btn btn-sm  submitButton" href="{% url 'amendmend-edit' amendmend.pk %}">{% trans 'edit' %}</a>
     <a class="btn btn-sm  cancelButton" href="{% url 'paper-translation-detail' amendmend.paper.pk amendmend.language_code %}">
       {{amendmend.paper.working_title}}
-    </a>   
+    </a>
   </div>
-  <div class="col-md-4">
+  <div class="col-md-5">
     <!-- Implements Comment section-->
     <h2>{% trans 'Comments' %}</h2><br>
     {% if not  amendmend.comments.all%}
@@ -41,9 +40,22 @@
     <strong>
       {{ comment.name }} -
       {{ comment.created_on}}
+
     </strong>
     <br/>
     {{ comment.body|safe }}
+    <form action="{% url 'comment_like' comment.pk %}" method="POST">
+      {% csrf_token %}
+
+      <button type="submit" class="btn btn-sm submitButton">
+        {% if request.user in comment.likes.all %}
+        Unlike
+        {% else %}
+        Like
+        {% endif %}
+      </button>
+      Likes: {{ comment.num_likes }}
+    </form>
     <br/><br/>
     {% endfor %}
     {% endif %}

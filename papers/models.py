@@ -142,6 +142,7 @@ class Comment(models.Model):
     )
     body = models.TextField()
     created_on = models.DateTimeField(auto_now_add=True)
+    likes = models.ManyToManyField(settings.AUTH_USER_MODEL)
 
     @property
     def name(self):
@@ -152,3 +153,6 @@ class Comment(models.Model):
 
     def __str__(self):
         return "Comment {} by {}".format(self.body, self.name)
+
+    def num_likes(self):
+        return self.likes.all().count()
