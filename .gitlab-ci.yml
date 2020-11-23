@@ -29,21 +29,18 @@ docker-build:
 
 black:
   stage: .pre
-  image: milansuk/python-black:latest
   script:
-    - black --check . 
+    - docker run -v $(pwd):/data -w /data milansuk/python-black black --check .
 
 isort:
   stage: .pre
   script:
-    - isort --check . 
+    - docker run -v $(pwd):/data -w /data python /bin/bash -c "pip install isort; isort ."
 
 pylint:
   stage: .pre
   script:
-    - pip3 install pylint pylint-django --user
-    - pip3 install -r requirements.txt --user
-    - pylint --load-plugins pylint_django backend papers
+    - docker run -v $(pwd):/data -w /data python /bin/bash -c "pip install pylint pylint-django; pip install -r requirements.txt; pylint --load-plugins pylint_django papers backend"
   allow_failure: true
 
 django-test-master:
@@ -59,3 +56,8 @@ django-test:
     - docker run "$CI_REGISTRY_IMAGE:$CI_COMMIT_REF_SLUG" python manage.py test
   except:
     - master
+
+bandit:
+  stage: pre
+  script:
+    - docker run -v $(pwd):/data -w /data python /bin/bash -c "pip install bandit; bandit -r ."
