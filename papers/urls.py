@@ -1,4 +1,5 @@
-from django.urls import path
+from django.contrib.auth import views as auth_views
+from django.urls import include, path
 
 from papers import views
 
@@ -23,4 +24,7 @@ urlpatterns = [
     ),
     path("amendmends/<int:pk>/", views.amendmend_detail, name="amendmend-detail"),
     path("amendmends/<int:pk>/edit/", views.amendmend_edit, name="amendmend-edit"),
+    path("members/login/", auth_views.LoginView.as_view()),
+    path("members/logout/", auth_views.LogoutView.as_view()),
+    path("members/profile/", views.members_profile),
 ]

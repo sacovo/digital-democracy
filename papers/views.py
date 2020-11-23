@@ -1,3 +1,4 @@
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import redirect, render
 from django.utils import timezone
 
@@ -206,3 +207,8 @@ def translation_update(request, pk, language_code):
             "paper": paper,
         },
     )
+
+
+@login_required
+def members_profile(request):
+    return render(request, "registration/profile.html")
