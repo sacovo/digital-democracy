@@ -5,9 +5,7 @@ from django.db import migrations, models
 
 class Migration(migrations.Migration):
 
-    dependencies = [
-        ("papers", "0002_paper_working_title"),
-    ]
+    dependencies = [("papers", "0002_paper_working_title")]
 
     operations = [
         migrations.AlterField(
@@ -115,5 +113,5 @@ class Migration(migrations.Migration):
                 max_length=7,
                 verbose_name="language code",
             ),
-        ),
+        )
     ]

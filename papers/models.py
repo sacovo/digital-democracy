@@ -11,11 +11,7 @@ from papers import utils
 
 # Create your models here.
 
-STATES = (
-    ("draft", _("Draft")),
-    ("public", _("Published")),
-    ("final", _("Finalized")),
-)
+STATES = (("draft", _("Draft")), ("public", _("Published")), ("final", _("Finalized")))
 
 
 class Author(models.Model):

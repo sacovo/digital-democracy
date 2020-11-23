@@ -6,15 +6,10 @@ from django.db import migrations, models
 
 class Migration(migrations.Migration):
 
-    dependencies = [
-        ("papers", "0010_auto_20201123_1232"),
-    ]
+    dependencies = [("papers", "0010_auto_20201123_1232")]
 
     operations = [
-        migrations.RemoveField(
-            model_name="comment",
-            name="name",
-        ),
+        migrations.RemoveField(model_name="comment", name="name"),
         migrations.AddField(
             model_name="comment",
             name="author",

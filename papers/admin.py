@@ -14,11 +14,7 @@ class PaperTranslationInline(admin.StackedInline):
     """
 
     model = models.PaperTranslation
-    fields = [
-        "language_code",
-        "title",
-        "content",
-    ]
+    fields = ["language_code", "title", "content"]
 
     extra = 1
 
@@ -29,11 +25,7 @@ class PaperAdmin(admin.ModelAdmin):
     Admin for papers
     """
 
-    fields = [
-        "amendmend_deadline",
-        "state",
-        "authors",
-    ]
+    fields = ["amendmend_deadline", "state", "authors"]
 
     autocomplete_fields = ["authors"]
 

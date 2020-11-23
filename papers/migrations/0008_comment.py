@@ -40,5 +40,5 @@ class Migration(migrations.Migration):
                 ),
                 ("likes", models.ManyToManyField(to=settings.AUTH_USER_MODEL)),
             ],
-        ),
+        )
     ]
