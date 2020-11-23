@@ -38,4 +38,5 @@ urlpatterns = [
     path("members/login/", auth_views.LoginView.as_view()),
     path("members/logout/", auth_views.LogoutView.as_view()),
     path("members/profile/", views.members_profile),
+    path("comments/<int:comment_pk>/like/", views.like_comment, name="comment_like"),
 ]
