@@ -4,6 +4,8 @@ from django.db import models
 from django.utils.html import mark_safe
 from django.utils.translation import gettext as _
 
+from papers import utils
+
 # Create your models here.
 
 STATES = (
@@ -68,6 +70,10 @@ class PaperTranslation(models.Model):
 
 
 class Amendmend(models.Model):
+    """
+    Represents a proposed change to a paper
+    """
+
     paper = models.ForeignKey(Paper, models.CASCADE, verbose_name=_("paper"))
     language_code = models.CharField(
         max_length=7, verbose_name=_("language code"), choices=settings.LANGUAGES
@@ -81,7 +87,17 @@ class Amendmend(models.Model):
     reason = RichTextField(config_name="basic", verbose_name=_("reason"))
 
     def translation(self):
+        """
+        Returns the translation this amendment belongs to
+        """
         self.paper.translation_set.get(language_code=self.language_code)
+
+    def extract_content(self):
+        """
+        Returns only the part of the paper that is changed
+        """
+
+        return utils.extract_content(self.content)
 
 
 class Comment(models.Model):
