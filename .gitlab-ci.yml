@@ -58,6 +58,6 @@ django-test:
     - master
 
 bandit:
-  stage: pre
+  stage: .pre
   script:
     - docker run -v $(pwd):/data -w /data python /bin/bash -c "pip install bandit; bandit -r ."
