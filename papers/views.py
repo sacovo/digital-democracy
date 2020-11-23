@@ -19,8 +19,8 @@ def paper_list(request):
     )
 
 
-def paper_detail(request, pk):
-    paper = models.Paper.objects.get(pk=pk)
+def paper_detail(request, paper_pk):
+    paper = models.Paper.objects.get(pk=paper_pk)
 
     return render(
         request,
@@ -31,8 +31,8 @@ def paper_detail(request, pk):
     )
 
 
-def paper_translation_detail(request, pk, language_code):
-    paper = models.Paper.objects.get(pk=pk)
+def paper_translation_detail(request, paper_pk, language_code):
+    paper = models.Paper.objects.get(pk=paper_pk)
     translation = paper.translation_set.get(language_code=language_code)
 
     amendmend_list = models.Amendmend.objects.filter(
@@ -50,8 +50,8 @@ def paper_translation_detail(request, pk, language_code):
     )
 
 
-def paper_edit(request, pk, language_code):
-    paper = models.Paper.objects.get(pk=pk)
+def paper_edit(request, paper_pk, language_code):
+    paper = models.Paper.objects.get(pk=paper_pk)
     translation = paper.translation_set.get(language_code=language_code)
 
     form = forms.AmendmendForm(translation=translation)
@@ -61,10 +61,9 @@ def paper_edit(request, pk, language_code):
 
         if form.is_valid():
             content = form.cleaned_data["content"]
-            author_name = form.cleaned_data["author"]
             reason = form.cleaned_data["reason"]
 
-            author = models.Author.objects.create(name=author_name)
+            author, _ = models.Author.objects.get_or_create(user=request.user)
 
             amendmend = models.Amendmend.objects.create(
                 paper=paper,
@@ -122,8 +121,8 @@ def paper_create(request):
     return render(request, "papers/paper_create.html", {"form": form})
 
 
-def amendmend_detail(request, pk):
-    amendmend = models.Amendmend.objects.get(pk=pk)
+def amendmend_detail(request, amendment_pk):
+    amendmend = models.Amendmend.objects.get(pk=amendment_pk)
     form = forms.CommentForm()
 
     if request.method == "POST":
@@ -135,7 +134,7 @@ def amendmend_detail(request, pk):
             name = form.cleaned_data["name"]
             body = form.cleaned_data["comment"]
             comment = models.Comment.objects.create(
-                amendment=models.Amendmend.objects.get(pk=pk),
+                amendment=models.Amendmend.objects.get(pk=amendment_pk),
                 name=name,
                 body=body,
             )
@@ -146,8 +145,8 @@ def amendmend_detail(request, pk):
     )
 
 
-def amendmend_edit(request, pk):
-    amendmend = models.Amendmend.objects.get(pk=pk)
+def amendmend_edit(request, amendment_pk):
+    amendmend = models.Amendmend.objects.get(pk=amendment_pk)
 
     form = forms.AmendmendForm(amendmend=amendmend)
 
@@ -174,16 +173,16 @@ def amendmend_edit(request, pk):
     )
 
 
-def paper_update(request, pk):
+def paper_update(request, paper_pk):
     pass
 
 
-def paper_create_translation(request, pk):
+def paper_create_translation(request, paper_pk):
     pass
 
 
-def translation_update(request, pk, language_code):
-    paper = models.Paper.objects.get(pk=pk)
+def translation_update(request, paper_pk, language_code):
+    paper = models.Paper.objects.get(pk=paper_pk)
 
     translation, created = paper.translation_set.get_or_create(
         language_code=language_code,
