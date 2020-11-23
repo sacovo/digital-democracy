@@ -4,7 +4,7 @@ from django.conf import settings
 from django.test import TestCase
 from django.utils import timezone
 
-from papers import models
+from papers import models, utils
 
 # Create your tests here.
 
@@ -56,3 +56,20 @@ class PaperTestCase(TestCase):
             paper.missing_translations(),
             msg="Added translation is not missing.",
         )
+
+
+class ExtractorTestCase(TestCase):
+    def test_extraction(self):
+        text = """<p>Hallo, ich bin ein Test. Hier ein zweiter Satz.</p>
+
+<p>Ut aperiam animi cumque minima.Temporibus rerum sed et repudiandae nulla reprehenderit ex ipsam.<del class="ice-del ice-cts" data-changedata="" data-cid="2" data-last-change-time="1606126946149" data-time="1606126946149" data-userid="" data-username=""> Iste</del> iusto omnis dignissimos quia.</p>
+
+<p>Ipsa nobis reprehenderit voluptas neque fugiat et placeat. Repellat aspernatur rerum dolore voluptas corporis exercitationem accusantium eveniet.
+        </p><p>Hier ein Satz. Hier kommt nochmals Text</p>"""
+
+        extracted = utils.extract_content(text)
+
+        self.assertTrue(len(text) > len(extracted))
+
+        self.assertEqual(extracted.find("Hallo, ich bin ein Test"), -1)
+        self.assertEqual(extracted.find("Hier kommt nochmals Text"), -1)

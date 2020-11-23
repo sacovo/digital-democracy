@@ -178,5 +178,10 @@ footer #languages a:hover{
 }
 
 
+del {
+  background-color:  #ffa9a9;
+}
 
-
+ins {
+    background: #a8ffa8;
+}

@@ -5,67 +5,68 @@
 {% block content %}
 
 <div class="row mt-4">
-    <div class="col-md-8">
-        <span><strong>{% trans 'By' %}</strong></span>
-        ‎{{amendmend.author.name|safe}} at {{amendmend.created_at}}‎
-        <div id="paperContent" class="content">
-            <article>
-                <div> {{amendmend.content|safe}}
-            </div>
-            </article>
-        </div>        
-        <h2>{% trans 'Reason' %}</h2>
-        <section class="reason">
-        {{amendmend.reason|safe}}
-        </section> 
-        {% if amendmend.state == 'draft' %}
-            <form method="POST">
-                {% csrf_token %}
-                <button class="btn btn-sm  submitButton"type="submit" value="publish">{% trans 'publish' %}</button>
-            </form>
-        {% endif %}
-        <a class="btn btn-sm  submitButton" href="{% url 'amendmend-edit' amendmend.pk %}">{% trans 'edit' %}</a>
-        <a class="btn btn-sm  cancelButton" href="{% url 'paper-translation-detail' amendmend.paper.pk amendmend.language_code %}">
-            {{amendmend.paper.working_title}}
-        </a>   
-    </div>
-    <div class="col-md-4">
-        <!-- Implements Comment section-->
-        <h2>{% trans 'Comments' %}</h2><br>
-        {% if not  amendmend.comments.all%}
-            No Comments Yet...
-            <br><br>
-            {% else %}
-            {% for comment in amendmend.comments.all %}
-                <strong>
-                    {{ comment.name }} -
-                    {{ comment.created_on}}
-                </strong>
-                <br/>
-                {{ comment.body }}
-                <br/><br/>
-            {% endfor %}
-        {% endif %}
-        <hr/>
-        {% block head %}
-        {{form.media}}
-        {% endblock %}
-        {% block content2 %}
-            <h5>{% trans 'Leave a comment' %}</h5>
-            <form action="" method="POST" id="create_comment">
-                {% csrf_token %}
-                {% bootstrap_form form  form_group_class='form-group'%}
-                {% buttons %}
-                <div class="row">
-                    <div class="col">
-                        <button type="submit" class="btn btn-sm btn-block submitButton">Submit</button>
-                    </div>
-                </div>
-                {% endbuttons %}
-            </form>
-        {% endblock %}
-        <!-- Implements Comment section-->
-    </div>
+  <div class="col-md-8">
+    <span><strong>{% trans 'By' %}</strong></span>
+    {{amendmend.author.name|safe}} at {{amendmend.created_at}}
+    <div id="paperContent" class="content">
+      <article>
+        <div>
+          {{amendmend.extract_content|safe}}
+        </div>
+      </article>
+    </div>        
+    <h2>{% trans 'Reason' %}</h2>
+    <section class="reason">
+      {{amendmend.reason|safe}}
+    </section> 
+    {% if amendmend.state == 'draft' %}
+    <form method="POST">
+      {% csrf_token %}
+      <button class="btn btn-sm  submitButton"type="submit" value="publish">{% trans 'publish' %}</button>
+    </form>
+    {% endif %}
+    <a class="btn btn-sm  submitButton" href="{% url 'amendmend-edit' amendmend.pk %}">{% trans 'edit' %}</a>
+    <a class="btn btn-sm  cancelButton" href="{% url 'paper-translation-detail' amendmend.paper.pk amendmend.language_code %}">
+      {{amendmend.paper.working_title}}
+    </a>   
+  </div>
+  <div class="col-md-4">
+    <!-- Implements Comment section-->
+    <h2>{% trans 'Comments' %}</h2><br>
+    {% if not  amendmend.comments.all%}
+    No Comments Yet...
+    <br><br>
+    {% else %}
+    {% for comment in amendmend.comments.all %}
+    <strong>
+      {{ comment.name }} -
+      {{ comment.created_on}}
+    </strong>
+    <br/>
+    {{ comment.body }}
+    <br/><br/>
+    {% endfor %}
+    {% endif %}
+    <hr/>
+    {% block head %}
+    {{form.media}}
+    {% endblock %}
+    {% block content2 %}
+    <h5>{% trans 'Leave a comment' %}</h5>
+    <form action="" method="POST" id="create_comment">
+      {% csrf_token %}
+      {% bootstrap_form form  form_group_class='form-group'%}
+      {% buttons %}
+      <div class="row">
+        <div class="col">
+          <button type="submit" class="btn btn-sm btn-block submitButton">Submit</button>
+        </div>
+      </div>
+      {% endbuttons %}
+    </form>
+    {% endblock %}
+    <!-- Implements Comment section-->
+  </div>
 </div>
 
 {% endblock %}
