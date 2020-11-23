@@ -1,3 +1,6 @@
+"""
+Paper views
+"""
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import redirect, render
 from django.utils import timezone
@@ -8,6 +11,9 @@ from papers import forms, models
 
 
 def paper_list(request):
+    """
+    List of all papers
+    """
     papers = models.Paper.objects.all()
 
     return render(
@@ -20,6 +26,9 @@ def paper_list(request):
 
 
 def paper_detail(request, paper_pk):
+    """
+    Detail view of paper
+    """
     paper = models.Paper.objects.get(pk=paper_pk)
 
     return render(
@@ -32,6 +41,9 @@ def paper_detail(request, paper_pk):
 
 
 def paper_translation_detail(request, paper_pk, language_code):
+    """
+    Detail of a translation of a paper
+    """
     paper = models.Paper.objects.get(pk=paper_pk)
     translation = paper.translation_set.get(language_code=language_code)
 
@@ -51,6 +63,9 @@ def paper_translation_detail(request, paper_pk, language_code):
 
 
 def paper_edit(request, paper_pk, language_code):
+    """
+    View to create a new amendment
+    """
     paper = models.Paper.objects.get(pk=paper_pk)
     translation = paper.translation_set.get(language_code=language_code)
 
@@ -88,6 +103,9 @@ def paper_edit(request, paper_pk, language_code):
 
 
 def paper_create(request):
+    """
+    View to create a new paper
+    """
     form = forms.PaperCreateForm()
 
     if request.POST:
@@ -122,6 +140,9 @@ def paper_create(request):
 
 
 def amendmend_detail(request, amendment_pk):
+    """
+    Detail view of paper
+    """
     amendmend = models.Amendmend.objects.get(pk=amendment_pk)
     form = forms.CommentForm()
 
@@ -131,13 +152,16 @@ def amendmend_detail(request, amendment_pk):
         form = forms.CommentForm(request.POST)
 
         if form.is_valid():
-            name = form.cleaned_data["name"]
             body = form.cleaned_data["comment"]
-            comment = models.Comment.objects.create(
+
+            author, _ = models.Author.objects.get_or_create(user=request.user)
+
+            models.Comment.objects.create(
                 amendment=models.Amendmend.objects.get(pk=amendment_pk),
-                name=name,
                 body=body,
+                author=author,
             )
+
             return redirect("amendmend-detail", amendmend.pk)
 
     return render(
@@ -146,6 +170,9 @@ def amendmend_detail(request, amendment_pk):
 
 
 def amendmend_edit(request, amendment_pk):
+    """
+    Edit an existing amendment
+    """
     amendmend = models.Amendmend.objects.get(pk=amendment_pk)
 
     form = forms.AmendmendForm(amendmend=amendmend)
@@ -173,18 +200,13 @@ def amendmend_edit(request, amendment_pk):
     )
 
 
-def paper_update(request, paper_pk):
-    pass
-
-
-def paper_create_translation(request, paper_pk):
-    pass
-
-
 def translation_update(request, paper_pk, language_code):
+    """
+    Update the translation of a paper
+    """
     paper = models.Paper.objects.get(pk=paper_pk)
 
-    translation, created = paper.translation_set.get_or_create(
+    translation, _ = paper.translation_set.get_or_create(
         language_code=language_code,
         defaults={
             "title": paper.working_title,
@@ -210,4 +232,7 @@ def translation_update(request, paper_pk, language_code):
 
 @login_required
 def members_profile(request):
+    """
+    Profile page
+    """
     return render(request, "registration/profile.html")

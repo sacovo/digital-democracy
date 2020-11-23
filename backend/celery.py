@@ -1,3 +1,6 @@
+"""
+Celery worker for background tasks
+"""
 import os
 
 from celery import Celery

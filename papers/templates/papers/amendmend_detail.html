@@ -43,7 +43,7 @@
       {{ comment.created_on}}
     </strong>
     <br/>
-    {{ comment.body }}
+    {{ comment.body|safe }}
     <br/><br/>
     {% endfor %}
     {% endif %}
