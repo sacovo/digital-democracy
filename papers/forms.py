@@ -1,3 +1,6 @@
+"""
+Forms
+"""
 from ckeditor.widgets import CKEditorWidget
 from django import forms
 from django.conf import settings
@@ -6,6 +9,10 @@ from papers import models
 
 
 class PaperCreateForm(forms.Form):
+    """
+    Form to create a new paper
+    """
+
     title = forms.CharField()
     language_code = forms.ChoiceField(
         label=" ", widget=forms.RadioSelect, choices=settings.LANGUAGES
@@ -18,6 +25,10 @@ class PaperCreateForm(forms.Form):
 
 
 class AmendmendForm(forms.Form):
+    """
+    Form to create or update an amendment
+    """
+
     content = forms.CharField(widget=CKEditorWidget(config_name="track-changes"))
     reason = forms.CharField(widget=CKEditorWidget(config_name="basic"))
 
@@ -35,11 +46,18 @@ class AmendmendForm(forms.Form):
 
 
 class TranslationForm(forms.ModelForm):
+    """
+    Form to create or update a translation
+    """
+
     class Meta:
         model = models.PaperTranslation
         fields = ["title", "content"]
 
 
 class CommentForm(forms.Form):
-    name = forms.CharField()
-    comment = forms.CharField()
+    """
+    Form for comments
+    """
+
+    comment = forms.CharField(widget=CKEditorWidget(config_name="basic"))

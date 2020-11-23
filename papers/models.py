@@ -1,3 +1,6 @@
+"""
+Database models for app papers
+"""
 from ckeditor.fields import RichTextField
 from django.conf import settings
 from django.db import models
@@ -134,9 +137,18 @@ class Comment(models.Model):
         related_name="comments",
         null=True,
     )
-    name = models.CharField(max_length=80)
+    author = models.ForeignKey(
+        Author, models.CASCADE, verbose_name=_("author"), blank=True, null=True
+    )
     body = models.TextField()
     created_on = models.DateTimeField(auto_now_add=True)
+
+    @property
+    def name(self):
+        """
+        The name of the author of this comment
+        """
+        return self.author.name
 
     def __str__(self):
         return "Comment {} by {}".format(self.body, self.name)
