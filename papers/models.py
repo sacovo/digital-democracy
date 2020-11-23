@@ -16,7 +16,20 @@ STATES = (
 
 
 class Author(models.Model):
-    name = models.CharField(max_length=255)
+    """
+    Represents an author of a paper or an amendment, used as a proxy to auth.User
+    """
+
+    user = models.OneToOneField(
+        settings.AUTH_USER_MODEL, models.CASCADE, blank=True, null=True
+    )
+
+    @property
+    def name(self):
+        """
+        The name of the user
+        """
+        return str(self.user)
 
 
 class Paper(models.Model):
@@ -38,6 +51,9 @@ class Paper(models.Model):
         return self.working_title
 
     def missing_translations(self):
+        """
+        Iterator over all language tuples where there is no translation for this paper
+        """
         for language in settings.LANGUAGES:
             if not bool(self.translation_set.filter(language_code=language[0])):
                 yield language
@@ -63,9 +79,15 @@ class PaperTranslation(models.Model):
         return self.title
 
     def content_safe(self):
+        """
+        Returns the content as safe string
+        """
         return mark_safe(self.content)
 
     def amendmend_list(self):
+        """
+        List of all amendments for this paper in the language of this translation.
+        """
         return self.paper.amendmend_set.filter(language_code=self.language_code)
 
 
@@ -94,13 +116,17 @@ class Amendmend(models.Model):
 
     def extract_content(self):
         """
-        Returns only the part of the paper that is changed
+        Returns only the part of the paper that is changed through this amendment
         """
 
         return utils.extract_content(self.content)
 
 
 class Comment(models.Model):
+    """
+    A comment to an amendment
+    """
+
     amendment = models.ForeignKey(
         Amendmend,
         models.CASCADE,
