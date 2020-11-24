@@ -4,9 +4,10 @@ from django.utils import timezone
 
 from papers import forms, models
 
+
 # Create your views here.
 
-
+@login_required
 def paper_list(request):
     papers = models.Paper.objects.all()
 
@@ -19,6 +20,7 @@ def paper_list(request):
     )
 
 
+@login_required
 def paper_detail(request, paper_pk):
     paper = models.Paper.objects.get(pk=paper_pk)
 
@@ -50,6 +52,7 @@ def paper_translation_detail(request, paper_pk, language_code):
     )
 
 
+@login_required
 def paper_edit(request, paper_pk, language_code):
     paper = models.Paper.objects.get(pk=paper_pk)
     translation = paper.translation_set.get(language_code=language_code)
@@ -87,6 +90,7 @@ def paper_edit(request, paper_pk, language_code):
     )
 
 
+@login_required
 def paper_create(request):
     form = forms.PaperCreateForm()
 
@@ -121,6 +125,7 @@ def paper_create(request):
     return render(request, "papers/paper_create.html", {"form": form})
 
 
+@login_required
 def amendmend_detail(request, amendment_pk):
     amendmend = models.Amendmend.objects.get(pk=amendment_pk)
     form = forms.CommentForm()
@@ -145,6 +150,7 @@ def amendmend_detail(request, amendment_pk):
     )
 
 
+@login_required
 def amendmend_edit(request, amendment_pk):
     amendmend = models.Amendmend.objects.get(pk=amendment_pk)
 
@@ -173,14 +179,17 @@ def amendmend_edit(request, amendment_pk):
     )
 
 
+@login_required
 def paper_update(request, paper_pk):
     pass
 
 
+@login_required
 def paper_create_translation(request, paper_pk):
     pass
 
 
+@login_required
 def translation_update(request, paper_pk, language_code):
     paper = models.Paper.objects.get(pk=paper_pk)
 
