@@ -10,11 +10,7 @@ urlpatterns = [
     path("", views.paper_list, name="paper-list"),
     path("paper/create/", views.paper_create, name="paper-create"),
     path("paper/<int:paper_pk>/", views.paper_detail, name="paper-detail"),
-    path(
-        "paper/<int:paper_pk>/<str:language_code>/",
-        views.paper_translation_detail,
-        name="paper-translation-detail",
-    ),
+    path("newsfeed/", views.newsfeed, name="newsfeed"),
     path(
         "paper/<int:paper_pk>/<str:language_code>/create-amendmend/",
         views.paper_edit,
@@ -35,8 +31,8 @@ urlpatterns = [
         views.amendmend_edit,
         name="amendmend-edit",
     ),
-    path("members/login/", auth_views.LoginView.as_view()),
-    path("members/logout/", auth_views.LogoutView.as_view()),
-    path("members/profile/", views.members_profile),
+    path("members/login/", auth_views.LoginView.as_view(), name="login"),
+    path("members/logout/", auth_views.LogoutView.as_view(), name="logout"),
+    path("members/profile/", views.members_profile, name="profile"),
     path("comments/<int:comment_pk>/like/", views.like_comment, name="comment_like"),
 ]

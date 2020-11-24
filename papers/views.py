@@ -28,24 +28,6 @@ def paper_detail(request, paper_pk):
     return render(request, "papers/paper_detail.html", {"paper": paper})
 
 
-def paper_translation_detail(request, paper_pk, language_code):
-    """
-    Detail of a translation of a paper
-    """
-    paper = models.Paper.objects.get(pk=paper_pk)
-    translation = paper.translation_set.get(language_code=language_code)
-
-    amendmend_list = models.Amendmend.objects.filter(
-        paper=paper, language_code=language_code, state="public"
-    )
-
-    return render(
-        request,
-        "papers/paper_translation_detail.html",
-        {"paper": paper, "translation": translation, "amendmend_list": amendmend_list},
-    )
-
-
 def paper_edit(request, paper_pk, language_code):
     """
     View to create a new amendment
@@ -99,14 +81,12 @@ def paper_create(request):
             paper = models.Paper.objects.create(
                 amendmend_deadline=timezone.now(), working_title=title, state=state
             )
-            translation = models.PaperTranslation.objects.create(
+
+            models.PaperTranslation.objects.create(
                 paper=paper, language_code=language_code, title=title, content=content
             )
-            return render(
-                request,
-                "papers/paper_create_success.html",
-                {"paper": paper, "translation": translation},
-            )
+
+            return redirect("paper-detail", paper.pk)
 
     return render(request, "papers/paper_create.html", {"form": form})
 
@@ -190,6 +170,9 @@ def translation_update(request, paper_pk, language_code):
 
 
 def like_comment(request, comment_pk):
+    """
+    Function to like and unlike a comment.
+    """
     if request.method == "POST":
         comment = models.Comment.objects.get(pk=comment_pk)
         user = request.user
@@ -209,3 +192,11 @@ def members_profile(request):
     Profile page
     """
     return render(request, "registration/profile.html")
+
+
+@login_required
+def newsfeed(request):
+    """
+    Display a newsfeed with recent activity
+    """
+    return render(request, "papers/newsfeed.html")
