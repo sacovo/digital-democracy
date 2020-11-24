@@ -10,6 +10,7 @@ from papers import forms, models
 # Create your views here.
 
 
+@login_required
 def paper_list(request):
     """
     List of all papers
@@ -19,6 +20,7 @@ def paper_list(request):
     return render(request, "papers/paper_list.html", {"paper_list": papers})
 
 
+@login_required
 def paper_detail(request, paper_pk):
     """
     Detail view of paper
@@ -28,6 +30,7 @@ def paper_detail(request, paper_pk):
     return render(request, "papers/paper_detail.html", {"paper": paper})
 
 
+@login_required
 def paper_edit(request, paper_pk, language_code):
     """
     View to create a new amendment
@@ -64,6 +67,7 @@ def paper_edit(request, paper_pk, language_code):
     )
 
 
+@login_required
 def paper_create(request):
     """
     View to create a new paper
@@ -91,6 +95,7 @@ def paper_create(request):
     return render(request, "papers/paper_create.html", {"form": form})
 
 
+@login_required
 def amendmend_detail(request, amendment_pk):
     """
     Detail view of paper
@@ -121,6 +126,7 @@ def amendmend_detail(request, amendment_pk):
     )
 
 
+@login_required
 def amendmend_edit(request, amendment_pk):
     """
     Edit an existing amendment
