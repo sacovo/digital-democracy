@@ -6,9 +6,7 @@ from django.db import migrations, models
 
 class Migration(migrations.Migration):
 
-    dependencies = [
-        ("papers", "0007_auto_20201111_0925"),
-    ]
+    dependencies = [("papers", "0007_auto_20201111_0925")]
 
     operations = [
         migrations.CreateModel(
@@ -37,5 +35,5 @@ class Migration(migrations.Migration):
                     ),
                 ),
             ],
-        ),
+        )
     ]

@@ -6,14 +6,12 @@ from django.db import migrations
 
 class Migration(migrations.Migration):
 
-    dependencies = [
-        ("papers", "0006_auto_20201021_1148"),
-    ]
+    dependencies = [("papers", "0006_auto_20201021_1148")]
 
     operations = [
         migrations.AlterField(
             model_name="papertranslation",
             name="content",
             field=ckeditor.fields.RichTextField(blank=True, verbose_name="content"),
-        ),
+        )
     ]

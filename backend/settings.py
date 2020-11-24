@@ -68,9 +68,9 @@ TEMPLATES = [
                 "django.template.context_processors.request",
                 "django.contrib.auth.context_processors.auth",
                 "django.contrib.messages.context_processors.messages",
-            ],
+            ]
         },
-    },
+    }
 ]
 
 WSGI_APPLICATION = "backend.wsgi.application"
@@ -95,17 +95,11 @@ DATABASES = {
 
 AUTH_PASSWORD_VALIDATORS = [
     {
-        "NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator",
+        "NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator"
     },
-    {
-        "NAME": "django.contrib.auth.password_validation.MinimumLengthValidator",
-    },
-    {
-        "NAME": "django.contrib.auth.password_validation.CommonPasswordValidator",
-    },
-    {
-        "NAME": "django.contrib.auth.password_validation.NumericPasswordValidator",
-    },
+    {"NAME": "django.contrib.auth.password_validation.MinimumLengthValidator"},
+    {"NAME": "django.contrib.auth.password_validation.CommonPasswordValidator"},
+    {"NAME": "django.contrib.auth.password_validation.NumericPasswordValidator"},
 ]
 
 
@@ -114,11 +108,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = "de"
 
-LANGUAGES = [
-    ("de", _("German")),
-    ("fr", _("French")),
-    ("it", _("Italian")),
-]
+LANGUAGES = [("de", _("German")), ("fr", _("French")), ("it", _("Italian"))]
 
 TIME_ZONE = "UTC"
 
@@ -157,14 +147,9 @@ CELERY_RESULT_BACKEND = "django-db"
 CELERY_CACHE_BACKEND = "django-cache"
 
 CKEDITOR_CONFIGS = {
-    "default": {
-        "width": "100%",
-    },
+    "default": {"width": "100%"},
     "basic": {"toolbar": "Basic", "width": "100%"},
-    "track-changes": {
-        "extraPlugins": ",".join(["lite"]),
-        "width": "100%",
-    },
+    "track-changes": {"extraPlugins": ",".join(["lite"]), "width": "100%"},
 }
 
 LOGIN_URL = "/members/login"

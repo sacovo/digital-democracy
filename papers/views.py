@@ -4,33 +4,21 @@ from django.utils import timezone
 
 from papers import forms, models
 
-
 # Create your views here.
+
 
 @login_required
 def paper_list(request):
     papers = models.Paper.objects.all()
 
-    return render(
-        request,
-        "papers/paper_list.html",
-        {
-            "paper_list": papers,
-        },
-    )
+    return render(request, "papers/paper_list.html", {"paper_list": papers})
 
 
 @login_required
 def paper_detail(request, paper_pk):
     paper = models.Paper.objects.get(pk=paper_pk)
 
-    return render(
-        request,
-        "papers/paper_detail.html",
-        {
-            "paper": paper,
-        },
-    )
+    return render(request, "papers/paper_detail.html", {"paper": paper})
 
 
 def paper_translation_detail(request, paper_pk, language_code):
@@ -44,11 +32,7 @@ def paper_translation_detail(request, paper_pk, language_code):
     return render(
         request,
         "papers/paper_translation_detail.html",
-        {
-            "paper": paper,
-            "translation": translation,
-            "amendmend_list": amendmend_list,
-        },
+        {"paper": paper, "translation": translation, "amendmend_list": amendmend_list},
     )
 
 
@@ -82,11 +66,7 @@ def paper_edit(request, paper_pk, language_code):
     return render(
         request,
         "papers/paper_edit_view.html",
-        {
-            "paper": paper,
-            "form": form,
-            "translation": translation,
-        },
+        {"paper": paper, "form": form, "translation": translation},
     )
 
 
@@ -103,23 +83,15 @@ def paper_create(request):
             state = form.cleaned_data["state"]
 
             paper = models.Paper.objects.create(
-                amendmend_deadline=timezone.now(),
-                working_title=title,
-                state=state,
+                amendmend_deadline=timezone.now(), working_title=title, state=state
             )
             translation = models.PaperTranslation.objects.create(
-                paper=paper,
-                language_code=language_code,
-                title=title,
-                content=content,
+                paper=paper, language_code=language_code, title=title, content=content
             )
             return render(
                 request,
                 "papers/paper_create_success.html",
-                {
-                    "paper": paper,
-                    "translation": translation,
-                },
+                {"paper": paper, "translation": translation},
             )
 
     return render(request, "papers/paper_create.html", {"form": form})
@@ -170,12 +142,7 @@ def amendmend_edit(request, amendment_pk):
             return redirect("amendmend-detail", amendmend.pk)
 
     return render(
-        request,
-        "papers/amendmend_edit.html",
-        {
-            "form": form,
-            "amendmend": amendmend,
-        },
+        request, "papers/amendmend_edit.html", {"form": form, "amendmend": amendmend}
     )
 
 
@@ -195,10 +162,7 @@ def translation_update(request, paper_pk, language_code):
 
     translation, created = paper.translation_set.get_or_create(
         language_code=language_code,
-        defaults={
-            "title": paper.working_title,
-            "content": "...",
-        },
+        defaults={"title": paper.working_title, "content": "..."},
     )
     if request.method == "POST":
         form = forms.TranslationForm(request.POST, instance=translation)
@@ -208,12 +172,7 @@ def translation_update(request, paper_pk, language_code):
     form = forms.TranslationForm(instance=translation)
 
     return render(
-        request,
-        "papers/translation_update.html",
-        {
-            "form": form,
-            "paper": paper,
-        },
+        request, "papers/translation_update.html", {"form": form, "paper": paper}
     )
 
 
