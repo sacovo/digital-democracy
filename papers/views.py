@@ -1,3 +1,6 @@
+"""
+Paper views
+"""
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import redirect, render
 from django.utils import timezone
@@ -9,6 +12,9 @@ from papers import forms, models
 
 @login_required
 def paper_list(request):
+    """
+    List of all papers
+    """
     papers = models.Paper.objects.all()
 
     return render(request, "papers/paper_list.html", {"paper_list": papers})
@@ -16,28 +22,19 @@ def paper_list(request):
 
 @login_required
 def paper_detail(request, paper_pk):
+    """
+    Detail view of paper
+    """
     paper = models.Paper.objects.get(pk=paper_pk)
 
     return render(request, "papers/paper_detail.html", {"paper": paper})
 
 
-def paper_translation_detail(request, paper_pk, language_code):
-    paper = models.Paper.objects.get(pk=paper_pk)
-    translation = paper.translation_set.get(language_code=language_code)
-
-    amendmend_list = models.Amendmend.objects.filter(
-        paper=paper, language_code=language_code, state="public"
-    )
-
-    return render(
-        request,
-        "papers/paper_translation_detail.html",
-        {"paper": paper, "translation": translation, "amendmend_list": amendmend_list},
-    )
-
-
 @login_required
 def paper_edit(request, paper_pk, language_code):
+    """
+    View to create a new amendment
+    """
     paper = models.Paper.objects.get(pk=paper_pk)
     translation = paper.translation_set.get(language_code=language_code)
 
@@ -72,6 +69,9 @@ def paper_edit(request, paper_pk, language_code):
 
 @login_required
 def paper_create(request):
+    """
+    View to create a new paper
+    """
     form = forms.PaperCreateForm()
 
     if request.POST:
@@ -85,20 +85,21 @@ def paper_create(request):
             paper = models.Paper.objects.create(
                 amendmend_deadline=timezone.now(), working_title=title, state=state
             )
-            translation = models.PaperTranslation.objects.create(
+
+            models.PaperTranslation.objects.create(
                 paper=paper, language_code=language_code, title=title, content=content
             )
-            return render(
-                request,
-                "papers/paper_create_success.html",
-                {"paper": paper, "translation": translation},
-            )
+
+            return redirect("paper-detail", paper.pk)
 
     return render(request, "papers/paper_create.html", {"form": form})
 
 
 @login_required
 def amendmend_detail(request, amendment_pk):
+    """
+    Detail view of paper
+    """
     amendmend = models.Amendmend.objects.get(pk=amendment_pk)
     form = forms.CommentForm()
 
@@ -108,13 +109,16 @@ def amendmend_detail(request, amendment_pk):
         form = forms.CommentForm(request.POST)
 
         if form.is_valid():
-            name = form.cleaned_data["name"]
             body = form.cleaned_data["comment"]
-            comment = models.Comment.objects.create(
+
+            author, _ = models.Author.objects.get_or_create(user=request.user)
+
+            models.Comment.objects.create(
                 amendment=models.Amendmend.objects.get(pk=amendment_pk),
-                name=name,
                 body=body,
+                author=author,
             )
+
             return redirect("amendmend-detail", amendmend.pk)
 
     return render(
@@ -124,6 +128,9 @@ def amendmend_detail(request, amendment_pk):
 
 @login_required
 def amendmend_edit(request, amendment_pk):
+    """
+    Edit an existing amendment
+    """
     amendmend = models.Amendmend.objects.get(pk=amendment_pk)
 
     form = forms.AmendmendForm(amendmend=amendmend)
@@ -146,21 +153,13 @@ def amendmend_edit(request, amendment_pk):
     )
 
 
-@login_required
-def paper_update(request, paper_pk):
-    pass
-
-
-@login_required
-def paper_create_translation(request, paper_pk):
-    pass
-
-
-@login_required
 def translation_update(request, paper_pk, language_code):
+    """
+    Update the translation of a paper
+    """
     paper = models.Paper.objects.get(pk=paper_pk)
 
-    translation, created = paper.translation_set.get_or_create(
+    translation, _ = paper.translation_set.get_or_create(
         language_code=language_code,
         defaults={"title": paper.working_title, "content": "..."},
     )
@@ -176,6 +175,34 @@ def translation_update(request, paper_pk, language_code):
     )
 
 
+def like_comment(request, comment_pk):
+    """
+    Function to like and unlike a comment.
+    """
+    if request.method == "POST":
+        comment = models.Comment.objects.get(pk=comment_pk)
+        user = request.user
+
+        if comment.likes.filter(pk=user.pk):
+            comment.likes.remove(user.pk)
+
+        else:
+            comment.likes.add(user.pk)
+
+    return redirect("amendmend-detail", comment.amendment.pk)
+
+
 @login_required
 def members_profile(request):
+    """
+    Profile page
+    """
     return render(request, "registration/profile.html")
+
+
+@login_required
+def newsfeed(request):
+    """
+    Display a newsfeed with recent activity
+    """
+    return render(request, "papers/newsfeed.html")

@@ -1,7 +1,8 @@
 html{
     min-height: 100vh;
 }
-body{
+
+main {
     min-height: 100vh;
 }
 a, .link{
@@ -22,10 +23,7 @@ a:hover, .link:hover{
 #wrapper {
     height: 100%;    
 }
-.container{
-    height: 100%;
-    margin-bottom: 100px;
-}
+
 #navBarItem:hover{
     color:#E53136 ;
     text-decoration:none;
@@ -34,8 +32,7 @@ a:hover, .link:hover{
     text-decoration:none;
 }
 footer{
-    width: 100%;
-    position: absolute;
+  margin-top: 5em;
     
 }
 footer #languages{
@@ -95,18 +92,13 @@ footer #languages a:hover{
     border: 1px solid black !important;
     border-width: thick;        
 }
-.row{
-    margin-top: 50px;
-}
 .btn{
     border-color: #E53136 !important;
-    margin: 0.5rem;
 }
 
 .submitButton,.btn-secondary{
     color: white;
     background-color: #E53136 !important;
-    margin: 0.5rem;
 }
 .submitButton:hover{
     color: white;
@@ -151,9 +143,6 @@ footer #languages a:hover{
     color: #E53136 !important;
     text-align: center;
 }
-.row{
-    height: 100%;
-}
 #commentForm{
     margin-top: 10px; 
     width: 100%;
@@ -184,4 +173,14 @@ del {
 
 ins {
     background: #a8ffa8;
+}
+
+.comment {
+  margin: 0.25em;
+  border-bottom: solid black 1px;
+  padding-bottom: 0.5em;
+}
+
+.amendment-content p {
+  margin-bottom: 0;
 }

@@ -1,0 +1,273 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2020-11-24 12:39+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+#: papers/forms.py:17 papers/models.py:73
+msgid "title"
+msgstr "Titel"
+
+#: papers/forms.py:21 papers/forms.py:34 papers/models.py:75
+#: papers/models.py:104
+msgid "content"
+msgstr "Inhalt"
+
+#: papers/forms.py:25 papers/models.py:46 papers/models.py:108
+msgid "state"
+msgstr "Status"
+
+#: papers/forms.py:35 papers/models.py:109
+msgid "reason"
+msgstr "Begründung"
+
+#: papers/forms.py:65
+msgid "comment"
+msgstr "Kommentar"
+
+#: papers/models.py:14
+msgid "Draft"
+msgstr "Entwurf"
+
+#: papers/models.py:14
+msgid "Published"
+msgstr "Veröffentlicht"
+
+#: papers/models.py:14
+msgid "Finalized"
+msgstr "Finalisiert"
+
+#: papers/models.py:24
+msgid "user"
+msgstr "Benutzer*in"
+
+#: papers/models.py:40 papers/models.py:106 papers/models.py:141
+msgid "created at"
+msgstr "Erstellt am"
+
+#: papers/models.py:41
+msgid "edited at"
+msgstr "Bearbeitet am"
+
+#: papers/models.py:42
+msgid "deadline"
+msgstr "Antragsfrist"
+
+#: papers/models.py:44
+msgid "working title"
+msgstr "Working title"
+
+#: papers/models.py:48
+msgid "authors"
+msgstr "Autor*innen"
+
+#: papers/models.py:68 papers/models.py:99
+msgid "paper"
+msgstr "Papier"
+
+#: papers/models.py:71 papers/models.py:101
+msgid "language code"
+msgstr "Sprachcode"
+
+#: papers/models.py:105 papers/models.py:138
+msgid "author"
+msgstr "Autor*in"
+
+#: papers/models.py:133
+msgid "amendment"
+msgstr "Antrag"
+
+#: papers/models.py:140
+msgid "body"
+msgstr "Inhalt"
+
+#: papers/models.py:142
+msgid "likes"
+msgstr "Likes"
+
+#: papers/templates/papers/amendmend_detail.html:18
+#, python-format
+msgid ""
+"\n"
+"      By <strong>%(name)s</strong> at %(created)s\n"
+"      "
+msgstr ""
+"\n"
+"      Von <strong>%(name)s</strong> am %(created)s\n"
+"      "
+
+
+#: papers/templates/papers/amendmend_detail.html:30
+msgid "Reason"
+msgstr "Begründung"
+
+#: papers/templates/papers/amendmend_detail.html:37
+msgid "publish"
+msgstr "Veröffentlichen"
+
+#: papers/templates/papers/amendmend_detail.html:40
+msgid "edit"
+msgstr "Bearbeiten"
+
+#: papers/templates/papers/amendmend_detail.html:44
+msgid "Comments"
+msgstr "Kommentare"
+
+#: papers/templates/papers/amendmend_detail.html:49
+msgid ""
+"\n"
+"      No Comments Yet...\n"
+"      "
+msgstr ""
+"\n"
+"      Keine Kommentare bis jetzt\n"
+"      "
+
+#: papers/templates/papers/amendmend_detail.html:71
+msgid "unlike"
+msgstr "Unlike"
+
+#: papers/templates/papers/amendmend_detail.html:73
+msgid "like"
+msgstr "Like"
+
+#: papers/templates/papers/amendmend_detail.html:86
+msgid "Leave a comment"
+msgstr "Kommentieren"
+
+#: papers/templates/papers/amendmend_detail.html:95
+#: papers/templates/papers/translation_update.html:53
+msgid "Submit"
+msgstr "Absinden"
+
+#: papers/templates/papers/amendmend_edit.html:16
+#: papers/templates/papers/paper_create.html:22
+#: papers/templates/papers/paper_edit_view.html:19
+msgid "submit"
+msgstr "Absinden"
+
+#: papers/templates/papers/base.html:25
+msgid "Digital Democracy"
+msgstr "Digital Democracy"
+
+#: papers/templates/papers/base.html:29
+msgid "papers"
+msgstr "Papiere"
+
+#: papers/templates/papers/base.html:32
+msgid "newsfeed"
+msgstr "Newsfeed"
+
+#: papers/templates/papers/base.html:37
+msgid "account"
+msgstr "Account"
+
+#: papers/templates/papers/base.html:39
+msgid "sign in"
+msgstr "Anmelden"
+
+#: papers/templates/papers/includes/translation_list.html:19
+#: papers/templates/papers/paper_detail.html:42
+msgid "create amendmend"
+msgstr "Antrag verfassen"
+
+#: papers/templates/papers/paper_create.html:5
+#: papers/templates/papers/paper_create.html:12
+#: papers/templates/papers/paper_list.html:44
+msgid "Create new paper"
+msgstr "Neues Papier erstellen"
+
+#: papers/templates/papers/paper_create.html:19
+msgid "cancel"
+msgstr "Zurück"
+
+#: papers/templates/papers/paper_create_success.html:4
+#, python-format
+msgid "%(title)s created! "
+msgstr "%(title)s erstellt! "
+
+#: papers/templates/papers/paper_create_success.html:9
+msgid "all papers"
+msgstr "Alle Papiere"
+
+#: papers/templates/papers/paper_detail.html:46
+msgid "update translation"
+msgstr "Übersetzung aktualisieren"
+
+#: papers/templates/papers/paper_detail.html:52
+msgid "amendmends"
+msgstr "Anträge"
+
+#: papers/templates/papers/paper_detail.html:56
+#, python-format
+msgid ""
+"\n"
+"            %(name)s at %(created_at)s\n"
+"            "
+msgstr ""
+"\n"
+"            %(name)s um %(created_at)s\n"
+"            "
+
+#: papers/templates/papers/paper_list.html:4
+#: papers/templates/papers/paper_list.html:8
+msgid "Papers"
+msgstr "Papiere"
+
+#: papers/templates/papers/paper_list.html:14
+msgid "Title"
+msgstr "Titel"
+
+#: papers/templates/papers/paper_list.html:17
+msgid "Created at"
+msgstr "Erstellt am"
+
+#: papers/templates/papers/paper_list.html:20
+msgid "deadline for amandments"
+msgstr "Antragsfrist"
+
+#: papers/templates/papers/translation_update.html:40
+msgid "update"
+msgstr "Aktualisieren"
+
+#: papers/templates/papers/translation_update.html:50
+msgid "Cancel"
+msgstr "Zurück"
+
+#: papers/templates/registration/login.html:5
+msgid ""
+"\n"
+"Login\n"
+msgstr ""
+"\n"
+"Login\n"
+
+#: papers/templates/registration/login.html:13
+msgid "Incorrect credentials."
+msgstr "Ungültige Zugangsdaten."
+
+#: papers/templates/registration/login.html:21
+msgid "login"
+msgstr "Login"
+
+#: papers/templates/registration/profile.html:10
+#, python-format
+msgid "Logged in as: %(username)s"
+msgstr "Angemeldet als: %(username)s"
+
+#: papers/templates/registration/profile.html:11
+msgid "click here to logout"
+msgstr "Hier klicken um abzumelden"

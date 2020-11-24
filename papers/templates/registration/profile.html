@@ -1,6 +1,5 @@
 {% extends 'papers/base.html' %}
-
-
+{% load i18n %}
 
 {% block title %}
 Sie sind eingeloggt
@@ -8,7 +7,7 @@ Sie sind eingeloggt
 
 {% block content %}
 
-<p>Eingeloggt als: {{ user.get_username }}</p>
-<p><a href="/members/logout">Klicken Sie hier um sich auszuloggen</a></p>
+<p>{% blocktrans with username=user %}Logged in as: {{ username }}{% endblocktrans %}</p>
+<p><a href="/members/logout">{% trans 'click here to logout' %}</a></p>
 
 {% endblock %}

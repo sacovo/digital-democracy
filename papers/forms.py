@@ -1,25 +1,42 @@
+"""
+Forms
+"""
 from ckeditor.widgets import CKEditorWidget
 from django import forms
 from django.conf import settings
+from django.utils.translation import gettext as _
 
 from papers import models
 
 
 class PaperCreateForm(forms.Form):
-    title = forms.CharField()
+    """
+    Form to create a new paper
+    """
+
+    title = forms.CharField(label=_("title"))
     language_code = forms.ChoiceField(
         label=" ", widget=forms.RadioSelect, choices=settings.LANGUAGES
     )
-    content = forms.CharField(widget=CKEditorWidget)
+    content = forms.CharField(widget=CKEditorWidget, label=_("content"))
     state = forms.ChoiceField(
         widget=forms.RadioSelect(attrs={"class": "radioSelection"}),
         choices=models.STATES,
+        label=_("state"),
     )
 
 
 class AmendmendForm(forms.Form):
-    content = forms.CharField(widget=CKEditorWidget(config_name="track-changes"))
-    reason = forms.CharField(widget=CKEditorWidget(config_name="basic"))
+    """
+    Form to create or update an amendment
+    """
+
+    content = forms.CharField(
+        widget=CKEditorWidget(config_name="track-changes"), label=_("content")
+    )
+    reason = forms.CharField(
+        widget=CKEditorWidget(config_name="basic"), label=_("reason")
+    )
 
     def __init__(self, *args, **kwargs):
         self.translation = kwargs.pop("translation", None)
@@ -35,11 +52,20 @@ class AmendmendForm(forms.Form):
 
 
 class TranslationForm(forms.ModelForm):
+    """
+    Form to create or update a translation
+    """
+
     class Meta:
         model = models.PaperTranslation
         fields = ["title", "content"]
 
 
 class CommentForm(forms.Form):
-    name = forms.CharField()
-    comment = forms.CharField()
+    """
+    Form for comments
+    """
+
+    comment = forms.CharField(
+        widget=CKEditorWidget(config_name="basic"), label=_("comment")
+    )

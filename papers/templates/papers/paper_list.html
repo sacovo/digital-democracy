@@ -16,6 +16,9 @@
             <th>
                 {% trans 'Created at' %}
             </th>
+            <th>
+              {% trans 'deadline for amandments' %}
+            </th>
         </tr>
     </thead>
     <tbody>
@@ -30,9 +33,13 @@
                 <td>
                     {{paper.created_at}}
                 </td>
+                <td>
+                  {{paper.amendmend_deadline}}
+                </td>
             </tr>
             {% endfor %}
         </tr>
     </tbody>
 </table>
+<a href="{% url 'paper-create' %}" class="btn btn-secondary ">{% trans 'Create new paper' %}</a>
 {% endblock %}

@@ -1,3 +1,6 @@
+"""
+Tests for app papers
+"""
 from datetime import timedelta
 
 from django.conf import settings
@@ -10,6 +13,10 @@ from papers import models, utils
 
 
 class PaperTestCase(TestCase):
+    """
+    Test case for the paper and related models
+    """
+
     def setUp(self):
         models.Paper.objects.create(
             amendmend_deadline=timezone.now() + timedelta(days=10),
@@ -35,6 +42,10 @@ class PaperTestCase(TestCase):
         )
 
     def test_add_translation(self):
+        """
+        After craeting a translation the language should not be in the list
+        of missing translations anymore.
+        """
         paper = models.Paper.objects.create(
             amendmend_deadline=timezone.now() + timedelta(days=10),
             working_title="Test add translation",
@@ -59,7 +70,15 @@ class PaperTestCase(TestCase):
 
 
 class ExtractorTestCase(TestCase):
+    """
+    Test cases for the extraction feature
+    """
+
     def test_extraction(self):
+        """
+        The extracted text should be shorter than the original and it shouldn't contain
+        the first and the last sentences
+        """
         text = """<p>Hallo, ich bin ein Test. Hier ein zweiter Satz.</p>
 
 <p>Ut aperiam animi cumque minima.Temporibus rerum sed et repudiandae nulla reprehenderit ex ipsam.<del class="ice-del ice-cts" data-changedata="" data-cid="2" data-last-change-time="1606126946149" data-time="1606126946149" data-userid="" data-username=""> Iste</del> iusto omnis dignissimos quia.</p>

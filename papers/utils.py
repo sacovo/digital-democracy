@@ -1,8 +1,15 @@
+"""
+Misc. functions that are used by the project
+"""
 import re
 from itertools import zip_longest
 
 
 def extract_content(content):
+    """
+    Takes a string with markup for changes (<ins> and <del> tags) and returns
+    a string that contains these tags plus some context
+    """
     first_insert = content.find("<ins")
     first_deletion = content.find("<del")
 
