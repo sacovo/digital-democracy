@@ -81,5 +81,5 @@ sonarqube:
     - master
     - dev
   script:
-    - docker run -v $(pwd):/data -w /data -e "SONAR_HOST_URL=${CI_SONARQUBE_HOST_URL}" -e "SONAR_TOKEN=${CI_SONARQUBE_TOKEN}" -e "SONAR_USER_HOME=${CI_PROJECT_DIR}/.sonar" sonarsource/sonar-scanner-cli:latest sonar-scanner -Dsonar.qualitygate.wait=true
+    - docker run -v $(pwd):/data -w /data -e "SONAR_HOST_URL=${CI_SONARQUBE_HOST_URL}" -e "SONAR_TOKEN=${CI_SONARQUBE_TOKEN}" -e "SONAR_USER_HOME=${CI_PROJECT_DIR}/.sonar" sonarsource/sonar-scanner-cli:latest bash -c "sonar-scanner -Dsonar.qualitygate.wait=true; rm -rf .scannerwork;"
 
