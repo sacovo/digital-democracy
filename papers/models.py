@@ -111,7 +111,7 @@ class Amendmend(models.Model):
         """
         Returns the translation this amendment belongs to
         """
-        self.paper.translation_set.get(language_code=self.language_code)
+        return self.paper.translation_set.get(language_code=self.language_code)
 
     def extract_content(self):
         """
@@ -151,4 +151,7 @@ class Comment(models.Model):
         return "Comment {} by {}".format(self.body, self.name)
 
     def num_likes(self):
+        """
+        Number of likes for this comment
+        """
         return self.likes.all().count()
