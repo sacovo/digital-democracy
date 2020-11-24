@@ -201,6 +201,24 @@ def members_profile(request):
 
 
 @login_required
+def support_amendment(request, amendment_pk):
+    """
+    Adds the requesting user to the list of supporters
+    """
+    if request.method == "POST":
+        amendment = models.Amendmend.objects.get(pk=amendment_pk)
+        user = request.user
+
+        if amendment.supporters.filter(pk=user.pk):
+            amendment.supporters.remove(user.pk)
+
+        else:
+            amendment.supporters.add(user.pk)
+
+    return redirect("amendmend-detail", amendment.pk)
+
+
+@login_required
 def newsfeed(request):
     """
     Display a newsfeed with recent activity

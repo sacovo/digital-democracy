@@ -4,6 +4,7 @@ Tests for app papers
 from datetime import timedelta
 
 from django.conf import settings
+from django.contrib.auth import get_user_model
 from django.test import TestCase
 from django.utils import timezone
 
@@ -92,3 +93,61 @@ class ExtractorTestCase(TestCase):
 
         self.assertEqual(extracted.find("Hallo, ich bin ein Test"), -1)
         self.assertEqual(extracted.find("Hier kommt nochmals Text"), -1)
+
+
+class AmendmentSupporterTestCase(TestCase):
+    """
+    Test case for the supporting amendments feature
+    """
+
+    def test_amount_supporters(self):
+        """
+        An amendment should have zero supporters upon creation
+        """
+        user = get_user_model().objects.create_user(username="testuser")
+
+        author = models.Author.objects.create(user=user)
+
+        paper = models.Paper.objects.create(
+            amendmend_deadline=timezone.now() + timedelta(days=10),
+            working_title="Test missing translations",
+            state="public",
+        )
+
+        amendment = models.Amendmend.objects.create(
+            author_id=author.id, paper_id=paper.id, state="Draft", reason="Some Reason"
+        )
+
+        self.assertEqual(amendment.num_supporters(), 0)
+
+
+class LikeCommentTestCase(TestCase):
+    """
+    Test case for the like comment feature
+    """
+
+    def test_amount_supporters(self):
+        """
+        A comment should have zero likes upon creation
+        """
+        user = get_user_model().objects.create_user(username="testuser")
+
+        author = models.Author.objects.create(user=user)
+
+        paper = models.Paper.objects.create(
+            amendmend_deadline=timezone.now() + timedelta(days=10),
+            working_title="Test missing translations",
+            state="public",
+        )
+
+        amendment = models.Amendmend.objects.create(
+            author_id=author.id, paper_id=paper.id, state="Draft", reason="Some Reason"
+        )
+
+        comment = models.Comment.objects.create(
+            amendment_id=amendment.id,
+            author_id=author.id,
+            body="Ein Kommentar zum testen",
+        )
+
+        self.assertEqual(comment.num_likes(), 0)
