@@ -35,4 +35,9 @@ urlpatterns = [
     path("members/logout/", auth_views.LogoutView.as_view(), name="logout"),
     path("members/profile/", views.members_profile, name="profile"),
     path("comments/<int:comment_pk>/like/", views.like_comment, name="comment_like"),
+    path(
+        "amendmends/<int:amendment_pk>/like/",
+        views.support_amendment,
+        name="support-amendment",
+    ),
 ]

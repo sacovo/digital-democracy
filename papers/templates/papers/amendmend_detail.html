@@ -38,6 +38,34 @@
     </form>
     {% endif %}
     <a class="btn btn-sm  submitButton" href="{% url 'amendmend-edit' amendmend.pk %}">{% trans 'edit' %}</a>
+    <a class="btn btn-sm  cancelButton" href="{% url 'paper-detail' amendmend.paper.pk %}">
+      {{amendmend.paper.working_title}}
+    </a>
+
+    <br/><br/><br/><br/>
+
+    <h4>{% trans 'Support this amendment:' %}</h4>
+    <form action="{% url 'support-amendment' amendmend.pk %}" method="POST">
+      {% csrf_token %}
+      <button type="submit" class="btn btn-sm submitButton">
+        {% if request.user in amendmend.supporters.all %}
+        {% trans "Don't support anymore" %}
+        {% else %}
+        {% trans 'Support this amendment' %}
+        {% endif %}
+      </button>
+    </form>
+
+    <br/><br/>
+
+    <h5>{% trans 'This amendment is supported by' %} ({{amendmend.num_supporters}}) :</h5>
+    <ul>
+      {% for supporter in amendmend.supporters.all %}
+      <li>
+        {{ amendmend.name }}
+      </li>
+      {% endfor %}
+    </ul>
   </div>
   <div class="col-md-4">
     <!-- Implements Comment section-->

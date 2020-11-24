@@ -110,6 +110,7 @@ class Amendmend(models.Model):
 
     state = models.CharField(max_length=7, verbose_name=_("state"), choices=STATES)
     reason = RichTextField(config_name="basic", verbose_name=_("reason"))
+    supporters = models.ManyToManyField(settings.AUTH_USER_MODEL)
 
     def translation(self):
         """
@@ -123,6 +124,19 @@ class Amendmend(models.Model):
         """
 
         return utils.extract_content(self.content)
+
+    def num_supporters(self):
+        """
+        Number of people that support the amendment
+        """
+        return self.supporters.all().count()
+
+    @property
+    def name(self):
+        """
+        The name of the author of this
+        """
+        return self.author.name
 
 
 class Comment(models.Model):
