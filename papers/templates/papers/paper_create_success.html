@@ -1,7 +1,7 @@
 {% extends 'papers/base.html' %}
 {% load i18n %}
 
-{% block title %}{% blocktrans %}{{paper.working_title}} created! {% endblocktrans %}{% endblock %}
+{% block title %}{% blocktrans title=paper.working_title %}{{title}} created! {% endblocktrans %}{% endblock %}
 
 
 {% block content %}

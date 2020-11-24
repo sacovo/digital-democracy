@@ -55,11 +55,10 @@
       {% for comment in amendmend.comments.all %}
       <div class="comment">
         <h3 class="h6">
-          {{ comment.name }} -
-          {{ comment.created_on}}
+          {{ comment.name }} - {{ comment.created_on }}
         </h3>
 
-        <section="comment-body">
+        <section class="comment-body">
           {{ comment.body|safe }}
         </section>
 
@@ -92,7 +91,9 @@
       {% buttons %}
       <div class="row">
         <div class="col">
-          <button type="submit" class="btn btn-sm btn-block submitButton">Submit</button>
+          <button type="submit" class="btn btn-sm btn-block submitButton">
+            {% trans 'Submit' %}
+          </button>
         </div>
       </div>
       {% endbuttons %}

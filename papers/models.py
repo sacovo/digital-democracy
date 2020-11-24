@@ -20,7 +20,11 @@ class Author(models.Model):
     """
 
     user = models.OneToOneField(
-        settings.AUTH_USER_MODEL, models.CASCADE, blank=True, null=True
+        settings.AUTH_USER_MODEL,
+        models.CASCADE,
+        blank=True,
+        null=True,
+        verbose_name=_("user"),
     )
 
     @property
@@ -40,11 +44,11 @@ class Paper(models.Model):
     edited_at = models.DateTimeField(auto_now=True, verbose_name=_("edited at"))
     amendmend_deadline = models.DateTimeField(verbose_name=_("deadline"))
 
-    working_title = models.CharField(max_length=255)
+    working_title = models.CharField(max_length=255, verbose_name=_("working title"))
 
     state = models.CharField(choices=STATES, max_length=20, verbose_name=_("state"))
 
-    authors = models.ManyToManyField(Author, blank=True)
+    authors = models.ManyToManyField(Author, blank=True, verbose_name=_("authors"))
 
     def __str__(self):
         return self.working_title
@@ -100,9 +104,9 @@ class Amendmend(models.Model):
         max_length=7, verbose_name=_("language code"), choices=settings.LANGUAGES
     )
 
-    content = models.TextField()
+    content = models.TextField(verbose_name=_("content"))
     author = models.ForeignKey(Author, models.CASCADE, verbose_name=_("author"))
-    created_at = models.DateTimeField(auto_now_add=True)
+    created_at = models.DateTimeField(auto_now_add=True, verbose_name=_("created at"))
 
     state = models.CharField(max_length=7, verbose_name=_("state"), choices=STATES)
     reason = RichTextField(config_name="basic", verbose_name=_("reason"))
@@ -136,9 +140,9 @@ class Comment(models.Model):
     author = models.ForeignKey(
         Author, models.CASCADE, verbose_name=_("author"), blank=True, null=True
     )
-    body = models.TextField()
-    created_on = models.DateTimeField(auto_now_add=True)
-    likes = models.ManyToManyField(settings.AUTH_USER_MODEL)
+    body = models.TextField(verbose_name=_("body"))
+    created_on = models.DateTimeField(auto_now_add=True, verbose_name=_("created at"))
+    likes = models.ManyToManyField(settings.AUTH_USER_MODEL, verbose_name=_("likes"))
 
     @property
     def name(self):
