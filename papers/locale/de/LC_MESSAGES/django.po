@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-11-24 12:39+0000\n"
+"POT-Creation-Date: 2020-11-25 11:30+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,147 +17,182 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-#: papers/forms.py:17 papers/models.py:73
+
+#: papers/forms.py:17 papers/models.py:90
 msgid "title"
 msgstr "Titel"
 
-#: papers/forms.py:21 papers/forms.py:34 papers/models.py:75
-#: papers/models.py:104
+#: papers/forms.py:21 papers/forms.py:35 papers/models.py:92
+#: papers/models.py:124
 msgid "content"
 msgstr "Inhalt"
 
-#: papers/forms.py:25 papers/models.py:46 papers/models.py:108
+#: papers/forms.py:25 papers/models.py:51 papers/models.py:128
 msgid "state"
 msgstr "Status"
 
-#: papers/forms.py:35 papers/models.py:109
+#: papers/forms.py:38 papers/models.py:129
 msgid "reason"
 msgstr "Begründung"
 
-#: papers/forms.py:65
+#: papers/forms.py:87
 msgid "comment"
 msgstr "Kommentar"
 
-#: papers/models.py:14
+#: papers/models.py:16
 msgid "Draft"
 msgstr "Entwurf"
 
-#: papers/models.py:14
+#: papers/models.py:16
 msgid "Published"
 msgstr "Veröffentlicht"
 
-#: papers/models.py:14
+#: papers/models.py:16
 msgid "Finalized"
 msgstr "Finalisiert"
 
-#: papers/models.py:24
+#: papers/models.py:29
 msgid "user"
 msgstr "Benutzer*in"
 
-#: papers/models.py:40 papers/models.py:106 papers/models.py:141
+#: papers/models.py:45 papers/models.py:126 papers/models.py:225
 msgid "created at"
 msgstr "Erstellt am"
 
-#: papers/models.py:41
+#: papers/models.py:46
 msgid "edited at"
 msgstr "Bearbeitet am"
 
-#: papers/models.py:42
+#: papers/models.py:47
 msgid "deadline"
 msgstr "Antragsfrist"
 
-#: papers/models.py:44
+#: papers/models.py:49
 msgid "working title"
 msgstr "Working title"
 
-#: papers/models.py:48
+#: papers/models.py:53
 msgid "authors"
 msgstr "Autor*innen"
 
-#: papers/models.py:68 papers/models.py:99
+#: papers/models.py:85 papers/models.py:116
 msgid "paper"
 msgstr "Papier"
 
-#: papers/models.py:71 papers/models.py:101
+#: papers/models.py:88 papers/models.py:118
 msgid "language code"
 msgstr "Sprachcode"
 
-#: papers/models.py:105 papers/models.py:138
+#: papers/models.py:121
+msgid "start index"
+msgstr "Startindex"
+
+#: papers/models.py:122
+msgid "last index"
+msgstr "Endindex"
+
+#: papers/models.py:125 papers/models.py:222
 msgid "author"
 msgstr "Autor*in"
 
-#: papers/models.py:133
+#: papers/models.py:132 papers/templates/papers/amendmend_detail.html:31
+msgid "translations"
+msgstr "Übersetzung aktualisieren"
+
+#: papers/models.py:217
 msgid "amendment"
 msgstr "Antrag"
 
-#: papers/models.py:140
+#: papers/models.py:224
 msgid "body"
 msgstr "Inhalt"
 
-#: papers/models.py:142
+#: papers/models.py:226
 msgid "likes"
 msgstr "Likes"
 
-#: papers/templates/papers/amendmend_detail.html:18
-#, python-format
-msgid ""
-"\n"
-"      By <strong>%(name)s</strong> at %(created)s\n"
-"      "
-msgstr ""
-"\n"
-"      Von <strong>%(name)s</strong> am %(created)s\n"
-"      "
+#: papers/templates/papers/add_amendment_translation.html:6
+msgid "Add translation"
+msgstr "Übersetzung hinzufügen"
 
+#: papers/templates/papers/add_amendment_translation.html:13
+msgid "original"
+msgstr "Orginal"
 
-#: papers/templates/papers/amendmend_detail.html:30
+#: papers/templates/papers/add_amendment_translation.html:16
+#: papers/templates/papers/amendmend_detail.html:19
+msgid "By <strong>%(name)s</strong> at %(created)s"
+msgstr "Von <strong>%(name)s</strong> am %(created)s"
+
+#: papers/templates/papers/add_amendment_translation.html:26
+#: papers/templates/papers/amendmend_detail.html:47
 msgid "Reason"
 msgstr "Begründung"
 
-#: papers/templates/papers/amendmend_detail.html:37
+#: papers/templates/papers/add_amendment_translation.html:34
+msgid "translation"
+msgstr "Übersetzung"
+
+#: papers/templates/papers/add_amendment_translation.html:44
+#: papers/templates/papers/translation_update.html:50
+msgid "Cancel"
+msgstr "Zurück"
+
+#: papers/templates/papers/add_amendment_translation.html:47
+#: papers/templates/papers/amendmend_detail.html:139
+#: papers/templates/papers/translation_update.html:53
+msgid "Submit"
+msgstr "Absenden"
+
+#: papers/templates/papers/amendmend_detail.html:55
 msgid "publish"
 msgstr "Veröffentlichen"
 
-#: papers/templates/papers/amendmend_detail.html:40
+#: papers/templates/papers/amendmend_detail.html:58
 msgid "edit"
 msgstr "Bearbeiten"
 
-#: papers/templates/papers/amendmend_detail.html:44
+#: papers/templates/papers/amendmend_detail.html:66
+msgid "Support this amendment:"
+msgstr "Diesen Antrag unterstützen:"
+
+#: papers/templates/papers/amendmend_detail.html:71
+msgid "Don't support anymore"
+msgstr "Antrag nicht mehr unterstützen"
+
+#: papers/templates/papers/amendmend_detail.html:73
+msgid "Support this amendment"
+msgstr "Antrag unterstützen"
+
+#: papers/templates/papers/amendmend_detail.html:78
+msgid "This amendment is supported by"
+msgstr "Dieser Antrag wird unterstützt von"
+
+#: papers/templates/papers/amendmend_detail.html:91
 msgid "Comments"
 msgstr "Kommentare"
 
-#: papers/templates/papers/amendmend_detail.html:49
-msgid ""
-"\n"
-"      No Comments Yet...\n"
-"      "
-msgstr ""
-"\n"
-"      Keine Kommentare bis jetzt\n"
-"      "
+#: papers/templates/papers/amendmend_detail.html:96
+msgid "No Comments Yet..."
+msgstr "Keine Kommentare bis jetzt"
 
-#: papers/templates/papers/amendmend_detail.html:71
+#: papers/templates/papers/amendmend_detail.html:115
 msgid "unlike"
 msgstr "Unlike"
 
-#: papers/templates/papers/amendmend_detail.html:73
+#: papers/templates/papers/amendmend_detail.html:117
 msgid "like"
 msgstr "Like"
 
-#: papers/templates/papers/amendmend_detail.html:86
+#: papers/templates/papers/amendmend_detail.html:130
 msgid "Leave a comment"
 msgstr "Kommentieren"
-
-#: papers/templates/papers/amendmend_detail.html:95
-#: papers/templates/papers/translation_update.html:53
-msgid "Submit"
-msgstr "Absinden"
 
 #: papers/templates/papers/amendmend_edit.html:16
 #: papers/templates/papers/paper_create.html:22
 #: papers/templates/papers/paper_edit_view.html:19
 msgid "submit"
-msgstr "Absinden"
+msgstr "Absenden"
 
 #: papers/templates/papers/base.html:25
 msgid "Digital Democracy"
@@ -212,15 +247,8 @@ msgid "amendmends"
 msgstr "Anträge"
 
 #: papers/templates/papers/paper_detail.html:56
-#, python-format
-msgid ""
-"\n"
-"            %(name)s at %(created_at)s\n"
-"            "
-msgstr ""
-"\n"
-"            %(name)s um %(created_at)s\n"
-"            "
+msgid "%(name)s at %(created_at)s"
+msgstr "%(name)s um %(created_at)s"
 
 #: papers/templates/papers/paper_list.html:4
 #: papers/templates/papers/paper_list.html:8
@@ -242,10 +270,6 @@ msgstr "Antragsfrist"
 #: papers/templates/papers/translation_update.html:40
 msgid "update"
 msgstr "Aktualisieren"
-
-#: papers/templates/papers/translation_update.html:50
-msgid "Cancel"
-msgstr "Zurück"
 
 #: papers/templates/registration/login.html:5
 msgid ""

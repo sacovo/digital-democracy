@@ -2,6 +2,7 @@
 Paper views
 """
 from django.contrib.auth.decorators import login_required
+from django.http import Http404
 from django.shortcuts import redirect, render
 from django.utils import timezone
 
@@ -33,7 +34,7 @@ def paper_detail(request, paper_pk):
 @login_required
 def paper_edit(request, paper_pk, language_code):
     """
-    View to create a new amendment
+    View to create a new amendmen
     """
     paper = models.Paper.objects.get(pk=paper_pk)
     translation = paper.translation_set.get(language_code=language_code)
@@ -44,20 +45,9 @@ def paper_edit(request, paper_pk, language_code):
         form = forms.AmendmendForm(request.POST, translation=translation)
 
         if form.is_valid():
-            content = form.cleaned_data["content"]
-            reason = form.cleaned_data["reason"]
-
             author, _ = models.Author.objects.get_or_create(user=request.user)
 
-            amendmend = models.Amendmend.objects.create(
-                paper=paper,
-                language_code=language_code,
-                author=author,
-                content=content,
-                state="draft",
-                reason=reason,
-            )
-
+            amendmend = form.create_amendmend(translation, author)
             return redirect("amendmend-detail", amendmend.pk)
 
     return render(
@@ -172,6 +162,40 @@ def translation_update(request, paper_pk, language_code):
 
     return render(
         request, "papers/translation_update.html", {"form": form, "paper": paper}
+    )
+
+
+def add_amendment_translation(request, amendment_pk, language_code):
+    """
+    Shows a form to create a translation in the given language code.
+    If POST data is received validate the form and create the translation.
+    """
+    original = models.Amendmend.objects.get(pk=amendment_pk)
+
+    if original.has_translation_for_language(language_code):
+        return redirect("amendmend-edit", amendment_pk)
+
+    if not original.paper.has_translation_for_language(language_code):
+        raise Http404("translation for this language not found")
+
+    translation = original.paper.translation_for(language_code)
+
+    form = forms.AmendmendForm(translation=translation)
+
+    if request.method == "POST":
+        form = forms.AmendmendForm(request.POST, translation=translation)
+
+        if form.is_valid():
+            amendmend = form.create_amendmend(
+                translation=translation, author=original.author
+            )
+            original.add_translation(amendmend)
+            return redirect("amendmend-detail", amendmend.pk)
+
+    return render(
+        request,
+        "papers/add_amendment_translation.html",
+        {"form": form, "translation": translation, "original": original},
     )
 
 

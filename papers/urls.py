@@ -40,4 +40,9 @@ urlpatterns = [
         views.support_amendment,
         name="support-amendment",
     ),
+    path(
+        "amendments/<int:amendment_pk>/translate/<str:language_code>/",
+        views.add_amendment_translation,
+        name="amendment-add-translation",
+    ),
 ]

@@ -95,6 +95,123 @@ class ExtractorTestCase(TestCase):
         self.assertEqual(extracted.find("Hier kommt nochmals Text"), -1)
 
 
+class AmendmentTestCase(TestCase):
+    """
+    Test case for an amendment
+    """
+
+    def setUp(self):
+        self.paper = models.Paper.objects.create(
+            amendmend_deadline=timezone.now() + timedelta(days=10),
+            working_title="Test Paper",
+            state="public",
+        )
+
+        self.user = get_user_model().objects.create_user(username="test")
+        self.author = models.Author.objects.create(user=self.user)
+
+    def test_no_translations_on_creation(self):
+        """
+        An amendment doesn't have any translations upon creation.
+        """
+        amendment = models.Amendmend.objects.create(
+            paper=self.paper,
+            language_code="de",
+            content="doesn't matter",
+            author=self.author,
+            state="public",
+            reason="no reason at all",
+        )
+
+        self.assertEqual(
+            len(list(amendment.translation_list())),
+            0,
+            msg="no translations upon creation",
+        )
+
+    def test_add_translation(self):
+        """
+        After adding a translation it should be in the list of
+        translations
+        """
+        amendment = models.Amendmend.objects.create(
+            paper=self.paper,
+            language_code="de",
+            content="doesn't matter",
+            author=self.author,
+            state="public",
+            reason="no reason at all",
+        )
+
+        translation = models.Amendmend.objects.create(
+            paper=self.paper,
+            language_code="fr",
+            content="doesn't matter",
+            author=self.author,
+            state="public",
+            reason="no reason at all",
+        )
+
+        amendment.add_translation(translation)
+
+        self.assertTrue(
+            amendment.has_translation_for_language("fr"),
+            msg="amendment as french translation",
+        )
+        self.assertTrue(
+            translation.has_translation_for_language("de"),
+            msg="translation as german translation",
+        )
+
+        self.assertTrue(
+            translation in list(amendment.translation_list()),
+            msg="translation in list of translations",
+        )
+
+    def test_add_two_translations(self):
+        """
+        Only the first translation should be added
+        """
+        amendment = models.Amendmend.objects.create(
+            paper=self.paper,
+            language_code="de",
+            content="doesn't matter",
+            author=self.author,
+            state="public",
+            reason="no reason at all",
+        )
+
+        translation = models.Amendmend.objects.create(
+            paper=self.paper,
+            language_code="fr",
+            content="doesn't matter",
+            author=self.author,
+            state="public",
+            reason="no reason at all",
+        )
+
+        other_translation = models.Amendmend.objects.create(
+            paper=self.paper,
+            language_code="fr",
+            content="doesn't matter",
+            author=self.author,
+            state="public",
+            reason="no reason at all",
+        )
+
+        amendment.add_translation(translation)
+        amendment.add_translation(other_translation)
+
+        self.assertFalse(
+            other_translation in list(amendment.translation_list()),
+            msg="only one translation per language",
+        )
+        self.assertFalse(
+            other_translation.has_translation_for_language("de"),
+            msg="second translation should not have a translation for german",
+        )
+
+
 class AmendmentSupporterTestCase(TestCase):
     """
     Test case for the supporting amendments feature

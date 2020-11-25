@@ -5,24 +5,37 @@ import re
 from itertools import zip_longest
 
 
-def extract_content(content):
+def index_of_first_change(content):
     """
-    Takes a string with markup for changes (<ins> and <del> tags) and returns
-    a string that contains these tags plus some context
+    Returns the index of the first occurrence of a change
     """
     first_insert = content.find("<ins")
     first_deletion = content.find("<del")
 
     if first_insert == -1:
-        start_index = first_deletion
+        return first_deletion
 
-    elif first_deletion == -1:
-        start_index = first_insert
+    if first_deletion == -1:
+        return first_insert
 
-    else:
-        start_index = min(first_deletion, first_insert)
+    return min(first_deletion, first_insert)
 
-    end_index = max(content.rfind("</ins>"), content.rfind("</del>")) + 6
+
+def index_of_last_change(content):
+    """
+    Returns the index where the last change ends.
+    """
+    return max(content.rfind("</ins>"), content.rfind("</del>"))
+
+
+def extract_content(content):
+    """
+    Takes a string with markup for changes (<ins> and <del> tags) and returns
+    a string that contains these tags plus some context
+    """
+    start_index = index_of_first_change(content)
+
+    end_index = index_of_last_change(content) + 6
 
     content_before = content[0:start_index]
 
