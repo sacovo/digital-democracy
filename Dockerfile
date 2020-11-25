@@ -32,6 +32,8 @@ WORKDIR $APP_HOME
 # copy project
 COPY --chown=app:app . $APP_HOME
 
+RUN chown app:app $APP_HOME/static $APP_HOME/media
+
 # change to the app user
 USER app
 
