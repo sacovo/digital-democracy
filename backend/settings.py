@@ -33,8 +33,6 @@ ALLOWED_HOSTS = ["*"]
 # Application definition
 
 INSTALLED_APPS = [
-    "django.contrib.admin",
-    "django.contrib.auth",
     "django.contrib.contenttypes",
     "django.contrib.sessions",
     "django.contrib.messages",
@@ -42,6 +40,8 @@ INSTALLED_APPS = [
     "django_celery_results",
     "ckeditor",
     "papers",
+    "django.contrib.admin",
+    "django.contrib.auth",
     "bootstrap4",
 ]
 
@@ -156,3 +156,6 @@ CKEDITOR_CONFIGS = {
 LOGIN_URL = "/members/login"
 LOGIN_REDIRECT_URL = "/members/profile"
 LOGOUT_REDIRECT_URL = "/members/login"
+
+if DEBUG:
+    EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"

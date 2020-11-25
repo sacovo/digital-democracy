@@ -33,6 +33,40 @@ urlpatterns = [
     ),
     path("members/login/", auth_views.LoginView.as_view(), name="login"),
     path("members/logout/", auth_views.LogoutView.as_view(), name="logout"),
+    path(
+        "members/change_password/",
+        auth_views.PasswordChangeView.as_view(
+            success_url="/members/change_password_done/"
+        ),
+        name="password_change",
+    ),
+    path(
+        "members/change_password_done/",
+        auth_views.PasswordChangeDoneView.as_view(),
+        name="password_change_done",
+    ),
+    path(
+        "members/reset_password/",
+        auth_views.PasswordResetView.as_view(
+            success_url="/members/reset_password_done/"
+        ),
+        name="password_reset",
+    ),
+    path(
+        "members/reset_password_done/",
+        auth_views.PasswordResetDoneView.as_view(),
+        name="password_reset_done",
+    ),
+    path(
+        "members/reset_password_confirm/<uidb64>/<token>/",
+        auth_views.PasswordResetConfirmView.as_view(),
+        name="password_reset_confirm",
+    ),
+    path(
+        "members/reset_password_complete/",
+        auth_views.PasswordResetCompleteView.as_view(),
+        name="password_reset_complete",
+    ),
     path("members/profile/", views.members_profile, name="profile"),
     path("comments/<int:comment_pk>/like/", views.like_comment, name="comment_like"),
     path(
