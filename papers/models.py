@@ -16,6 +16,14 @@ from papers.utils import index_of_first_change, index_of_last_change
 STATES = (("draft", _("Draft")), ("public", _("Published")), ("final", _("Finalized")))
 
 
+class Tag(models.Model):
+    name = models.CharField(max_length=35)
+    created_at = models.DateTimeField(auto_now_add=False)
+
+    def __str__(self):
+        return self.name
+
+
 class Author(models.Model):
     """
     Represents an author of a paper or an amendment, used as a proxy to auth.User
@@ -128,6 +136,7 @@ class Amendmend(models.Model):
     state = models.CharField(max_length=7, verbose_name=_("state"), choices=STATES)
     reason = RichTextField(config_name="basic", verbose_name=_("reason"))
     supporters = models.ManyToManyField(settings.AUTH_USER_MODEL)
+    tags = models.ManyToManyField(Tag, related_name="tag")
 
     translations = models.ManyToManyField("self", verbose_name=_("translations"))
 

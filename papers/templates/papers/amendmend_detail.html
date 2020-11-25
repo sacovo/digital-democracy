@@ -27,7 +27,6 @@
       </div>
     </section>
     <section class="translation">
-
       <h2 class="h4">{% trans 'translations' %}</h2>
       <div class="btn-group btn-group-sm translations">
         {% for translation in amendmend.translation_list %}
@@ -62,6 +61,17 @@
       </div>
     </section>
 
+    <section class="tags">
+        <h2 class="h4">{% trans 'Tags:' %}</h2>
+        <ul>
+            {% for tag in amendmend.tags.all %}
+            <li>
+                <a class="tag-link" href="{% url 'amendment_list' amendmend.paper.pk tag.name amendmend.language_code %}">{{ tag.name }}</a>
+            </li>
+            {% endfor %}
+        </ul>
+    </section>
+    
     <section class="support">
       <h2 class="h4">{% trans 'Support this amendment:' %}</h2>
       <form action="{% url 'support-amendment' amendmend.pk %}" method="POST">
@@ -83,8 +93,8 @@
         </li>
         {% endfor %}
       </ul>
-  </div>
     </section>
+    </div>
 
     <div class="col-md-4">
       <!-- Implements Comment section-->

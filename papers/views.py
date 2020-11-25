@@ -248,3 +248,18 @@ def newsfeed(request):
     Display a newsfeed with recent activity
     """
     return render(request, "papers/newsfeed.html")
+
+
+@login_required
+def amendment_list(request, paper_pk, tag, language_code):
+    """
+    List of all papers
+    """
+    paper = models.Paper.objects.get(pk=paper_pk)
+    amendments = models.Amendmend.objects.filter(
+        tags__name=tag, language_code=language_code, paper=paper
+    )
+
+    return render(
+        request, "papers/amendments_by_tag.html", {"amendment_list": amendments}
+    )

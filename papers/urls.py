@@ -41,6 +41,11 @@ urlpatterns = [
         name="support-amendment",
     ),
     path(
+        "amendment/list/<int:paper_pk>/<str:tag>/<str:language_code>/",
+        views.amendment_list,
+        name="amendment_list",
+    ),
+    path(
         "amendments/<int:amendment_pk>/translate/<str:language_code>/",
         views.add_amendment_translation,
         name="amendment-add-translation",
