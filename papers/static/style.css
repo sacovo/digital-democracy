@@ -5,6 +5,10 @@ html{
 main {
     min-height: 100vh;
 }
+
+section {
+  margin-bottom: 1.4em;
+}
 a, .link{
     color: black;
     text-decoration:none ; 

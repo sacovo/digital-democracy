@@ -4,10 +4,12 @@ Database models for app papers
 from ckeditor.fields import RichTextField
 from django.conf import settings
 from django.db import models
+from django.shortcuts import reverse
 from django.utils.html import mark_safe
 from django.utils.translation import gettext as _
 
 from papers import utils
+from papers.utils import index_of_first_change, index_of_last_change
 
 # Create your models here.
 
@@ -61,6 +63,18 @@ class Paper(models.Model):
             if not bool(self.translation_set.filter(language_code=language[0])):
                 yield language
 
+    def has_translation_for_language(self, language_code):
+        """
+        returns true if there is a translation for the given language
+        """
+        return bool(self.translation_set.filter(language_code=language_code))
+
+    def translation_for(self, language_code):
+        """
+        Returns the according translation
+        """
+        return self.translation_set.get(language_code=language_code)
+
 
 class PaperTranslation(models.Model):
     """
@@ -104,6 +118,9 @@ class Amendmend(models.Model):
         max_length=7, verbose_name=_("language code"), choices=settings.LANGUAGES
     )
 
+    start_index = models.IntegerField(verbose_name=_("start index"), default=0)
+    end_index = models.IntegerField(verbose_name=_("last index"), default=0)
+
     content = models.TextField(verbose_name=_("content"))
     author = models.ForeignKey(Author, models.CASCADE, verbose_name=_("author"))
     created_at = models.DateTimeField(auto_now_add=True, verbose_name=_("created at"))
@@ -111,6 +128,17 @@ class Amendmend(models.Model):
     state = models.CharField(max_length=7, verbose_name=_("state"), choices=STATES)
     reason = RichTextField(config_name="basic", verbose_name=_("reason"))
     supporters = models.ManyToManyField(settings.AUTH_USER_MODEL)
+
+    translations = models.ManyToManyField("self", verbose_name=_("translations"))
+
+    def save(self, *args, **kwargs):  # pylint: disable=W0222
+        """
+        Save the amendment to the database, also updates the start_index to the index
+        of the first change.
+        """
+        self.start_index = index_of_first_change(self.content)
+        self.end_index = index_of_last_change(self.content)
+        super().save(*args, **kwargs)
 
     def translation(self):
         """
@@ -125,11 +153,47 @@ class Amendmend(models.Model):
 
         return utils.extract_content(self.content)
 
+    def add_translation(self, other):
+        """
+        Adds the given amendment to the translations of this amendment.
+        If the amendment already has a translation in this language nothing happens.
+        """
+        if not self.has_translation_for_language(other.language_code):
+            self.translations.add(other)
+
+    def has_translation_for_language(self, language_code):
+        """
+        Return true if a translation for this language exists.
+        """
+        return self.language_code == language_code or bool(
+            self.translations.filter(language_code=language_code)
+        )
+
+    def missing_translations(self):
+        """
+        Iterator over the language tuples that are missing.
+        """
+        for translation in self.paper.translation_set.all():
+            if not self.has_translation_for_language(translation.language_code):
+                yield translation.language_code
+
+    def translation_list(self):
+        """
+        Iterator over the translations for this amendment
+        """
+        return self.translations.all()
+
     def num_supporters(self):
         """
         Number of people that support the amendment
         """
         return self.supporters.all().count()
+
+    def get_absolute_url(self):
+        """
+        URL of the detail view
+        """
+        return reverse("amendmend-detail", args=(self.pk,))
 
     @property
     def name(self):
@@ -137,6 +201,9 @@ class Amendmend(models.Model):
         The name of the author of this
         """
         return self.author.name
+
+    class Meta:
+        ordering = ["start_index"]
 
 
 class Comment(models.Model):

@@ -53,10 +53,8 @@
         <ul>
           {% for amendmend in translation.amendmend_list %}
           <a class="link" href="{% url 'amendmend-detail' amendmend.pk %}">
-            {% blocktrans with name=amendmend.author.name created_at=amendmend.created_at %}
-            {{name}} at {{created_at}}
-            {% endblocktrans %}
-            <div class="amandmentListReason">{{amendmend.reason|safe}}</div>
+            {% blocktrans with name=amendmend.author.name created_at=amendmend.created_at %}{{name}} at {{created_at}}{% endblocktrans %}
+            <div class="amandmentListReason">{{amendmend.reason|truncatechars_html:"60"|safe}}</div>
           </a>
           {% endfor %}
         </ul>

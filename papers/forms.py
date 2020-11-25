@@ -50,6 +50,23 @@ class AmendmendForm(forms.Form):
             self.fields["content"].initial = self.amendmend.content
             self.fields["reason"].initial = self.amendmend.reason
 
+    def create_amendmend(self, translation, author):
+        """
+        Creates a new amendmend from the form data and to the given translation and user.
+        This has to be called after `is_valid` has been called and succeded.
+        """
+        content = self.cleaned_data["content"]
+        reason = self.cleaned_data["reason"]
+
+        return models.Amendmend.objects.create(
+            paper=translation.paper,
+            language_code=translation.language_code,
+            author=author,
+            content=content,
+            state="draft",
+            reason=reason,
+        )
+
 
 class TranslationForm(forms.ModelForm):
     """
