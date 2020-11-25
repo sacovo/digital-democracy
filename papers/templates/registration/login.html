@@ -19,9 +19,10 @@ Login
       {% csrf_token %}
       {% bootstrap_form form  form_group_class='form-group'%}
       <button type="submit" class="btn btn-success">{% trans 'login' %}</button>
-
       <input type="hidden" name="next" value="{{ next }}">
     </form>
+	<a href={% url 'password_reset' %}>{% trans 'Passwort vergessen?' %}</a>
   </div>
 </div>
-  {% endblock %}
+
+{% endblock %}
