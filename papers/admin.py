@@ -31,6 +31,8 @@ class PaperAdmin(admin.ModelAdmin):
 
     inlines = [PaperTranslationInline]
 
+    search_fields = ["working_title"]
+
 
 @admin.register(models.Author)
 class AuthorsAdmin(admin.ModelAdmin):
@@ -48,8 +50,12 @@ class AmendmendedAdmin(admin.ModelAdmin):
     Admin for amendments
     """
 
-    fields = ["author", "paper", "state", "content"]
+    fields = ["author", "paper", "state", "content", "tags"]
     list_display = ["paper", "state", "author"]
+    filter_horizontal = ["tags"]
+    ordering = ["tags"]
+    list_filter = ["paper", "tags", "language_code"]
+    search_fields = ["content"]
 
 
 @admin.register(models.Comment)
@@ -61,3 +67,14 @@ class CommentAdmin(admin.ModelAdmin):
     list_display = ["name", "body", "amendment", "created_on"]
     list_filter = ["created_on"]
     search_fields = ["name", "body"]
+
+
+@admin.register(models.Tag)
+class TagAdmin(admin.ModelAdmin):
+    """
+    Admin for tag
+    """
+
+    list_display = ["name", "created_at"]
+    list_filter = ["created_at"]
+    search_fields = ["name"]
