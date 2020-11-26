@@ -17,6 +17,10 @@ STATES = (("draft", _("Draft")), ("public", _("Published")), ("final", _("Finali
 
 
 class Tag(models.Model):
+    """
+    Tagging for amendments
+    """
+
     name = models.CharField(max_length=35)
     created_at = models.DateTimeField(auto_now_add=False)
 
@@ -37,12 +41,19 @@ class Author(models.Model):
         verbose_name=_("user"),
     )
 
+    def __str__(self):
+        return self.name
+
     @property
     def name(self):
         """
         The name of the user
         """
         return str(self.user)
+
+    class Meta:
+        verbose_name = _("author")
+        verbose_name_plural = _("authors")
 
 
 class Paper(models.Model):
@@ -83,6 +94,10 @@ class Paper(models.Model):
         """
         return self.translation_set.get(language_code=language_code)
 
+    class Meta:
+        verbose_name = _("paper")
+        verbose_name_plural = _("papers")
+
 
 class PaperTranslation(models.Model):
     """
@@ -114,6 +129,10 @@ class PaperTranslation(models.Model):
         List of all amendments for this paper in the language of this translation.
         """
         return self.paper.amendment_set.filter(language_code=self.language_code)
+
+    class Meta:
+        verbose_name = _("paper translation")
+        verbose_name_plural = _("paper translations")
 
 
 class Amendment(models.Model):
@@ -213,6 +232,8 @@ class Amendment(models.Model):
 
     class Meta:
         ordering = ["start_index"]
+        verbose_name = _("amendment")
+        verbose_name_plural = _("amendments")
 
 
 class Comment(models.Model):
@@ -249,3 +270,7 @@ class Comment(models.Model):
         Number of likes for this comment
         """
         return self.likes.all().count()
+
+    class Meta:
+        verbose_name = _("comment")
+        verbose_name_plural = _("comments")

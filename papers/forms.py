@@ -1,6 +1,7 @@
 """
 Forms
 """
+import bleach
 from ckeditor.widgets import CKEditorWidget
 from django import forms
 from django.conf import settings
@@ -24,6 +25,16 @@ class PaperCreateForm(forms.Form):
         choices=models.STATES,
         label=_("state"),
     )
+
+    def clean_content(self):
+        """
+        Clean content
+        """
+        return bleach.clean(
+            self.cleaned_data["content"],
+            tags=settings.BLEACH_ALLOWED_TAGS,
+            attributes=settings.BLEACH_ALLOWED_ATTRIBUTES,
+        )
 
 
 class AmendmentForm(forms.Form):
@@ -67,6 +78,26 @@ class AmendmentForm(forms.Form):
             reason=reason,
         )
 
+    def clean_content(self):
+        """
+        Cleans the given content from malicious html tags.
+        """
+        return bleach.clean(
+            self.cleaned_data["content"],
+            tags=settings.BLEACH_ALLOWED_TAGS,
+            attributes=settings.BLEACH_ALLOWED_ATTRIBUTES,
+        )
+
+    def clean_reason(self):
+        """
+        Cleans the given reason from any malicious tags.
+        """
+        return bleach.clean(
+            self.cleaned_data["reason"],
+            tags=settings.BLEACH_ALLOWED_TAGS,
+            attributes=settings.BLEACH_ALLOWED_ATTRIBUTES,
+        )
+
 
 class TranslationForm(forms.ModelForm):
     """
@@ -86,3 +117,13 @@ class CommentForm(forms.Form):
     comment = forms.CharField(
         widget=CKEditorWidget(config_name="basic"), label=_("comment")
     )
+
+    def clean_comment(self):
+        """
+        Clean comments from script tasks
+        """
+        return bleach.clean(
+            self.cleaned_data["comment"],
+            tags=settings.BLEACH_ALLOWED_TAGS,
+            attributes=settings.BLEACH_ALLOWED_ATTRIBUTES,
+        )
