@@ -100,6 +100,9 @@ class AmendmentTestCase(TestCase):
     Test case for an amendment
     """
 
+    content = "doesn't matter"
+    reason = "no reason at all"
+
     def setUp(self):
         self.paper = models.Paper.objects.create(
             amendmend_deadline=timezone.now() + timedelta(days=10),
@@ -117,10 +120,10 @@ class AmendmentTestCase(TestCase):
         amendment = models.Amendmend.objects.create(
             paper=self.paper,
             language_code="de",
-            content="doesn't matter",
+            content=self.content,
             author=self.author,
             state="public",
-            reason="no reason at all",
+            reason=self.reason,
         )
 
         self.assertEqual(
@@ -137,19 +140,19 @@ class AmendmentTestCase(TestCase):
         amendment = models.Amendmend.objects.create(
             paper=self.paper,
             language_code="de",
-            content="doesn't matter",
+            content=self.content,
             author=self.author,
             state="public",
-            reason="no reason at all",
+            reason=self.reason,
         )
 
         translation = models.Amendmend.objects.create(
             paper=self.paper,
             language_code="fr",
-            content="doesn't matter",
+            content=self.content,
             author=self.author,
             state="public",
-            reason="no reason at all",
+            reason=self.reason,
         )
 
         amendment.add_translation(translation)
@@ -175,28 +178,28 @@ class AmendmentTestCase(TestCase):
         amendment = models.Amendmend.objects.create(
             paper=self.paper,
             language_code="de",
-            content="doesn't matter",
+            content=self.content,
             author=self.author,
             state="public",
-            reason="no reason at all",
+            reason=self.reason,
         )
 
         translation = models.Amendmend.objects.create(
             paper=self.paper,
             language_code="fr",
-            content="doesn't matter",
+            content=self.content,
             author=self.author,
             state="public",
-            reason="no reason at all",
+            reason=self.reason,
         )
 
         other_translation = models.Amendmend.objects.create(
             paper=self.paper,
             language_code="fr",
-            content="doesn't matter",
+            content=self.content,
             author=self.author,
             state="public",
-            reason="no reason at all",
+            reason=self.reason,
         )
 
         amendment.add_translation(translation)
@@ -227,7 +230,7 @@ class AmendmentSupporterTestCase(TestCase):
 
         paper = models.Paper.objects.create(
             amendmend_deadline=timezone.now() + timedelta(days=10),
-            working_title="Test missing translations",
+            working_title="Test amount supporters",
             state="public",
         )
 
@@ -243,7 +246,7 @@ class LikeCommentTestCase(TestCase):
     Test case for the like comment feature
     """
 
-    def test_amount_supporters(self):
+    def test_amount_likes(self):
         """
         A comment should have zero likes upon creation
         """
@@ -253,7 +256,7 @@ class LikeCommentTestCase(TestCase):
 
         paper = models.Paper.objects.create(
             amendmend_deadline=timezone.now() + timedelta(days=10),
-            working_title="Test missing translations",
+            working_title="Test amount of likes",
             state="public",
         )
 

@@ -9,7 +9,7 @@
 {% endblock %}
 
 {% block content %}
-<!--<h1>{% trans 'Create new paper' %}</h1>-->
+<h1 class="h3">{% trans 'Create new paper' %}</h1>
 <form action="" method="POST" id="createPapperForm">
   {% csrf_token %}
   {% bootstrap_form form  form_group_class='form-group'%}
