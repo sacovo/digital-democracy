@@ -6,10 +6,8 @@
 {% block content %}
 
 {% for amendment in amendment_list %}
-    <a class="link" href="{% url 'amendmend-detail' amendment.pk %}">
-            {% blocktrans with name=amendment.author.name created_at=amendment.created_at %}
-            {{name}} at {{created_at}}
-            {% endblocktrans %}
+    <a class="link" href="{% url 'amendment-detail' amendment.pk %}">
+            {% blocktrans with name=amendment.author.name created_at=amendment.created_at %}{{name}} at {{created_at}}{% endblocktrans %}
             <div class="amandmentListReason">{{amendment.reason|safe}}</div>
           </a>
 {% endfor %}

@@ -98,7 +98,7 @@ msgstr ""
 msgid "likes"
 msgstr ""
 
-#: papers/templates/papers/amendmend_detail.html:18
+#: papers/templates/papers/amendment_detail.html:18
 #, python-format
 msgid ""
 "\n"
@@ -106,47 +106,47 @@ msgid ""
 "      "
 msgstr ""
 
-#: papers/templates/papers/amendmend_detail.html:30
+#: papers/templates/papers/amendment_detail.html:30
 msgid "Reason"
 msgstr ""
 
-#: papers/templates/papers/amendmend_detail.html:37
+#: papers/templates/papers/amendment_detail.html:37
 msgid "publish"
 msgstr ""
 
-#: papers/templates/papers/amendmend_detail.html:40
+#: papers/templates/papers/amendment_detail.html:40
 msgid "edit"
 msgstr ""
 
-#: papers/templates/papers/amendmend_detail.html:44
+#: papers/templates/papers/amendment_detail.html:44
 msgid "Comments"
 msgstr ""
 
-#: papers/templates/papers/amendmend_detail.html:49
+#: papers/templates/papers/amendment_detail.html:49
 msgid ""
 "\n"
 "      No Comments Yet...\n"
 "      "
 msgstr ""
 
-#: papers/templates/papers/amendmend_detail.html:71
+#: papers/templates/papers/amendment_detail.html:71
 msgid "unlike"
 msgstr ""
 
-#: papers/templates/papers/amendmend_detail.html:73
+#: papers/templates/papers/amendment_detail.html:73
 msgid "like"
 msgstr ""
 
-#: papers/templates/papers/amendmend_detail.html:86
+#: papers/templates/papers/amendment_detail.html:86
 msgid "Leave a comment"
 msgstr ""
 
-#: papers/templates/papers/amendmend_detail.html:95
+#: papers/templates/papers/amendment_detail.html:95
 #: papers/templates/papers/translation_update.html:53
 msgid "Submit"
 msgstr ""
 
-#: papers/templates/papers/amendmend_edit.html:16
+#: papers/templates/papers/amendment_edit.html:16
 #: papers/templates/papers/paper_create.html:22
 #: papers/templates/papers/paper_edit_view.html:19
 msgid "submit"
@@ -174,7 +174,7 @@ msgstr ""
 
 #: papers/templates/papers/includes/translation_list.html:19
 #: papers/templates/papers/paper_detail.html:42
-msgid "create amendmend"
+msgid "create amendment"
 msgstr ""
 
 #: papers/templates/papers/paper_create.html:5
@@ -201,7 +201,7 @@ msgid "update translation"
 msgstr ""
 
 #: papers/templates/papers/paper_detail.html:52
-msgid "amendmends"
+msgid "amendments"
 msgstr ""
 
 #: papers/templates/papers/paper_detail.html:56
@@ -226,7 +226,7 @@ msgid "Created at"
 msgstr ""
 
 #: papers/templates/papers/paper_list.html:20
-msgid "deadline for amandments"
+msgid "deadline for amendments"
 msgstr ""
 
 #: papers/templates/papers/translation_update.html:40

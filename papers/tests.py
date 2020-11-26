@@ -20,7 +20,7 @@ class PaperTestCase(TestCase):
 
     def setUp(self):
         models.Paper.objects.create(
-            amendmend_deadline=timezone.now() + timedelta(days=10),
+            amendment_deadline=timezone.now() + timedelta(days=10),
             working_title="Test Paper",
             state="draft",
         )
@@ -31,7 +31,7 @@ class PaperTestCase(TestCase):
         should be equal to all configured translations.
         """
         paper = models.Paper.objects.create(
-            amendmend_deadline=timezone.now() + timedelta(days=10),
+            amendment_deadline=timezone.now() + timedelta(days=10),
             working_title="Test missing translations",
             state="public",
         )
@@ -48,7 +48,7 @@ class PaperTestCase(TestCase):
         of missing translations anymore.
         """
         paper = models.Paper.objects.create(
-            amendmend_deadline=timezone.now() + timedelta(days=10),
+            amendment_deadline=timezone.now() + timedelta(days=10),
             working_title="Test add translation",
             state="public",
         )
@@ -105,7 +105,7 @@ class AmendmentTestCase(TestCase):
 
     def setUp(self):
         self.paper = models.Paper.objects.create(
-            amendmend_deadline=timezone.now() + timedelta(days=10),
+            amendment_deadline=timezone.now() + timedelta(days=10),
             working_title="Test Paper",
             state="public",
         )
@@ -117,7 +117,7 @@ class AmendmentTestCase(TestCase):
         """
         An amendment doesn't have any translations upon creation.
         """
-        amendment = models.Amendmend.objects.create(
+        amendment = models.Amendment.objects.create(
             paper=self.paper,
             language_code="de",
             content=self.content,
@@ -137,7 +137,7 @@ class AmendmentTestCase(TestCase):
         After adding a translation it should be in the list of
         translations
         """
-        amendment = models.Amendmend.objects.create(
+        amendment = models.Amendment.objects.create(
             paper=self.paper,
             language_code="de",
             content=self.content,
@@ -146,7 +146,7 @@ class AmendmentTestCase(TestCase):
             reason=self.reason,
         )
 
-        translation = models.Amendmend.objects.create(
+        translation = models.Amendment.objects.create(
             paper=self.paper,
             language_code="fr",
             content=self.content,
@@ -175,7 +175,7 @@ class AmendmentTestCase(TestCase):
         """
         Only the first translation should be added
         """
-        amendment = models.Amendmend.objects.create(
+        amendment = models.Amendment.objects.create(
             paper=self.paper,
             language_code="de",
             content=self.content,
@@ -184,7 +184,7 @@ class AmendmentTestCase(TestCase):
             reason=self.reason,
         )
 
-        translation = models.Amendmend.objects.create(
+        translation = models.Amendment.objects.create(
             paper=self.paper,
             language_code="fr",
             content=self.content,
@@ -193,7 +193,7 @@ class AmendmentTestCase(TestCase):
             reason=self.reason,
         )
 
-        other_translation = models.Amendmend.objects.create(
+        other_translation = models.Amendment.objects.create(
             paper=self.paper,
             language_code="fr",
             content=self.content,
@@ -229,12 +229,12 @@ class AmendmentSupporterTestCase(TestCase):
         author = models.Author.objects.create(user=user)
 
         paper = models.Paper.objects.create(
-            amendmend_deadline=timezone.now() + timedelta(days=10),
-            working_title="Test amount supporters",
+            amendment_deadline=timezone.now() + timedelta(days=10),
+            working_title="Test missing translations",
             state="public",
         )
 
-        amendment = models.Amendmend.objects.create(
+        amendment = models.Amendment.objects.create(
             author_id=author.id, paper_id=paper.id, state="Draft", reason="Some Reason"
         )
 
@@ -255,12 +255,12 @@ class LikeCommentTestCase(TestCase):
         author = models.Author.objects.create(user=user)
 
         paper = models.Paper.objects.create(
-            amendmend_deadline=timezone.now() + timedelta(days=10),
-            working_title="Test amount of likes",
+            amendment_deadline=timezone.now() + timedelta(days=10),
+            working_title="Test missing translations",
             state="public",
         )
 
-        amendment = models.Amendmend.objects.create(
+        amendment = models.Amendment.objects.create(
             author_id=author.id, paper_id=paper.id, state="Draft", reason="Some Reason"
         )
 

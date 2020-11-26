@@ -12,9 +12,9 @@ urlpatterns = [
     path("paper/<int:paper_pk>/", views.paper_detail, name="paper-detail"),
     path("newsfeed/", views.newsfeed, name="newsfeed"),
     path(
-        "paper/<int:paper_pk>/<str:language_code>/create-amendmend/",
+        "paper/<int:paper_pk>/<str:language_code>/create-amendment/",
         views.paper_edit,
-        name="create-amendmend",
+        name="create-amendment",
     ),
     path(
         "paper/<int:paper_pk>/<str:language_code>/update/",
@@ -22,14 +22,14 @@ urlpatterns = [
         name="paper-translation-update",
     ),
     path(
-        "amendmends/<int:amendment_pk>/",
-        views.amendmend_detail,
-        name="amendmend-detail",
+        "amendments/<int:amendment_pk>/",
+        views.amendment_detail,
+        name="amendment-detail",
     ),
     path(
-        "amendmends/<int:amendment_pk>/edit/",
-        views.amendmend_edit,
-        name="amendmend-edit",
+        "amendments/<int:amendment_pk>/edit/",
+        views.amendment_edit,
+        name="amendment-edit",
     ),
     path("members/login/", auth_views.LoginView.as_view(), name="login"),
     path("members/logout/", auth_views.LogoutView.as_view(), name="logout"),
@@ -70,7 +70,7 @@ urlpatterns = [
     path("members/profile/", views.members_profile, name="profile"),
     path("comments/<int:comment_pk>/like/", views.like_comment, name="comment_like"),
     path(
-        "amendmends/<int:amendment_pk>/like/",
+        "amendments/<int:amendment_pk>/like/",
         views.support_amendment,
         name="support-amendment",
     ),

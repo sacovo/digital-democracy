@@ -25,7 +25,7 @@ class PaperAdmin(admin.ModelAdmin):
     Admin for papers
     """
 
-    fields = ["amendmend_deadline", "state", "authors"]
+    fields = ["amendment_deadline", "state", "authors"]
 
     autocomplete_fields = ["authors"]
 
@@ -44,8 +44,8 @@ class AuthorsAdmin(admin.ModelAdmin):
     search_fields = ["user__username"]
 
 
-@admin.register(models.Amendmend)
-class AmendmendedAdmin(admin.ModelAdmin):
+@admin.register(models.Amendment)
+class AmendmentedAdmin(admin.ModelAdmin):
     """
     Admin for amendments
     """

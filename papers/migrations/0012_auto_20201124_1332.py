@@ -130,7 +130,7 @@ class Migration(migrations.Migration):
         ),
         migrations.AlterField(
             model_name="paper",
-            name="amendmend_deadline",
+            name="amendment_deadline",
             field=models.DateTimeField(verbose_name="Antragsfrist"),
         ),
         migrations.AlterField(

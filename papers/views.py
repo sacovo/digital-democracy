@@ -39,16 +39,16 @@ def paper_edit(request, paper_pk, language_code):
     paper = models.Paper.objects.get(pk=paper_pk)
     translation = paper.translation_set.get(language_code=language_code)
 
-    form = forms.AmendmendForm(translation=translation)
+    form = forms.AmendmentForm(translation=translation)
 
     if request.POST:
-        form = forms.AmendmendForm(request.POST, translation=translation)
+        form = forms.AmendmentForm(request.POST, translation=translation)
 
         if form.is_valid():
             author, _ = models.Author.objects.get_or_create(user=request.user)
 
-            amendmend = form.create_amendmend(translation, author)
-            return redirect("amendmend-detail", amendmend.pk)
+            amendment = form.create_amendment(translation, author)
+            return redirect("amendment-detail", amendment.pk)
 
     return render(
         request,
@@ -73,7 +73,7 @@ def paper_create(request):
             state = form.cleaned_data["state"]
 
             paper = models.Paper.objects.create(
-                amendmend_deadline=timezone.now(), working_title=title, state=state
+                amendment_deadline=timezone.now(), working_title=title, state=state
             )
 
             models.PaperTranslation.objects.create(
@@ -86,16 +86,16 @@ def paper_create(request):
 
 
 @login_required
-def amendmend_detail(request, amendment_pk):
+def amendment_detail(request, amendment_pk):
     """
     Detail view of paper
     """
-    amendmend = models.Amendmend.objects.get(pk=amendment_pk)
+    amendment = models.Amendment.objects.get(pk=amendment_pk)
     form = forms.CommentForm()
 
     if request.method == "POST":
-        amendmend.state = "public"
-        amendmend.save()
+        amendment.state = "public"
+        amendment.save()
         form = forms.CommentForm(request.POST)
 
         if form.is_valid():
@@ -104,42 +104,42 @@ def amendmend_detail(request, amendment_pk):
             author, _ = models.Author.objects.get_or_create(user=request.user)
 
             models.Comment.objects.create(
-                amendment=models.Amendmend.objects.get(pk=amendment_pk),
+                amendment=models.Amendment.objects.get(pk=amendment_pk),
                 body=body,
                 author=author,
             )
 
-            return redirect("amendmend-detail", amendmend.pk)
+            return redirect("amendment-detail", amendment.pk)
 
     return render(
-        request, "papers/amendmend_detail.html", {"amendmend": amendmend, "form": form}
+        request, "papers/amendment_detail.html", {"amendment": amendment, "form": form}
     )
 
 
 @login_required
-def amendmend_edit(request, amendment_pk):
+def amendment_edit(request, amendment_pk):
     """
     Edit an existing amendment
     """
-    amendmend = models.Amendmend.objects.get(pk=amendment_pk)
+    amendment = models.Amendment.objects.get(pk=amendment_pk)
 
-    form = forms.AmendmendForm(amendmend=amendmend)
+    form = forms.AmendmentForm(amendment=amendment)
 
     if request.method == "POST":
-        form = forms.AmendmendForm(request.POST)
+        form = forms.AmendmentForm(request.POST)
 
         if form.is_valid():
             content = form.cleaned_data.get("content")
             reason = form.cleaned_data.get("reason")
 
-            amendmend.content = content
-            amendmend.reason = reason
-            amendmend.save()
+            amendment.content = content
+            amendment.reason = reason
+            amendment.save()
 
-            return redirect("amendmend-detail", amendmend.pk)
+            return redirect("amendment-detail", amendment.pk)
 
     return render(
-        request, "papers/amendmend_edit.html", {"form": form, "amendmend": amendmend}
+        request, "papers/amendment_edit.html", {"form": form, "amendment": amendment}
     )
 
 
@@ -170,27 +170,27 @@ def add_amendment_translation(request, amendment_pk, language_code):
     Shows a form to create a translation in the given language code.
     If POST data is received validate the form and create the translation.
     """
-    original = models.Amendmend.objects.get(pk=amendment_pk)
+    original = models.Amendment.objects.get(pk=amendment_pk)
 
     if original.has_translation_for_language(language_code):
-        return redirect("amendmend-edit", amendment_pk)
+        return redirect("amendment-edit", amendment_pk)
 
     if not original.paper.has_translation_for_language(language_code):
         raise Http404("translation for this language not found")
 
     translation = original.paper.translation_for(language_code)
 
-    form = forms.AmendmendForm(translation=translation)
+    form = forms.AmendmentForm(translation=translation)
 
     if request.method == "POST":
-        form = forms.AmendmendForm(request.POST, translation=translation)
+        form = forms.AmendmentForm(request.POST, translation=translation)
 
         if form.is_valid():
-            amendmend = form.create_amendmend(
+            amendment = form.create_amendment(
                 translation=translation, author=original.author
             )
-            original.add_translation(amendmend)
-            return redirect("amendmend-detail", amendmend.pk)
+            original.add_translation(amendment)
+            return redirect("amendment-detail", amendment.pk)
 
     return render(
         request,
@@ -213,7 +213,7 @@ def like_comment(request, comment_pk):
         else:
             comment.likes.add(user.pk)
 
-    return redirect("amendmend-detail", comment.amendment.pk)
+    return redirect("amendment-detail", comment.amendment.pk)
 
 
 @login_required
@@ -230,7 +230,7 @@ def support_amendment(request, amendment_pk):
     Adds the requesting user to the list of supporters
     """
     if request.method == "POST":
-        amendment = models.Amendmend.objects.get(pk=amendment_pk)
+        amendment = models.Amendment.objects.get(pk=amendment_pk)
         user = request.user
 
         if amendment.supporters.filter(pk=user.pk):
@@ -239,7 +239,7 @@ def support_amendment(request, amendment_pk):
         else:
             amendment.supporters.add(user.pk)
 
-    return redirect("amendmend-detail", amendment.pk)
+    return redirect("amendment-detail", amendment.pk)
 
 
 @login_required
@@ -256,7 +256,7 @@ def amendment_list(request, paper_pk, tag, language_code):
     List of all papers
     """
     paper = models.Paper.objects.get(pk=paper_pk)
-    amendments = models.Amendmend.objects.filter(
+    amendments = models.Amendment.objects.filter(
         tags__name=tag, language_code=language_code, paper=paper
     )
 

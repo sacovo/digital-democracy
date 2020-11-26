@@ -38,8 +38,8 @@
           </article>
         </div>
         <div class="btn-group my-2" role="group">
-          <a class="btn btn-secondary" href="{% url 'create-amendmend' translation.paper.pk translation.language_code %}">
-            {% trans 'create amendmend' %}
+          <a class="btn btn-secondary" href="{% url 'create-amendment' translation.paper.pk translation.language_code %}">
+            {% trans 'create amendment' %}
           </a>
           {% if perms.papers.change_translation %}
           <a class="btn btn-secondary" href="{%url 'paper-translation-update' translation.paper.pk translation.language_code%}">
@@ -49,12 +49,12 @@
         </div>
       </div>
       <div class="col-md-4">
-        <h2 id="amandments">{% trans 'amendmends' %}</h2>
+        <h2 id="amendments">{% trans 'amendments' %}</h2>
         <ul>
-          {% for amendmend in translation.amendmend_list %}
-          <a class="link" href="{% url 'amendmend-detail' amendmend.pk %}">
-            {% blocktrans with name=amendmend.author.name created_at=amendmend.created_at %}{{name}} at {{created_at}}{% endblocktrans %}
-            <div class="amandmentListReason">{{amendmend.reason|truncatechars_html:"60"|safe}}</div>
+          {% for amendment in translation.amendment_list %}
+          <a class="link" href="{% url 'amendment-detail' amendment.pk %}">
+            {% blocktrans with name=amendment.author.name created_at=amendment.created_at %}{{name}} at {{created_at}}{% endblocktrans %}
+            <div class="amendmentListReason">{{amendment.reason|truncatechars_html:"60"|safe}}</div>
           </a>
           {% endfor %}
         </ul>
