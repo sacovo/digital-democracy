@@ -153,6 +153,27 @@ CKEDITOR_CONFIGS = {
     "track-changes": {"extraPlugins": ",".join(["lite"]), "width": "100%"},
 }
 
+BLEACH_ALLOWED_TAGS = [
+    "a",
+    "abbr",
+    "b",
+    "blockquote",
+    "em",
+    "i",
+    "li",
+    "ol",
+    "ul",
+    "span",
+    "h1",
+    "h2",
+    "h3",
+    "h4",
+    "h5",
+    "h6",
+]
+
+BLEACH_ALLOWED_ATTRIBUTES = {"a": ["href", "title"]}
+
 LOGIN_URL = "/members/login"
 LOGIN_REDIRECT_URL = "/members/profile"
 LOGOUT_REDIRECT_URL = "/members/login"
