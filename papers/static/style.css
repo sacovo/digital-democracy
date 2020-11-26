@@ -157,11 +157,11 @@ footer #languages a:hover{
     border: 1px solid black;
     border-radius: 10px;
 }
-#amandments{
+#amendments{
     text-align: center;
 }
 
-.amandmentListReason{
+.amendmentListReason{
     border: 1px solid red ; 
     border-radius: 5px; 
     padding: 20px; 

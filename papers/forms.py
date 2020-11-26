@@ -26,7 +26,7 @@ class PaperCreateForm(forms.Form):
     )
 
 
-class AmendmendForm(forms.Form):
+class AmendmentForm(forms.Form):
     """
     Form to create or update an amendment
     """
@@ -40,25 +40,25 @@ class AmendmendForm(forms.Form):
 
     def __init__(self, *args, **kwargs):
         self.translation = kwargs.pop("translation", None)
-        self.amendmend = kwargs.pop("amendmend", None)
+        self.amendment = kwargs.pop("amendment", None)
         super().__init__(*args, **kwargs)
 
         if self.translation:
             self.fields["content"].initial = self.translation.content
 
-        elif self.amendmend:
-            self.fields["content"].initial = self.amendmend.content
-            self.fields["reason"].initial = self.amendmend.reason
+        elif self.amendment:
+            self.fields["content"].initial = self.amendment.content
+            self.fields["reason"].initial = self.amendment.reason
 
-    def create_amendmend(self, translation, author):
+    def create_amendment(self, translation, author):
         """
-        Creates a new amendmend from the form data and to the given translation and user.
+        Creates a new amendment from the form data and to the given translation and user.
         This has to be called after `is_valid` has been called and succeded.
         """
         content = self.cleaned_data["content"]
         reason = self.cleaned_data["reason"]
 
-        return models.Amendmend.objects.create(
+        return models.Amendment.objects.create(
             paper=translation.paper,
             language_code=translation.language_code,
             author=author,

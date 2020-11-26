@@ -52,7 +52,7 @@ class Paper(models.Model):
 
     created_at = models.DateTimeField(auto_now_add=True, verbose_name=_("created at"))
     edited_at = models.DateTimeField(auto_now=True, verbose_name=_("edited at"))
-    amendmend_deadline = models.DateTimeField(verbose_name=_("deadline"))
+    amendment_deadline = models.DateTimeField(verbose_name=_("deadline"))
 
     working_title = models.CharField(max_length=255, verbose_name=_("working title"))
 
@@ -109,14 +109,14 @@ class PaperTranslation(models.Model):
         """
         return mark_safe(self.content)
 
-    def amendmend_list(self):
+    def amendment_list(self):
         """
         List of all amendments for this paper in the language of this translation.
         """
-        return self.paper.amendmend_set.filter(language_code=self.language_code)
+        return self.paper.amendment_set.filter(language_code=self.language_code)
 
 
-class Amendmend(models.Model):
+class Amendment(models.Model):
     """
     Represents a proposed change to a paper
     """
@@ -202,7 +202,7 @@ class Amendmend(models.Model):
         """
         URL of the detail view
         """
-        return reverse("amendmend-detail", args=(self.pk,))
+        return reverse("amendment-detail", args=(self.pk,))
 
     @property
     def name(self):
@@ -221,7 +221,7 @@ class Comment(models.Model):
     """
 
     amendment = models.ForeignKey(
-        Amendmend,
+        Amendment,
         models.CASCADE,
         verbose_name=_("amendment"),
         related_name="comments",
