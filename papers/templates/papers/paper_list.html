@@ -8,38 +8,39 @@
 <h1>{% trans 'Papers' %}</h1>
 
 <table class="table">
-    <thead>
-        <tr>
-            <th>
-                {% trans 'Title' %}
-            </th>
-            <th>
-                {% trans 'Created at' %}
-            </th>
-            <th>
-              {% trans 'deadline for amandments' %}
-            </th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-            {% for paper in paper_list %}
-            <tr>
-                <td>
-                    <a href="{% url 'paper-detail' paper.pk %}">
-                        {{paper}}
-                    </a>
-                </td>
-                <td>
-                    {{paper.created_at}}
-                </td>
-                <td>
-                  {{paper.amendmend_deadline}}
-                </td>
-            </tr>
-            {% endfor %}
-        </tr>
-    </tbody>
+  <caption class="sr-only">{% trans 'amandments' %}</caption>
+  <thead>
+    <tr>
+      <th scope="col">
+        {% trans 'Title' %}
+      </th>
+      <th scope="col">
+        {% trans 'Created at' %}
+      </th>
+      <th scope="col">
+        {% trans 'deadline for amandments' %}
+      </th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      {% for paper in paper_list %}
+      <tr>
+        <td>
+          <a href="{% url 'paper-detail' paper.pk %}">
+            {{paper}}
+          </a>
+        </td>
+        <td>
+          {{paper.created_at}}
+        </td>
+        <td>
+          {{paper.amendmend_deadline}}
+        </td>
+      </tr>
+      {% endfor %}
+    </tr>
+  </tbody>
 </table>
 <a href="{% url 'paper-create' %}" class="btn btn-secondary ">{% trans 'Create new paper' %}</a>
 {% endblock %}
