@@ -170,6 +170,9 @@ BLEACH_ALLOWED_TAGS = [
     "h4",
     "h5",
     "h6",
+    "p",
+    "del",
+    "ins",
 ]
 
 BLEACH_ALLOWED_ATTRIBUTES = {"a": ["href", "title"]}
