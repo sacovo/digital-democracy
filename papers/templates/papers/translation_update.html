@@ -1,0 +1,63 @@
+{% extends 'papers/base.html' %}
+{% load i18n %}
+{% load bootstrap4 %}
+
+{% block content %}
+
+<div class="row">
+  <div class="col-md-6">
+    <nav class="col">
+      <div class="nav nav-tabs" id="nav-tab" role="tablist">
+        {% for translation in paper.translation_set.all %}
+        <a class="nav-link {% if forloop.first %}active{% endif %}" href="#{{translation.language_code}}" data-toggle="tab">
+          {{translation.get_language_code_display}}
+        </a>
+        {% endfor %}
+      </div>
+    </nav>
+
+    <div class="tab-content" id="nav-tab-content">
+      {% for translation in paper.translation_set.all %}
+      <div class="tab-pane {% if forloop.first %}active show{% endif %}" id="{{translation.language_code}}" role="tabpanel">
+        <div class="row mt-4">
+          <div class="col">
+            <h2>
+              {{translation.title}}
+            </h2>
+            <div class="content">
+              {{translation.content_safe}}
+            </div>
+
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+
+  <div class="col-md-6">
+    <h2>
+    {% trans "update" %}
+    </h2>
+    <form method="post">
+      {% csrf_token %}
+
+      {% bootstrap_form form  form_group_class='form-group'%}
+        {{ form.media }}
+      {% buttons %}
+      <div class="row">
+        <div class="col">
+          <a href="{% url 'paper-detail' paper.pk %}">{% trans 'Cancel' %}</a>
+        </div>
+        <div class="col">
+          <button type="submit" class="btn btn-sm btn-block submitButton">{% trans 'Submit' %}</button>
+        </div>
+      </div>
+      {% endbuttons %}
+
+    </form>
+  </div>
+
+</div>
+
+{% endblock %}

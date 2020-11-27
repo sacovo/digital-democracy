@@ -1,20 +1,28 @@
 {% extends 'papers/base.html' %}
 {% load static i18n %}
+{% load bootstrap4 %}
+
 
 
 {% block head %}
 {{form.media}}
-<script src="{% static "jquery-3.5.1.min.js" %}">
-</script>
 {% endblock %}
-{% block content %}
 
-<form method="POST">
+{% block content %}
+<h2>{{translation.title}}</h2>
+
+<form method="POST" id="createPapperForm">
     {% csrf_token %}
-    <table>
-    {{form.as_table}}
-    </table>
-    <button type="submit">{% trans 'submit' %}</button>
+    {% bootstrap_form form  form_group_class='form-group'%}
+    {% buttons %}
+    <div class="btn-group btn-sm">
+      <button type="submit" class="btn submitButton">{% trans 'submit' %}</button>
+      <a class="btn btn-link" href="{% url 'paper-detail' paper.pk %}#{{translation.language_code}}">
+        {{translation.title}}
+      </a>
+    </div>
+    {% endbuttons %}
+
 </form>
 
 {% endblock %}

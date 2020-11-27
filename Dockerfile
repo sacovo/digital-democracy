@@ -10,7 +10,7 @@ ENV PYTHONUNBUFFERED 1
 
 RUN apt-get update && \
   apt-get install -y \
-    netcat
+    netcat gettext
 
 # install dependencies
 RUN pip install --upgrade pip
@@ -30,12 +30,13 @@ RUN mkdir $APP_HOME/media
 WORKDIR $APP_HOME
 
 # copy project
-COPY . $APP_HOME
+COPY --chown=app:app . $APP_HOME
 
-# chown all the files to the app user
-RUN chown -R app:app $APP_HOME
+RUN chown app:app $APP_HOME/static $APP_HOME/media
 
 # change to the app user
 USER app
+
+RUN python manage.py compilemessages
 
 ENTRYPOINT ["/home/app/web/entrypoint.sh"]

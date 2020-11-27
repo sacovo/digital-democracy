@@ -46,7 +46,7 @@ class Migration(migrations.Migration):
                     "edited_at",
                     models.DateTimeField(auto_now=True, verbose_name="edited at"),
                 ),
-                ("amendmend_deadline", models.DateTimeField(verbose_name="deadline")),
+                ("amendment_deadline", models.DateTimeField(verbose_name="deadline")),
                 (
                     "state",
                     models.CharField(

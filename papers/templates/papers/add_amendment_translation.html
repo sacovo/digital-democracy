@@ -1,0 +1,57 @@
+{% extends 'papers/base.html' %}
+
+{% load i18n %}
+{% load bootstrap4 %}
+
+{% block title %}{% trans 'Add translation' %}{% endblock %}
+
+{% block content %}
+
+<div class="row">
+  <div class="col-md-6">
+    <h2 class="h4">
+      {% trans 'original' %}
+    </h2>
+    <span>
+      {% blocktrans with name=original.author.name created=original.created_at %}By <strong>{{name}}</strong> at {{created}}{% endblocktrans %}
+    </span>
+    <div id="paperContent" class="content mb-4">
+      <article>
+        <div class="amendment-content">
+          {{original.extract_content|safe}}
+        </div>
+      </article>
+    </div>
+
+    <h2 class="h4">{% trans 'Reason' %}</h2>
+    <section class="reason">
+      {{original.reason|safe}}
+    </section>
+  </div>
+
+  <div class="col-md-6">
+    <h2 class="h4">
+    {% trans "translation" %}
+    </h2>
+    <form method="post">
+      {% csrf_token %}
+
+      {% bootstrap_form form  form_group_class='form-group'%}
+        {{ form.media }}
+      {% buttons %}
+      <div class="row">
+        <div class="col">
+          <a href="{% url 'amendment-detail' original.pk %}">{% trans 'Cancel' %}</a>
+        </div>
+        <div class="col">
+          <button type="submit" class="btn btn-sm btn-block submitButton">{% trans 'Submit' %}</button>
+        </div>
+      </div>
+      {% endbuttons %}
+
+    </form>
+  </div>
+
+</div>
+
+{% endblock %}

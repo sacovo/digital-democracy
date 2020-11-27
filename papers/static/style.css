@@ -1,10 +1,33 @@
-a{
-    text-decoration:none; 
+html{
+    min-height: 100vh;
 }
-a:hover{
-    text-decoration:none;
+
+main {
+    min-height: 100vh;
+}
+
+section {
+  margin-bottom: 1.4em;
+}
+a, .link{
+    color: black;
+    text-decoration:none ; 
+}
+a:hover, .link:hover{
+    text-decoration:none ;
     color:#E53136;
 }
+
+.primaryColor{   
+    color: #E53136;
+}
+.blackColor{
+    color: black;
+}
+#wrapper {
+    height: 100%;    
+}
+
 #navBarItem:hover{
     color:#E53136 ;
     text-decoration:none;
@@ -12,12 +35,24 @@ a:hover{
 #navBarItem{
     text-decoration:none;
 }
-.primaryColor{   
+footer{
+  margin-top: 5em;
+    
+}
+footer #languages{
+    display: inline-block;
+    float: right;
+    margin-right: 20px;
+}
+footer #languages a{
+    border-right: 1px solid black;
+    padding-right: 5px;
+    padding-left: 5px;
+}
+footer #languages a:hover{
     color: #E53136;
 }
-.blackColor{
-    color: black;
-}
+
 #createPapperForm{
     margin-right: 50px;
     margin-left: 50px;
@@ -31,6 +66,7 @@ a:hover{
 }
 .form-group input{
     border: 1px solid black;
+    box-shadow: none; 
 }
 .form-group .form-control:focus{
     border: 1px solid #E53136;
@@ -60,22 +96,95 @@ a:hover{
     border: 1px solid black !important;
     border-width: thick;        
 }
-.row{
-    margin-top: 50px;
-}
 .btn{
     border-color: #E53136 !important;
 }
-.submitButton{
+
+.submitButton,.btn-secondary{
     color: white;
-    background-color: #E53136;
+    background-color: #E53136 !important;
+}
+.submitButton:hover{
+    color: white;
 }
 .cancelButton{
     color: #E53136;
     background-color: white;
 }
+.cancelButton:hover{
+    color: #E53136;
+}
 .form-group #id_state{
     display: inline-block !important;
     margin-left: 30px;
     vertical-align: middle;
+}
+ /* paper list page*/
+ #paperLabel{
+    color: #E53136;
+}
+.table thead tr th{
+    border-top-color: #E53136 !important;
+    border-bottom-color: black;
+    color: #E53136;
+    padding-top: 40px;
+}
+.table td {
+    border-top-color: black !important;
+}
+.table td a{
+    color: black;
+}
+.table td a:hover{
+    color: #E53136;
+    text-decoration: none;
+}
+/*paper detail*/
+#paperDetail{
+    height: 100% !important;
+}
+#paperTitle{
+    color: #E53136 !important;
+    text-align: center;
+}
+#commentForm{
+    margin-top: 10px; 
+    width: 100%;
+}
+#paperContent{
+    margin-top: 0; 
+    padding: 20px;
+    border: 1px solid black;
+    border-radius: 10px;
+}
+#amendments{
+    text-align: center;
+}
+
+.amendmentListReason{
+    border: 1px solid red ; 
+    border-radius: 5px; 
+    padding: 20px; 
+    margin-bottom: 30px;
+    margin-top: 5px;
+    
+}
+
+
+del {
+  background-color:  #ffa9a9;
+}
+
+ins {
+    background: #a8ffa8;
+}
+
+.comment {
+  margin: 0.25em;
+  border-bottom: solid black 1px;
+  padding-bottom: 0.5em;
+}
+
+.amendment-content p {
+  margin-bottom: 0;
 }
