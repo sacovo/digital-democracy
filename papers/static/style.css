@@ -1,3 +1,14 @@
+/* Color variables */
+:root {
+    --main-bg-color: white;
+    --white: white;
+    --black: black;
+    --red: #f13338;
+    --red-hover: #fc5557;
+    --red-deleted: #ffa9a9;
+    --green-inserted: #a8ffa8;
+}
+
 html{
     min-height: 100vh;
 }
@@ -10,29 +21,32 @@ section {
   margin-bottom: 1.4em;
 }
 a, .link{
-    color: black;
+    color: var(--black);
     text-decoration:none ; 
 }
-a:hover, .link:hover{
+a:hover,
+.link:hover{
     text-decoration:none ;
-    color:#E53136;
+    color: var(--red);
 }
 
 .primaryColor{   
-    color: #E53136;
+    color: var(--red);
 }
+
 .blackColor{
-    color: black;
+    color: var(--black);
 }
 #wrapper {
     height: 100%;    
 }
 
 #navBarItem:hover{
-    color:#E53136 ;
+    color: var(--red);
     text-decoration:none;
 }
 #navBarItem{
+    color: var(--black);
     text-decoration:none;
 }
 footer{
@@ -50,10 +64,10 @@ footer #languages a{
     padding-left: 5px;
 }
 footer #languages a:hover{
-    color: #E53136;
+    color: var(--red);
 }
 
-#createPapperForm{
+#createPaperForm{
     margin-right: 50px;
     margin-left: 50px;
 }
@@ -61,15 +75,15 @@ footer #languages a:hover{
   display: block;
 }
 .form-group label{
-    color:#E53136;
+    color: var(--red);
     display: inline;
 }
 .form-group input{
-    border: 1px solid black;
+    border: 1px solid var(--black);
     box-shadow: none; 
 }
 .form-group .form-control:focus{
-    border: 1px solid #E53136;
+    border: 1px solid var(--red);
     box-shadow: 0 0 0 0.2rem rgba(228,2,45,.25);
 }
 
@@ -84,7 +98,7 @@ footer #languages a:hover{
 }
 
 .form-group .radio .form-check label{
-    color: black;
+    color: var(--black);
 }
 .django-ckeditor-widget{
     display: block;
@@ -93,27 +107,40 @@ footer #languages a:hover{
 }
 .cke_chrome {
     border-radius: 5px;
-    border: 1px solid black !important;
+    border: 1px solid var(--black);
     border-width: thick;        
 }
+
+/* Buttons */
 .btn{
-    border-color: #E53136 !important;
+    border-color: var(--red);
+}
+/* Submit- / Secondary-Button */
+.submitButton,.btn-secondary{
+    color: var(--white);
+    background-color: var(--red);
+}
+.btn-secondary:hover{
+    color: var(--white);
+    background-color: var(--red-hover);
+    border-color: var(--red-hover);
 }
 
-.submitButton,.btn-secondary{
-    color: white;
-    background-color: #E53136 !important;
-}
 .submitButton:hover{
-    color: white;
+    color: var(--white);
+    background-color: var(--red-hover);
+    border-color: var(--red-hover);
 }
+/* Cancel Button */
 .cancelButton{
-    color: #E53136;
-    background-color: white;
+    color: var(--red);
+    background-color: var(--white);
 }
 .cancelButton:hover{
-    color: #E53136;
+    color: var(--white);
+    background-color: var(--red);
 }
+
 .form-group #id_state{
     display: inline-block !important;
     margin-left: 30px;
@@ -121,22 +148,22 @@ footer #languages a:hover{
 }
  /* paper list page*/
  #paperLabel{
-    color: #E53136;
+    color: var(--red);
 }
 .table thead tr th{
-    border-top-color: #E53136 !important;
-    border-bottom-color: black;
-    color: #E53136;
+    border-top-color: var(--red);
+    border-bottom-color: var(--black);
+    color: var(--red);
     padding-top: 40px;
 }
 .table td {
-    border-top-color: black !important;
+    border-top-color: var(--black);
 }
 .table td a{
-    color: black;
+    color: var(--black);
 }
 .table td a:hover{
-    color: #E53136;
+    color: var(--red);
     text-decoration: none;
 }
 /*paper detail*/
@@ -144,7 +171,7 @@ footer #languages a:hover{
     height: 100% !important;
 }
 #paperTitle{
-    color: #E53136 !important;
+    color: var(--red);
     text-align: center;
 }
 #commentForm{
@@ -154,7 +181,7 @@ footer #languages a:hover{
 #paperContent{
     margin-top: 0; 
     padding: 20px;
-    border: 1px solid black;
+    border: 1px solid var(--black);
     border-radius: 10px;
 }
 #amendments{
@@ -162,26 +189,24 @@ footer #languages a:hover{
 }
 
 .amendmentListReason{
-    border: 1px solid red ; 
+    border: 1px solid var(--red);
     border-radius: 5px; 
     padding: 20px; 
     margin-bottom: 30px;
     margin-top: 5px;
-    
 }
 
-
 del {
-  background-color:  #ffa9a9;
+  background-color: var(--red-deleted);
 }
 
 ins {
-    background: #a8ffa8;
+    background: var(--green-inserted);
 }
 
 .comment {
   margin: 0.25em;
-  border-bottom: solid black 1px;
+  border-bottom: solid var(--black) 1px;
   padding-bottom: 0.5em;
 }
 
