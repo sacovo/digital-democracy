@@ -1,0 +1,27 @@
+{% extends 'papers/base.html' %}
+{% load i18n bootstrap4 %}
+
+{% block title %}
+{% blocktrans %}
+Upload users
+{% endblocktrans %}
+{% endblock %}
+
+
+{% block content %}
+<div class="row justify-content-center">
+  <div class="col-md-8">
+    <form action="" method="POST" enctype="multipart/form-data">
+      {% csrf_token %}
+      {% bootstrap_form form  form_group_class='form-group'%}
+      <button type="submit" class="btn btn-success">{% trans 'Import' %}</button>
+    </form>
+    {% if error %}
+    <div class="alert alert-danger mt-4">
+    {% trans 'there was an error: ' %}
+    <pre>{{error}}</pre>
+    </div>
+    {% endif %}
+  </div>
+</div>
+{% endblock %}

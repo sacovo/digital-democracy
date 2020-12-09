@@ -127,3 +127,11 @@ class CommentForm(forms.Form):
             tags=settings.BLEACH_ALLOWED_TAGS,
             attributes=settings.BLEACH_ALLOWED_ATTRIBUTES,
         )
+
+
+class UserUploadForm(forms.Form):
+    """
+    Form for uploading a bunch of users in bulk
+    """
+
+    csv_file = forms.FileField()

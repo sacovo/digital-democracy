@@ -17,7 +17,6 @@ from django.utils.translation import gettext_lazy as _
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.0/howto/deployment/checklist/
 
@@ -28,7 +27,6 @@ SECRET_KEY = "w@71fz+(h-v*q&h1iqbv69nz20m@2h3!+0jz1zs^uml7em6j#c"
 DEBUG = int(os.environ.get("DEBUG", "0"))
 
 ALLOWED_HOSTS = ["*"]
-
 
 # Application definition
 
@@ -76,7 +74,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = "backend.wsgi.application"
 
-
 # Database
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
 DATABASES = {
@@ -90,7 +87,6 @@ DATABASES = {
     }
 }
 
-
 # Password validation
 # https://docs.djangoproject.com/en/3.0/ref/settings/#auth-password-validators
 
@@ -102,7 +98,6 @@ AUTH_PASSWORD_VALIDATORS = [
     {"NAME": "django.contrib.auth.password_validation.CommonPasswordValidator"},
     {"NAME": "django.contrib.auth.password_validation.NumericPasswordValidator"},
 ]
-
 
 # Internationalization
 # https://docs.djangoproject.com/en/3.0/topics/i18n/
@@ -118,7 +113,6 @@ USE_I18N = True
 USE_L10N = True
 
 USE_TZ = True
-
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
@@ -140,7 +134,6 @@ EMAIL_HOST_PASSWORD = os.environ.get("SMTP_PASSWORD", "pw")
 
 DEFAULT_FROM_EMAIL = os.environ.get("DEFAULT_FROM_EMAIL", "webmaster@localhost")
 SERVER_EMAIL = os.environ.get("SERVER_EMAIL", "root@localhost")
-
 
 CELERY_BROKER_URL = "redis://redis:6379"
 
@@ -181,6 +174,14 @@ BLEACH_ALLOWED_ATTRIBUTES = {"a": ["href", "title"]}
 LOGIN_URL = "/members/login"
 LOGIN_REDIRECT_URL = "/members/profile"
 LOGOUT_REDIRECT_URL = "/members/login"
+
+NEW_USER_MAIL = """Hello {user.first_name},
+
+You have a new account on https://digital-democracy.sp-ps.ch/. You can
+login with your username ({user.username}) and password ({password}).
+
+Have fun!
+"""
 
 if DEBUG:
     EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"

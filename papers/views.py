@@ -1,12 +1,14 @@
 """
 Paper views
 """
-from django.contrib.auth.decorators import login_required
+from django.contrib import messages
+from django.contrib.auth.decorators import login_required, permission_required
 from django.http import Http404
 from django.shortcuts import redirect, render
 from django.utils import timezone
+from django.utils.translation import gettext as _
 
-from papers import forms, models
+from papers import forms, models, utils
 
 # Create your views here.
 
@@ -262,4 +264,37 @@ def amendment_list(request, paper_pk, tag, language_code):
 
     return render(
         request, "papers/amendments_by_tag.html", {"amendment_list": amendments}
+    )
+
+
+@permission_required("auth.add_user")
+def upload_users(request):
+    upload_form = forms.UserUploadForm()
+
+    if request.method == "POST":
+        upload_form = forms.UserUploadForm(request.POST, request.FILES)
+
+        if upload_form.is_valid():
+            csv_file = upload_form.cleaned_data["csv_file"].file
+            try:
+                imported_users = utils.import_users_from_csv(csv_file)
+                messages.success(request, _(f"{imported_users} were imported!"))
+
+                return redirect("admin:auth_user_changelist")
+            except Exception as e:
+                return render(
+                    request,
+                    "members/user_upload.html",
+                    {
+                        "form": upload_form,
+                        "error": e,
+                    },
+                )
+
+    return render(
+        request,
+        "members/user_upload.html",
+        {
+            "form": upload_form,
+        },
     )

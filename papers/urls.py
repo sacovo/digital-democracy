@@ -68,6 +68,7 @@ urlpatterns = [
         name="password_reset_complete",
     ),
     path("members/profile/", views.members_profile, name="profile"),
+    path("members/upload-users/", views.upload_users, name="upload_users"),
     path("comments/<int:comment_pk>/like/", views.like_comment, name="comment_like"),
     path(
         "amendments/<int:amendment_pk>/like/",
