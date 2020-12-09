@@ -55,7 +55,7 @@
         <h2 id="amendments">{% trans 'amendments' %}</h2>
         <ul>
           {% for amendment in translation.amendment_list %}
-          <a class="link" href="{% url 'amendment-detail' amendment.pk %}">
+          <a class="link" href="{% url 'amendment-detail' amendment.pk %}" data-content="{{amendment.extract_content|safe}}">
             <h3 class="h5">{{amendment.title}}</h3>
             {% blocktrans with name=amendment.author.name created_at=amendment.created_at %}{{name}} at {{created_at}}{% endblocktrans %}
           </a>
@@ -66,5 +66,16 @@
   </div>
   {% endfor %}
 </div>
+<script>
+  $(document).ready(function(){
+    var paperConent = $("#paperContent article div").text()
+    $(".link").hover(function(){      
+      var content = $(this).data("content")
+      $("#paperContent article div").html(content);
+    }, function(){
+      $("#paperContent article div").text(paperConent)
+    })
+  })
+</script>
 {% endblock %}
 
