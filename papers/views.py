@@ -221,11 +221,30 @@ def like_comment(request, comment_pk):
 
 
 @login_required
-def members_profile(request):
+def members_profile(request, user_id=None):
     """
     Profile page
+    If no user id is specified, default to showing the logged in user's profile
     """
-    return render(request, "registration/profile.html")
+    if user_id is not None:
+        member = models.User.objects.get(id=user_id)
+    else:
+        member = request.user
+    if hasattr(member, "author"):
+        author = member.author
+        comments = author.comment_set.all()
+        papers = author.paper_set.all()
+        amendments = author.amendment_set.all()
+    else:
+        comments = models.Comment.objects.none()
+        papers = models.Paper.objects.none()
+        amendments = models.Amendment.objects.none()
+
+    return render(
+        request,
+        "registration/profile.html",
+        {"papers": papers, "comments": comments, "amendments": amendments},
+    )
 
 
 @login_required

@@ -1,13 +1,119 @@
 {% extends 'papers/base.html' %}
 {% load i18n %}
 
-{% block title %}
-Sie sind eingeloggt
-{% endblock %}
+{% block title %}{% trans 'Papers' %}{% endblock %}
 
 {% block content %}
 
-<p>{% blocktrans with username=user %}Logged in as: {{ username }}{% endblocktrans %}</p>
-<p><a href="/members/logout">{% trans 'click here to logout' %}</a></p>
+<h1>{% blocktrans with username=user %}Contributions by {{ username }}{% endblocktrans %}</h1>
+<h2>{% trans 'Papers' %}</h2>
+<table class="table">
+  <caption class="sr-only">{% trans 'amendments' %}</caption>
+  <thead>
+    <tr>
+      <th scope="col">
+        {% trans 'Title' %}
+      </th>
+      <th scope="col">
+        {% trans 'Created at' %}
+      </th>
+      <th scope="col">
+        {% trans 'deadline for amendments' %}
+      </th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      {% for paper in papers %}
+      <tr>
+        <td>
+          <a href="{% url 'paper-detail' paper.pk %}">
+            {{ paper }}
+          </a>
+        </td>
+        <td>
+          {{ paper.created_at }}
+        </td>
+        <td>
+          {{ paper.amendment_deadline }}
+        </td>
+      </tr>
+      {% endfor %}
+    </tr>
+  </tbody>
+</table>
 
+<h2>{% trans 'Amendments' %}</h2>
+<table class="table">
+  <caption class="sr-only">{% trans 'amendments' %}</caption>
+  <thead>
+    <tr>
+      <th scope="col">
+        {% trans 'Title' %}
+      </th>
+      <th scope="col">
+        {% trans 'State' %}
+      </th>
+      <th scope="col">
+        {% trans '# Supporters' %}
+      </th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      {% for amendment in amendments %}
+      <tr>
+        <td>
+          <a href="{% url 'amendment-detail' amendment.pk %}">
+            {{ amendment.paper }}, {{ amendment.title }}
+          </a>
+        </td>
+        <td>
+            {{ amendment.state }}
+        </td>
+        <td>
+          {{ amendment.supporters.count }}
+        </td>
+      </tr>
+      {% endfor %}
+    </tr>
+  </tbody>
+</table>
+
+<h2>{% trans 'Comments' %}</h2>
+<table class="table">
+  <caption class="sr-only">{% trans 'Comments' %}</caption>
+  <thead>
+    <tr>
+      <th scope="col">
+        {% trans 'Amendment' %}
+      </th>
+      <th scope="col">
+        {% trans 'Comment' %}
+      </th>
+	  <th scope="col">
+        {% trans 'Likes' %}
+      </th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      {% for comment in comments %}
+      <tr>
+        <td>
+          <a href="{% url 'amendment-detail' comment.amendment.pk %}">
+            {{ comment.amendment.paper }} #{{ comment.amendment.title }}
+          </a>
+        </td>
+        <td>
+            {{ comment.body |truncatechars:100 |safe }}
+        </td>
+		<td>
+            {{ comment.likes.count }}
+        </td>
+      </tr>
+      {% endfor %}
+    </tr>
+  </tbody>
+</table>
 {% endblock %}
