@@ -285,16 +285,7 @@ def upload_users(request):
                 return render(
                     request,
                     "members/user_upload.html",
-                    {
-                        "form": upload_form,
-                        "error": e,
-                    },
+                    {"form": upload_form, "error": e},
                 )
 
-    return render(
-        request,
-        "members/user_upload.html",
-        {
-            "form": upload_form,
-        },
-    )
+    return render(request, "members/user_upload.html", {"form": upload_form})
