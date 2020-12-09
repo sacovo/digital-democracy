@@ -21,7 +21,7 @@ class PaperTestCase(TestCase):
     """
 
     def setUp(self):
-        models.Paper.objects.create(
+        self.paper = models.Paper.objects.create(
             amendment_deadline=timezone.now() + timedelta(days=10),
             working_title="Test Paper",
             state="draft",
@@ -70,6 +70,49 @@ class PaperTestCase(TestCase):
             paper.missing_translations(),
             msg="Added translation is not missing.",
         )
+
+    def test_start_zero_amendments(self):
+        """Check if we start with zero amendments"""
+        self.assertEqual(self.paper.count_amendments(), 0)
+
+    def test_add_amendment(self):
+        """Count should increase with a new public amendment"""
+        amendment = self.paper.amendment_set.create(
+            language_code="de",
+            content="Content",
+            author=models.Author.objects.create(
+                user=get_user_model().objects.create(username="test_user_for_counting")
+            ),
+            state="draft",
+            reason="reason",
+        )
+
+        self.assertEqual(0, self.paper.count_amendments())
+
+        amendment.state = "public"
+        amendment.save()
+
+        self.assertEqual(1, self.paper.count_amendments())
+
+    def test_start_zero_comments(self):
+        """Count should start with zero"""
+        self.assertEqual(self.paper.count_comments(), 0)
+
+    def test_add_comment(self):
+        """Start with zero comments"""
+        amendment = self.paper.amendment_set.create(
+            language_code="de",
+            content="Test addign a comment",
+            author=models.Author.objects.create(
+                user=get_user_model().objects.create(username="test-comments")
+            ),
+            state="public",
+            reason="reason",
+        )
+
+        amendment.comments.create(body="Test addign a comment")
+
+        self.assertEqual(1, self.paper.count_amendments())
 
 
 class ExtractorTestCase(TestCase):
