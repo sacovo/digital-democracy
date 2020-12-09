@@ -55,9 +55,6 @@
         </form>
         {% endif %}
         <a class="btn btn-sm  submitButton" href="{% url 'amendment-edit' amendment.pk %}">{% trans 'edit' %}</a>
-        <a class="btn btn-sm  cancelButton" href="{% url 'paper-detail' amendment.paper.pk %}">
-          {{amendment.paper.working_title}}
-        </a>
       </div>
     </section>
 
@@ -102,7 +99,10 @@
         {% endfor %}
       </ul>
     </section>
+    <br><br>
+    <a class="btn btn-sm  backButton" href="{% url 'paper-detail' amendment.paper.pk %}">Back</a>
   </div>
+
 
   <div class="col-md-4">
     <!-- Implements Comment section-->
