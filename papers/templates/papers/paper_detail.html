@@ -29,9 +29,8 @@
   <div class="tab-pane {% if forloop.first %}active show{% endif %}" id="{{translation.language_code}}" role="tabpanel">
     <div class="row mt-4">
       <div class="col-md-8">
-        <h2>
-          {{translation.title}}
-        </h2>
+        <h2>{{translation.title}}</h2>
+          <h3 class="h5">{% trans 'Deadline for this paper: ' %}{{paper.amendment_deadline}}</h3>
         <div id="paperContent" class="content">
           <article>
             <div> {{translation.content_safe}}</div>
