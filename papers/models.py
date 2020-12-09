@@ -94,6 +94,36 @@ class Paper(models.Model):
         """
         return self.translation_set.get(language_code=language_code)
 
+    def count_amendments(self):
+        """
+        Return the amount of public amendments to this paper
+        """
+        return len(self.amendment_set.filter(state="public"))
+
+    def count_comments(self):
+        """
+        Return the amount of comments to this paper
+        """
+        return len(
+            Comment.objects.filter(amendment__paper=self, amendment__state="public")
+        )
+
+    def latest_amendment(self):
+        """
+        Return the datetime of the latest amendment, fails if no amendments
+        """
+        return self.amendment_set.order_by("-created_at").first()
+
+    def latest_comment(self):
+        """
+        Return the latest comment to this amendment
+        """
+        return (
+            Comment.objects.filter(amendment__paper=self, amendment__state="public")
+            .order_by("-created_on")
+            .first()
+        )
+
     class Meta:
         verbose_name = _("paper")
         verbose_name_plural = _("papers")
