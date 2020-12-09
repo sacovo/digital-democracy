@@ -3,7 +3,7 @@
 {% load bootstrap4 %}
 
 {% block title %}
-{{amendment.translation.title}}
+{{amendment.translation.title}} - {{amendment.title}}
 {% endblock %}
 
 
@@ -12,7 +12,7 @@
 <div class="row mt-4">
   <div class="col-md-8">
     <h1 class="h3">
-      {{amendment.translation.title}}
+      {{amendment.translation.title}} - {{amendment.title}}
     </h1>
     <section class="amendment-copntent">
       <span>
@@ -55,14 +55,11 @@
         </form>
         {% endif %}
         <a class="btn btn-sm  submitButton" href="{% url 'amendment-edit' amendment.pk %}">{% trans 'edit' %}</a>
-        <a class="btn btn-sm  cancelButton" href="{% url 'paper-detail' amendment.paper.pk %}">
-          {{amendment.paper.working_title}}
-        </a>
       </div>
     </section>
 
     <section class="tags">
-      <h2 class="h4">{% trans 'Tags:' %}</h2>
+      <h2 class="h4">{% trans "Tags" %}</h2>
       <ul>
         {% for tag in amendment.tags.all %}
         <li>
@@ -73,19 +70,27 @@
     </section>
 
     <section class="support">
-      <h2 class="h4">{% trans 'Support this amendment:' %}</h2>
+      <h2 class="h4">{% trans "Sign this amendment" %}</h2>
       <form action="{% url 'support-amendment' amendment.pk %}" method="POST">
         {% csrf_token %}
-        <button type="submit" class="btn btn-sm submitButton">
+        <input type="checkbox" id="cb-sign-amendment" name="sign-amendment" value="sign-amendment">
+        <label for="sign-amendment">
+            {% if request.user in amendment.supporters.all %}
+            {% trans "I revoke my signature." %}
+            {% else %}
+            {% trans "I hereby sign this amendment." %}
+            {% endif %}
+        </label>
+        <button type="submit" id="btn-support-amendment" class="btn btn-sm submitButton" disabled>
           {% if request.user in amendment.supporters.all %}
           {% trans "Don't support anymore" %}
           {% else %}
-          {% trans 'Support this amendment' %}
+          {% trans "Support this amendment" %}
           {% endif %}
         </button>
       </form>
 
-      <h3 class="h5">{% trans 'This amendment is supported by' %} ({{amendment.num_supporters}}) :</h3>
+      <h5 class="h5">{% trans "This amendment is supported by" %} {{amendment.num_supporters}} {% trans "members" %}</h5>
       <ul>
         {% for supporter in amendment.supporters.all %}
         <li>
@@ -94,7 +99,10 @@
         {% endfor %}
       </ul>
     </section>
+    <br><br>
+    <a class="btn btn-sm  backButton" href="{% url 'paper-detail' amendment.paper.pk %}">Back</a>
   </div>
+
 
   <div class="col-md-4">
     <!-- Implements Comment section-->
@@ -155,5 +163,16 @@
     <!-- Implements Comment section-->
   </div>
 </div>
+
+<script>
+    $(document).ready(function(){
+        $("#cb-sign-amendment").click(function(){
+        if($("#cb-sign-amendment").is(':checked'))
+            $("#btn-support-amendment").attr("disabled",false)
+        else
+            $("#btn-support-amendment").attr("disabled",true)
+        })
+    });
+</script>
 
 {% endblock %}

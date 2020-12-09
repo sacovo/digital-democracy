@@ -42,6 +42,7 @@ class AmendmentForm(forms.Form):
     Form to create or update an amendment
     """
 
+    title = forms.CharField(label=_("title"))
     content = forms.CharField(
         widget=CKEditorWidget(config_name="track-changes"), label=_("content")
     )
@@ -58,6 +59,7 @@ class AmendmentForm(forms.Form):
             self.fields["content"].initial = self.translation.content
 
         elif self.amendment:
+            self.fields["title"].initial = self.amendment.title
             self.fields["content"].initial = self.amendment.content
             self.fields["reason"].initial = self.amendment.reason
 
@@ -68,11 +70,13 @@ class AmendmentForm(forms.Form):
         """
         content = self.cleaned_data["content"]
         reason = self.cleaned_data["reason"]
+        title = self.cleaned_data["title"]
 
         return models.Amendment.objects.create(
             paper=translation.paper,
             language_code=translation.language_code,
             author=author,
+            title=title,
             content=content,
             state="draft",
             reason=reason,
@@ -127,3 +131,11 @@ class CommentForm(forms.Form):
             tags=settings.BLEACH_ALLOWED_TAGS,
             attributes=settings.BLEACH_ALLOWED_ATTRIBUTES,
         )
+
+
+class UserUploadForm(forms.Form):
+    """
+    Form for uploading a bunch of users in bulk
+    """
+
+    csv_file = forms.FileField()
