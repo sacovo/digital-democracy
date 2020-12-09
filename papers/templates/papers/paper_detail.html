@@ -56,8 +56,8 @@
         <ul>
           {% for amendment in translation.amendment_list %}
           <a class="link" href="{% url 'amendment-detail' amendment.pk %}">
+            <h3 class="h5">{{amendment.title}}</h3>
             {% blocktrans with name=amendment.author.name created_at=amendment.created_at %}{{name}} at {{created_at}}{% endblocktrans %}
-            <div class="amendmentListReason">{{amendment.reason|truncatechars_html:"60"|safe}}</div>
           </a>
           {% endfor %}
         </ul>

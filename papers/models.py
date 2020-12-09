@@ -159,6 +159,8 @@ class Amendment(models.Model):
 
     translations = models.ManyToManyField("self", verbose_name=_("translations"))
 
+    title = models.CharField(max_length=120, blank=True)
+
     def save(self, *args, **kwargs):  # pylint: disable=W0222
         """
         Save the amendment to the database, also updates the start_index to the index

@@ -133,9 +133,11 @@ def amendment_edit(request, amendment_pk):
         if form.is_valid():
             content = form.cleaned_data.get("content")
             reason = form.cleaned_data.get("reason")
+            title = form.cleaned_data.get("title")
 
             amendment.content = content
             amendment.reason = reason
+            amendment.title = title
             amendment.save()
 
             return redirect("amendment-detail", amendment.pk)
