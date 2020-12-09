@@ -21,7 +21,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/3.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = "w@71fz+(h-v*q&h1iqbv69nz20m@2h3!+0jz1zs^uml7em6j#c"
+SECRET_KEY = os.environ.get("SECRET_KEY", "change-me")
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = int(os.environ.get("DEBUG", "0"))
@@ -56,21 +56,19 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = "backend.urls"
 
-TEMPLATES = [
-    {
-        "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [],
-        "APP_DIRS": True,
-        "OPTIONS": {
-            "context_processors": [
-                "django.template.context_processors.debug",
-                "django.template.context_processors.request",
-                "django.contrib.auth.context_processors.auth",
-                "django.contrib.messages.context_processors.messages",
-            ]
-        },
-    }
-]
+TEMPLATES = [{
+    "BACKEND": "django.template.backends.django.DjangoTemplates",
+    "DIRS": [],
+    "APP_DIRS": True,
+    "OPTIONS": {
+        "context_processors": [
+            "django.template.context_processors.debug",
+            "django.template.context_processors.request",
+            "django.contrib.auth.context_processors.auth",
+            "django.contrib.messages.context_processors.messages",
+        ]
+    },
+}]
 
 WSGI_APPLICATION = "backend.wsgi.application"
 
@@ -79,7 +77,8 @@ WSGI_APPLICATION = "backend.wsgi.application"
 DATABASES = {
     "default": {
         "ENGINE": os.environ.get("SQL_ENGINE", "django.db.backends.sqlite3"),
-        "NAME": os.environ.get("POSTGRES_DB", os.path.join(BASE_DIR, "db.sqlite3")),
+        "NAME": os.environ.get("POSTGRES_DB",
+                               os.path.join(BASE_DIR, "db.sqlite3")),
         "USER": os.environ.get("POSTGRES_USER", "user"),
         "PASSWORD": os.environ.get("POSTGRES_PASSWORD", "password"),
         "HOST": os.environ.get("SQL_HOST", "localhost"),
@@ -92,11 +91,21 @@ DATABASES = {
 
 AUTH_PASSWORD_VALIDATORS = [
     {
-        "NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator"
+        "NAME":
+        "django.contrib.auth.password_validation.UserAttributeSimilarityValidator"
     },
-    {"NAME": "django.contrib.auth.password_validation.MinimumLengthValidator"},
-    {"NAME": "django.contrib.auth.password_validation.CommonPasswordValidator"},
-    {"NAME": "django.contrib.auth.password_validation.NumericPasswordValidator"},
+    {
+        "NAME":
+        "django.contrib.auth.password_validation.MinimumLengthValidator"
+    },
+    {
+        "NAME":
+        "django.contrib.auth.password_validation.CommonPasswordValidator"
+    },
+    {
+        "NAME":
+        "django.contrib.auth.password_validation.NumericPasswordValidator"
+    },
 ]
 
 # Internationalization
@@ -120,7 +129,8 @@ USE_TZ = True
 STATIC_URL = "/static/"
 STATIC_ROOT = "/home/app/web/static/"
 
-DEFAULT_FROM_EMAIL = os.environ.get("DEFAULT_FROM_EMAIL", "webmaster@localhost")
+DEFAULT_FROM_EMAIL = os.environ.get("DEFAULT_FROM_EMAIL",
+                                    "webmaster@localhost")
 SERVER_EMAIL = os.environ.get("SERVER_EMAIL", "root@localhost")
 
 EMAIL_HOST = os.environ.get("SMTP_HOST", "smtp")
@@ -132,7 +142,8 @@ EMAIL_USE_SSL = int(os.environ.get("SMTP_SSL", "0"))
 EMAIL_HOST_USER = os.environ.get("SMTP_USER", "user")
 EMAIL_HOST_PASSWORD = os.environ.get("SMTP_PASSWORD", "pw")
 
-DEFAULT_FROM_EMAIL = os.environ.get("DEFAULT_FROM_EMAIL", "webmaster@localhost")
+DEFAULT_FROM_EMAIL = os.environ.get("DEFAULT_FROM_EMAIL",
+                                    "webmaster@localhost")
 SERVER_EMAIL = os.environ.get("SERVER_EMAIL", "root@localhost")
 
 CELERY_BROKER_URL = "redis://redis:6379"
@@ -141,9 +152,17 @@ CELERY_RESULT_BACKEND = "django-db"
 CELERY_CACHE_BACKEND = "django-cache"
 
 CKEDITOR_CONFIGS = {
-    "default": {"width": "100%"},
-    "basic": {"toolbar": "Basic", "width": "100%"},
-    "track-changes": {"extraPlugins": ",".join(["lite"]), "width": "100%"},
+    "default": {
+        "width": "100%"
+    },
+    "basic": {
+        "toolbar": "Basic",
+        "width": "100%"
+    },
+    "track-changes": {
+        "extraPlugins": ",".join(["lite"]),
+        "width": "100%"
+    },
 }
 
 BLEACH_ALLOWED_TAGS = [
