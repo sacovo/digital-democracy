@@ -71,6 +71,10 @@
   </div>
   {% endfor %}
 </div>
+{% endblock %}
+
+{% block scripts %}
+{{block.super}}
 <script>
   $(document).ready(function(){
     var paperConent = $("#paperContent article div").text()
