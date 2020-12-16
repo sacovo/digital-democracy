@@ -160,7 +160,7 @@ footer #languages a:hover{
     border-top-color: var(--black);
 }
 .table td a{
-    color: var(--black);
+    color: #007bff;
 }
 .table td a:hover{
     color: var(--red);
@@ -194,7 +194,9 @@ footer #languages a:hover{
     padding: 20px; 
     margin-bottom: 30px;
     margin-top: 5px;
+    
 }
+
 
 del {
   background-color: var(--red-deleted);
