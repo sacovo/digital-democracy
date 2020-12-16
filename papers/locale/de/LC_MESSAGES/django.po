@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-12-16 08:48+0000\n"
+"POT-Creation-Date: 2020-12-16 09:08+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -115,7 +115,7 @@ msgstr "Übersetzungen"
 msgid "amendment"
 msgstr "Antrag"
 
-#: papers/models.py:268 papers/templates/papers/paper_detail.html:54
+#: papers/models.py:268 papers/templates/papers/paper_detail.html:60
 #: papers/templates/registration/profile.html:11
 #: papers/templates/registration/profile.html:48
 msgid "amendments"
@@ -260,7 +260,7 @@ msgid "Papers"
 msgstr "Papiere"
 
 #: papers/templates/papers/amendments_by_tag.html:10
-#: papers/templates/papers/paper_detail.html:59
+#: papers/templates/papers/paper_detail.html:65
 #, python-format
 msgid "%(name)s at %(created_at)s"
 msgstr "%(name)s um %(created_at)s"
@@ -286,7 +286,7 @@ msgid "sign in"
 msgstr "Anmelden"
 
 #: papers/templates/papers/includes/translation_list.html:19
-#: papers/templates/papers/paper_detail.html:41
+#: papers/templates/papers/paper_detail.html:47
 msgid "create amendment"
 msgstr "Antrag verfassen"
 
@@ -309,15 +309,19 @@ msgstr "%(title)s erstellt! "
 msgid "all papers"
 msgstr "Alle Papiere"
 
-#: papers/templates/papers/paper_detail.html:33
+#: papers/templates/papers/paper_detail.html:35
+msgid "Authors"
+msgstr "Autor*innen"
+
+#: papers/templates/papers/paper_detail.html:39
 msgid "Deadline for this paper: "
 msgstr ""
 
-#: papers/templates/papers/paper_detail.html:45
+#: papers/templates/papers/paper_detail.html:51
 msgid "update translation"
 msgstr "Übersetzung aktualisieren"
 
-#: papers/templates/papers/paper_detail.html:50
+#: papers/templates/papers/paper_detail.html:56
 msgid "back"
 msgstr ""
 
@@ -434,6 +438,7 @@ msgid "Email senden"
 msgstr ""
 
 #: papers/templates/registration/profile.html:8
+#, python-format
 msgid "Contributions by %(username)s"
 msgstr "Mitarbeiten von: %(username)s"
 
@@ -467,7 +472,6 @@ msgstr "Likes"
 
 #: papers/utils.py:91
 msgid "New digital-democracy account"
-
 msgstr "Neuer Account für Digital Democracy"
 
 #: papers/views.py:302

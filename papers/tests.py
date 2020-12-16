@@ -26,6 +26,8 @@ class PaperTestCase(TestCase):
             working_title="Test Paper",
             state="draft",
         )
+        self.user = get_user_model().objects.create_user(username="test")
+        self.author = models.Author.objects.create(user=self.user)
 
     def test_missing_translations(self):
         """
