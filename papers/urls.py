@@ -13,7 +13,7 @@ urlpatterns = [
     path("newsfeed/", views.newsfeed, name="newsfeed"),
     path(
         "paper/<int:paper_pk>/<str:language_code>/create-amendment/",
-        views.paper_edit,
+        views.amendment_create,
         name="create-amendment",
     ),
     path(

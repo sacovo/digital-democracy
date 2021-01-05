@@ -34,9 +34,9 @@ def paper_detail(request, paper_pk):
 
 
 @login_required
-def paper_edit(request, paper_pk, language_code):
+def amendment_create(request, paper_pk, language_code):
     """
-    View to create a new amendmen
+    View to create a new amendment
     """
     paper = models.Paper.objects.get(pk=paper_pk)
     translation = paper.translation_set.get(language_code=language_code)
@@ -48,8 +48,11 @@ def paper_edit(request, paper_pk, language_code):
 
         if form.is_valid():
             author, _ = models.Author.objects.get_or_create(user=request.user)
-
             amendment = form.create_amendment(translation, author)
+
+            user = request.user
+            amendment.supporters.add(user.pk)
+
             return redirect("amendment-detail", amendment.pk)
 
     return render(
