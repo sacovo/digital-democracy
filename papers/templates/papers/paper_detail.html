@@ -37,7 +37,7 @@
         {{authors.name}}{% if not forloop.last %},{% endif %}
         {% endfor %}  
           <h3 class="h5">{% trans 'Deadline for this paper: ' %}{{paper.amendment_deadline}}</h3>
-        <div id="paperContent" class="content">
+        <div id="paperContent-{{translation.language_code}}" class="content">
           <article>
             <div> {{translation.content_safe}}</div>
           </article>
@@ -75,16 +75,17 @@
 
 {% block scripts %}
 {{block.super}}
+  {% for translation in paper.translation_set.all %}
 <script>
   $(document).ready(function(){
-    var paperConent = $("#paperContent article div").text()
-    $(".link").hover(function(){      
+    var paperConent{{translation.language_code}} = $("#paperContent-{{translation.language_code}} article div").html()
+    $("#{{translation.language_code}} .link").hover(function(){      
       var content = $(this).data("content")
-      $("#paperContent article div").html(content);
-    }, function(){
-      $("#paperContent article div").text(paperConent)
+      $("#paperContent-{{translation.language_code}} article div").html(content);
+      }, function(){
+        $("#paperContent-{{translation.language_code}} article div").html(paperConent{{translation.language_code}})
     })
   })
 </script>
+  {% endfor %}
 {% endblock %}
-
