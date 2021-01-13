@@ -1,12 +1,14 @@
 """
 Paper views
 """
-from django.contrib.auth.decorators import login_required
+from django.contrib import messages
+from django.contrib.auth.decorators import login_required, permission_required
 from django.http import Http404
 from django.shortcuts import redirect, render
 from django.utils import timezone
+from django.utils.translation import gettext as _
 
-from papers import forms, models
+from papers import forms, models, utils
 
 # Create your views here.
 
@@ -32,9 +34,9 @@ def paper_detail(request, paper_pk):
 
 
 @login_required
-def paper_edit(request, paper_pk, language_code):
+def amendment_create(request, paper_pk, language_code):
     """
-    View to create a new amendmen
+    View to create a new amendment
     """
     paper = models.Paper.objects.get(pk=paper_pk)
     translation = paper.translation_set.get(language_code=language_code)
@@ -46,8 +48,11 @@ def paper_edit(request, paper_pk, language_code):
 
         if form.is_valid():
             author, _ = models.Author.objects.get_or_create(user=request.user)
-
             amendment = form.create_amendment(translation, author)
+
+            user = request.user
+            amendment.supporters.add(user.pk)
+
             return redirect("amendment-detail", amendment.pk)
 
     return render(
@@ -71,11 +76,11 @@ def paper_create(request):
             content = form.cleaned_data["content"]
             language_code = form.cleaned_data["language_code"]
             state = form.cleaned_data["state"]
-
+            author, _ = models.Author.objects.get_or_create(user=request.user)
             paper = models.Paper.objects.create(
                 amendment_deadline=timezone.now(), working_title=title, state=state
             )
-
+            paper.authors.add(author)
             models.PaperTranslation.objects.create(
                 paper=paper, language_code=language_code, title=title, content=content
             )
@@ -131,9 +136,11 @@ def amendment_edit(request, amendment_pk):
         if form.is_valid():
             content = form.cleaned_data.get("content")
             reason = form.cleaned_data.get("reason")
+            title = form.cleaned_data.get("title")
 
             amendment.content = content
             amendment.reason = reason
+            amendment.title = title
             amendment.save()
 
             return redirect("amendment-detail", amendment.pk)
@@ -217,11 +224,30 @@ def like_comment(request, comment_pk):
 
 
 @login_required
-def members_profile(request):
+def members_profile(request, user_id=None):
     """
     Profile page
+    If no user id is specified, default to showing the logged in user's profile
     """
-    return render(request, "registration/profile.html")
+    if user_id is not None:
+        member = models.User.objects.get(id=user_id)
+    else:
+        member = request.user
+    if hasattr(member, "author"):
+        author = member.author
+        comments = author.comment_set.all()
+        papers = author.paper_set.all()
+        amendments = author.amendment_set.all()
+    else:
+        comments = models.Comment.objects.none()
+        papers = models.Paper.objects.none()
+        amendments = models.Amendment.objects.none()
+
+    return render(
+        request,
+        "registration/profile.html",
+        {"papers": papers, "comments": comments, "amendments": amendments},
+    )
 
 
 @login_required
@@ -263,3 +289,27 @@ def amendment_list(request, paper_pk, tag, language_code):
     return render(
         request, "papers/amendments_by_tag.html", {"amendment_list": amendments}
     )
+
+
+@permission_required("auth.add_user")
+def upload_users(request):
+    upload_form = forms.UserUploadForm()
+
+    if request.method == "POST":
+        upload_form = forms.UserUploadForm(request.POST, request.FILES)
+
+        if upload_form.is_valid():
+            csv_file = upload_form.cleaned_data["csv_file"].file
+            try:
+                imported_users = utils.import_users_from_csv(csv_file)
+                messages.success(request, _(f"{imported_users} were imported!"))
+
+                return redirect("admin:auth_user_changelist")
+            except Exception as e:
+                return render(
+                    request,
+                    "members/user_upload.html",
+                    {"form": upload_form, "error": e},
+                )
+
+    return render(request, "members/user_upload.html", {"form": upload_form})

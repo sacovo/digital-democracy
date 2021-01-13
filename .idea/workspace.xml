@@ -43,7 +43,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="8714a3bb-f930-4dea-8404-4a035b8c67ff" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/papers/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/papers/views.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/papers/templates/papers/paper_detail.html" beforeDir="false" afterPath="$PROJECT_DIR$/papers/templates/papers/paper_detail.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -123,6 +125,12 @@
       <workItem from="1605701354243" duration="1417000" />
       <workItem from="1606119892184" duration="7507000" />
       <workItem from="1606201897176" duration="2329000" />
+      <workItem from="1606232549539" duration="388000" />
+      <workItem from="1606290036258" duration="11868000" />
+      <workItem from="1607089857963" duration="76000" />
+      <workItem from="1607174037277" duration="1000" />
+      <workItem from="1607427404880" duration="5138000" />
+      <workItem from="1607518497036" duration="1680000" />
     </task>
     <servers />
   </component>
@@ -142,6 +150,10 @@
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="WindowStateProjectService">
+    <state x="1786" y="635" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog" timestamp="1606293678112">
+      <screen x="0" y="23" width="2560" height="1360" />
+    </state>
+    <state x="1786" y="635" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.23.2560.1360@0.23.2560.1360" timestamp="1606293678112" />
     <state x="813" y="256" key="FileChooserDialogImpl" timestamp="1601472849290">
       <screen x="0" y="23" width="1680" height="982" />
     </state>
@@ -154,9 +166,15 @@
       <screen x="0" y="23" width="1680" height="982" />
     </state>
     <state width="500" height="445" key="SwitcherDM/0.23.1680.982@0.23.1680.982" timestamp="1602325844026" />
-    <state x="1468" y="519" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1605363370859">
-      <screen x="0" y="23" width="2560" height="1372" />
+    <state x="963" y="377" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1607520879004">
+      <screen x="0" y="23" width="1680" height="979" />
     </state>
+    <state x="963" y="377" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.23.1680.979@0.23.1680.979" timestamp="1607520879004" />
+    <state x="1468" y="515" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.23.2560.1360@0.23.2560.1360" timestamp="1606313597184" />
     <state x="1468" y="519" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.23.2560.1372@0.23.2560.1372" timestamp="1605363370859" />
+    <state x="1749" y="590" width="598" height="582" key="find.popup" timestamp="1606304074363">
+      <screen x="0" y="23" width="2560" height="1360" />
+    </state>
+    <state x="1749" y="590" width="598" height="582" key="find.popup/0.23.2560.1360@0.23.2560.1360" timestamp="1606304074363" />
   </component>
 </project>

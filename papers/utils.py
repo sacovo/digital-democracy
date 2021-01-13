@@ -1,8 +1,16 @@
 """
 Misc. functions that are used by the project
 """
+import csv
+import io
 import re
+import secrets
 from itertools import zip_longest
+
+from django.conf import settings
+from django.contrib.auth import get_user_model
+from django.core.validators import validate_email
+from django.utils.translation import gettext as _
 
 
 def index_of_first_change(content):
@@ -60,3 +68,28 @@ def extract_content(content):
         sentence_after = sentence_after + sentence[0] + sentence[1]
 
     return sentence_before + content[start_index:end_index] + sentence_after
+
+
+def import_users_from_csv(csv_file):
+    """
+    Import the given csv file into the database
+    """
+    csv_file = io.TextIOWrapper(csv_file)
+    csv_reader = csv.DictReader(csv_file)
+
+    imported_users = [get_user_model()(**row) for row in csv_reader]
+
+    for new_user in imported_users:
+        validate_email(new_user.email)
+
+    for new_user in imported_users:
+        password = secrets.token_urlsafe(17)
+        new_user.set_password(password)
+        new_user.save()
+
+        new_user.email_user(
+            _("New digital-democracy account"),
+            settings.NEW_USER_MAIL.format(user=new_user, password=password),
+        )
+
+    return imported_users

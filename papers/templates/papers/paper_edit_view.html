@@ -11,15 +11,14 @@
 {% block content %}
 <h2>{{translation.title}}</h2>
 
-<form method="POST" id="createPapperForm">
+<form method="POST" id="createPaperForm">
     {% csrf_token %}
     {% bootstrap_form form  form_group_class='form-group'%}
     {% buttons %}
     <div class="btn-group btn-sm">
-      <button type="submit" class="btn submitButton">{% trans 'submit' %}</button>
-      <a class="btn btn-link" href="{% url 'paper-detail' paper.pk %}#{{translation.language_code}}">
-        {{translation.title}}
-      </a>
+        <a class="btn cancelButton" href="{% url 'paper-detail' paper.pk %}#{{translation.language_code}}">
+        back </a>
+        <button type="submit" class="btn submitButton">{% trans 'submit' %}</button>
     </div>
     {% endbuttons %}
 

@@ -32,7 +32,12 @@
         <h2>
           {{translation.title}}
         </h2>
-        <div id="paperContent" class="content">
+        {% trans 'Authors' %}:
+        {% for authors in paper.authors.all %}
+        {{authors.name}}{% if not forloop.last %},{% endif %}
+        {% endfor %}  
+          <h3 class="h5">{% trans 'Deadline for this paper: ' %}{{paper.amendment_deadline}}</h3>
+        <div id="paperContent-{{translation.language_code}}" class="content">
           <article>
             <div> {{translation.content_safe}}</div>
           </article>
@@ -47,14 +52,17 @@
           </a>
           {%endif%}
         </div>
+        <a class="btn" href="{%url 'paper-list' %}">
+          {% trans 'back' %}
+        </a>
       </div>
       <div class="col-md-4">
         <h2 id="amendments">{% trans 'amendments' %}</h2>
         <ul>
           {% for amendment in translation.amendment_list %}
-          <a class="link" href="{% url 'amendment-detail' amendment.pk %}">
+          <a class="link" href="{% url 'amendment-detail' amendment.pk %}" data-content="{{amendment.extract_content|safe}}">
+            <h3 class="h5">{{amendment.title}}</h3>
             {% blocktrans with name=amendment.author.name created_at=amendment.created_at %}{{name}} at {{created_at}}{% endblocktrans %}
-            <div class="amendmentListReason">{{amendment.reason|truncatechars_html:"60"|safe}}</div>
           </a>
           {% endfor %}
         </ul>
@@ -65,3 +73,19 @@
 </div>
 {% endblock %}
 
+{% block scripts %}
+{{block.super}}
+  {% for translation in paper.translation_set.all %}
+<script>
+  $(document).ready(function(){
+    var paperConent{{translation.language_code}} = $("#paperContent-{{translation.language_code}} article div").html()
+    $("#{{translation.language_code}} .link").hover(function(){      
+      var content = $(this).data("content")
+      $("#paperContent-{{translation.language_code}} article div").html(content);
+      }, function(){
+        $("#paperContent-{{translation.language_code}} article div").html(paperConent{{translation.language_code}})
+    })
+  })
+</script>
+  {% endfor %}
+{% endblock %}

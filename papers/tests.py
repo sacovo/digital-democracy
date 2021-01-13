@@ -2,13 +2,15 @@
 Tests for app papers
 """
 from datetime import timedelta
+from io import BytesIO
 
 from django.conf import settings
 from django.contrib.auth import get_user_model
-from django.test import TestCase
+from django.core import mail
+from django.test import Client, TestCase
 from django.utils import timezone
 
-from papers import models, utils
+from papers import models, utils, views
 
 # Create your tests here.
 
@@ -19,11 +21,13 @@ class PaperTestCase(TestCase):
     """
 
     def setUp(self):
-        models.Paper.objects.create(
+        self.paper = models.Paper.objects.create(
             amendment_deadline=timezone.now() + timedelta(days=10),
             working_title="Test Paper",
             state="draft",
         )
+        self.user = get_user_model().objects.create_user(username="test")
+        self.author = models.Author.objects.create(user=self.user)
 
     def test_missing_translations(self):
         """
@@ -68,6 +72,49 @@ class PaperTestCase(TestCase):
             paper.missing_translations(),
             msg="Added translation is not missing.",
         )
+
+    def test_start_zero_amendments(self):
+        """Check if we start with zero amendments"""
+        self.assertEqual(self.paper.count_amendments(), 0)
+
+    def test_add_amendment(self):
+        """Count should increase with a new public amendment"""
+        amendment = self.paper.amendment_set.create(
+            language_code="de",
+            content="Content",
+            author=models.Author.objects.create(
+                user=get_user_model().objects.create(username="test_user_for_counting")
+            ),
+            state="draft",
+            reason="reason",
+        )
+
+        self.assertEqual(0, self.paper.count_amendments())
+
+        amendment.state = "public"
+        amendment.save()
+
+        self.assertEqual(1, self.paper.count_amendments())
+
+    def test_start_zero_comments(self):
+        """Count should start with zero"""
+        self.assertEqual(self.paper.count_comments(), 0)
+
+    def test_add_comment(self):
+        """Start with zero comments"""
+        amendment = self.paper.amendment_set.create(
+            language_code="de",
+            content="Test addign a comment",
+            author=models.Author.objects.create(
+                user=get_user_model().objects.create(username="test-comments")
+            ),
+            state="public",
+            reason="reason",
+        )
+
+        amendment.comments.create(body="Test addign a comment")
+
+        self.assertEqual(1, self.paper.count_amendments())
 
 
 class ExtractorTestCase(TestCase):
@@ -271,3 +318,44 @@ class LikeCommentTestCase(TestCase):
         )
 
         self.assertEqual(comment.num_likes(), 0)
+
+
+class BulkUserImportTestCase(TestCase):
+    """
+    Tests for the feature for importing users
+    """
+
+    def setUp(self):
+        user = get_user_model().objects.create_superuser(username="csv-admin")
+        self.client = Client()
+        self.client.force_login(user=user)
+
+        self.csv_file = BytesIO(
+            b"first_name,last_name,email,username\ntest,test,test@test.ch,test-user\ntest1,test1,test2@test.ch,test2"
+        )
+        self.invalid_csv = BytesIO(
+            b"first_name,last_name,email,username\nvalid,valid,valid@email.com,valid_user\ntest,test,not-an-email-address,username"
+        )
+
+    def test_import_single_user_csv(self):
+        self.client.post("/members/upload-users/", {"csv_file": self.csv_file})
+
+        self.assertTrue(get_user_model().objects.filter(username="test-user").exists())
+        self.assertTrue(get_user_model().objects.filter(username="test2").exists())
+
+    def test_import_wrong_csv(self):
+        response = self.client.post(
+            "/members/upload-users/", {"csv_file": self.invalid_csv}
+        )
+
+        self.assertTrue(response.context["error"])
+        self.assertFalse(
+            get_user_model().objects.filter(username="valid_user").exists()
+        )
+        self.assertFalse(get_user_model().objects.filter(username="username").exists())
+
+    def test_login_required(self):
+        client = Client()
+        response = client.post("/members/upload-users/", {"csv_file": self.csv_file})
+
+        self.assertNotEqual(response.status_code, 200)
