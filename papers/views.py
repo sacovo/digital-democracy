@@ -197,6 +197,8 @@ def add_amendment_translation(request, amendment_pk, language_code):
                 translation=translation, author=original.author
             )
             original.add_translation(amendment)
+            for translated_amendment in original.translations.all():
+                translated_amendment.add_translation(amendment)
             return redirect("amendment-detail", amendment.pk)
 
     return render(
