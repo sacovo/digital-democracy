@@ -24,13 +24,21 @@ def paper_list(request):
 
 
 @login_required
-def paper_detail(request, paper_pk):
+def paper_detail(request, paper_pk, language_code=None):
     """
     Detail view of paper
     """
     paper = models.Paper.objects.get(pk=paper_pk)
 
-    return render(request, "papers/paper_detail.html", {"paper": paper})
+    return render(
+        request,
+        "papers/paper_detail.html",
+        {
+            "language_code": language_code
+            or paper.translation_set.first().language_code,
+            "paper": paper,
+        },
+    )
 
 
 @login_required
@@ -160,12 +168,12 @@ def translation_update(request, paper_pk, language_code):
         language_code=language_code,
         defaults={"title": paper.working_title, "content": "..."},
     )
+    form = forms.TranslationForm(instance=translation)
     if request.method == "POST":
         form = forms.TranslationForm(request.POST, instance=translation)
         if form.is_valid():
             form.save()
-
-    form = forms.TranslationForm(instance=translation)
+            return redirect("paper-detail-language", paper.pk, language_code)
 
     return render(
         request, "papers/translation_update.html", {"form": form, "paper": paper}
