@@ -13,7 +13,26 @@ from papers.utils import index_of_first_change, index_of_last_change
 
 # Create your models here.
 
-STATES = (("draft", _("Draft")), ("public", _("Published")), ("final", _("Finalized")))
+STATES = (
+    (
+        "draft",
+        mark_safe(
+            u'<u title="ⓘ This paper is a private draft and not ready for amendments.">Draft</u>'
+        ),
+    ),
+    (
+        "public",
+        mark_safe(
+            u'<u title="ⓘ This paper is public and ready for amendments.">Published</u>'
+        ),
+    ),
+    (
+        "final",
+        mark_safe(
+            u'<u title="ⓘ This paper is final no more changes can be made.">Finalized</u>'
+        ),
+    ),
+)
 
 
 class Tag(models.Model):
