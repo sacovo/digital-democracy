@@ -110,11 +110,11 @@
 
     <div class="comments">
 
-      {% if not  amendment.comments.all%}
+      {% if not comments %}
       {% blocktrans %}No Comments Yet...{% endblocktrans %}
       {% else %}
 
-      {% for comment in amendment.comments.all %}
+      {% for comment in comments %}
       <div class="comment">
         <h3 class="h6">
           {{ comment.name }} - {{ comment.created_on }}
