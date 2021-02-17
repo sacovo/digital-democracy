@@ -24,6 +24,7 @@ class PaperCreateForm(forms.Form):
         widget=forms.RadioSelect(attrs={"class": "radioSelection"}),
         choices=models.STATES,
         label=_("state"),
+        help_text="ⓘ Hover over the states for more information.",
     )
 
     def clean_content(self):
