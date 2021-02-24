@@ -10,6 +10,11 @@ urlpatterns = [
     path("", views.paper_list, name="paper-list"),
     path("paper/create/", views.paper_create, name="paper-create"),
     path("paper/<int:paper_pk>/", views.paper_detail, name="paper-detail"),
+    path(
+        "paper/<int:paper_pk>/<str:language_code>/",
+        views.paper_detail,
+        name="paper-detail-language",
+    ),
     path("newsfeed/", views.newsfeed, name="newsfeed"),
     path(
         "paper/<int:paper_pk>/<str:language_code>/create-amendment/",

@@ -46,6 +46,8 @@
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/papers/templates/papers/amendment_detail.html" beforeDir="false" afterPath="$PROJECT_DIR$/papers/templates/papers/amendment_detail.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/papers/templates/papers/paper_detail.html" beforeDir="false" afterPath="$PROJECT_DIR$/papers/templates/papers/paper_detail.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/papers/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/papers/urls.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/papers/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/papers/views.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
