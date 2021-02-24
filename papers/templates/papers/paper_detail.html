@@ -50,7 +50,12 @@
           <a class="btn btn-secondary" href="{%url 'paper-translation-update' translation.paper.pk translation.language_code%}">
             {% trans 'update translation' %}
           </a>
-          {%endif%}
+          {% endif %}
+          {% if update_allowed %}
+          <a class="btn btn-secondary" href="{%url 'paper-update' paper.pk %}">
+            {% trans 'update paper' %}
+          </a>
+          {% endif %}
         </div>
         <a class="btn" href="{%url 'paper-list' %}">
           {% trans 'back' %}

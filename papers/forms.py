@@ -38,6 +38,19 @@ class PaperCreateForm(forms.Form):
         )
 
 
+class PaperUpdateForm(forms.ModelForm):
+    state = forms.ChoiceField(
+        widget=forms.RadioSelect(attrs={"class": "radioSelection"}),
+        choices=models.STATES,
+        label=_("state"),
+        help_text="ⓘ Hover over the states for more information.",
+    )
+
+    class Meta:
+        model = models.Paper
+        fields = ["amendment_deadline", "state", "authors"]
+
+
 class AmendmentForm(forms.Form):
     """
     Form to create or update an amendment

@@ -15,6 +15,7 @@ urlpatterns = [
         views.paper_detail,
         name="paper-detail-language",
     ),
+    path("paper/<int:paper_pk>/update/", views.paper_update, name="paper-update"),
     path("newsfeed/", views.newsfeed, name="newsfeed"),
     path(
         "paper/<int:paper_pk>/<str:language_code>/create-amendment/",

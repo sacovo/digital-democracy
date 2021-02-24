@@ -96,6 +96,9 @@ class Paper(models.Model):
 
     authors = models.ManyToManyField(Author, blank=True, verbose_name=_("authors"))
 
+    def is_author(self, user):
+        return self.authors.filter(user=user).exists()
+
     def __str__(self):
         return self.working_title
 

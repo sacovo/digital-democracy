@@ -3,6 +3,7 @@ Paper views
 """
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required, permission_required
+from django.core.exceptions import PermissionDenied
 from django.db.models import Q
 from django.http import Http404
 from django.shortcuts import redirect, render
@@ -35,9 +36,11 @@ def paper_detail(request, paper_pk, language_code=None):
         request,
         "papers/paper_detail.html",
         {
+            "paper": paper,
+            "update_allowed": request.user.is_superuser
+            or paper.is_author(request.user),
             "language_code": language_code
             or paper.translation_set.first().language_code,
-            "paper": paper,
         },
     )
 
@@ -97,6 +100,26 @@ def paper_create(request):
             return redirect("paper-detail", paper.pk)
 
     return render(request, "papers/paper_create.html", {"form": form})
+
+
+@login_required
+def paper_update(request, paper_pk):
+    paper = models.Paper.objects.get(pk=paper_pk)
+    # Check if user may edit paper
+    if not (request.user.is_superuser or paper.is_author(request.user)):
+        raise PermissionDenied(_("You are not allowed to edit this paper."))
+
+    form = forms.PaperUpdateForm(instance=paper)
+
+    if request.method == "POST":
+        form = forms.PaperUpdateForm(request.POST, instance=paper)
+
+        if form.is_valid():
+            form.save()
+
+        return redirect("paper-detail", paper.pk)
+
+    return render(request, "papers/paper_update.html", {"form": form, "paper": paper})
 
 
 @login_required

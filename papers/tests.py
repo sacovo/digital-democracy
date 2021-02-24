@@ -6,11 +6,10 @@ from io import BytesIO
 
 from django.conf import settings
 from django.contrib.auth import get_user_model
-from django.core import mail
 from django.test import Client, TestCase
 from django.utils import timezone
 
-from papers import models, utils, views
+from papers import models, utils
 
 # Create your tests here.
 
