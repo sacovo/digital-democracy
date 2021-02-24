@@ -210,7 +210,7 @@ class Amendment(models.Model):
     author = models.ForeignKey(Author, models.CASCADE, verbose_name=_("author"))
     created_at = models.DateTimeField(auto_now_add=True, verbose_name=_("created at"))
 
-    state = models.CharField(max_length=9, verbose_name=_("state"), choices=STATES)
+    state = models.CharField(max_length=12, verbose_name=_("state"), choices=STATES)
     reason = RichTextField(config_name="basic", verbose_name=_("reason"))
     supporters = models.ManyToManyField(settings.AUTH_USER_MODEL)
     tags = models.ManyToManyField(Tag, related_name="tag")
