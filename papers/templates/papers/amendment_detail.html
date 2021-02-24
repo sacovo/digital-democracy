@@ -14,7 +14,7 @@
     <h1 class="h3">
       {{amendment.translation.title}} - {{amendment.title}}
     </h1>
-    <section class="amendment-copntent">
+    <section class="amendment-content">
       <span>
         {% blocktrans with name=amendment.author.name created=amendment.created_at %}By <strong>{{name}}</strong> at {{created}}{% endblocktrans %}
       </span>
@@ -28,7 +28,7 @@
     </section>
     <section class="translation">
       <h2 class="h4">{% trans 'translations' %}</h2>
-      <div class="btn-group btn-group-sm translations">
+      <div class="btn-group-sm translations">
         {% for translation in amendment.translation_list %}
         <a href="{{translation.get_absolute_url}}" class="btn btn-secondary">{{translation.language_code}}</a>
         {% endfor %}
@@ -47,14 +47,17 @@
       <section class="reason">
         {{amendment.reason|safe}}
       </section>
-      <div class="btn-group btn-group-sm">
+      <div class="row">
+
         {% if amendment.state == 'draft' %}
         <form method="POST">
           {% csrf_token %}
-          <button class="btn btn-sm  submitButton" type="submit" value="publish">{% trans 'publish' %}</button>
+            <div class="col">
+              <button class="btn btn-sm submitButton" type="submit" value="publish">{% trans 'publish' %}</button>
+            </div>
         </form>
         {% endif %}
-        <a class="btn btn-sm  submitButton" href="{% url 'amendment-edit' amendment.pk %}">{% trans 'edit' %}</a>
+        <a class="btn btn-sm submitButton" href="{% url 'amendment-edit' amendment.pk %}">{% trans 'edit' %}</a>
       </div>
     </section>
 
