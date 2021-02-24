@@ -116,6 +116,11 @@ def amendment_detail(request, amendment_pk):
 
             return redirect("amendment-detail", amendment.pk)
 
+    if "retracted" in request.POST:
+        amendment.state = "retracted"
+        amendment.save()
+        form = forms.CommentForm(request.POST)  # needed?
+
     return render(
         request, "papers/amendment_detail.html", {"amendment": amendment, "form": form}
     )

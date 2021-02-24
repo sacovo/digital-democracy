@@ -49,12 +49,12 @@
       </section>
       <div class="row">
 
-        {% if amendment.state == 'draft' %}
+        {% if amendment.state == 'draft' or amendment.state == 'retracted'%}
         <form method="POST">
           {% csrf_token %}
-            <div class="col">
-              <button class="btn btn-sm submitButton" type="submit" value="publish">{% trans 'publish' %}</button>
-            </div>
+          <div class="col">
+            <button class="btn btn-sm submitButton" type="submit" value="publish">{% trans 'publish' %}</button>
+          </div>
         </form>
         {% endif %}
         <a class="btn btn-sm submitButton" href="{% url 'amendment-edit' amendment.pk %}">{% trans 'edit' %}</a>
@@ -78,11 +78,11 @@
         {% csrf_token %}
         <input type="checkbox" id="cb-sign-amendment" name="sign-amendment" value="sign-amendment">
         <label for="sign-amendment">
-            {% if request.user in amendment.supporters.all %}
-            {% trans "I revoke my signature." %}
-            {% else %}
-            {% trans "I hereby sign this amendment." %}
-            {% endif %}
+          {% if request.user in amendment.supporters.all %}
+          {% trans "I revoke my signature." %}
+          {% else %}
+          {% trans "I hereby sign this amendment." %}
+          {% endif %}
         </label>
         <button type="submit" id="btn-support-amendment" class="btn btn-sm submitButton" disabled>
           {% if request.user in amendment.supporters.all %}
@@ -102,7 +102,22 @@
         {% endfor %}
       </ul>
     </section>
+
+    <!-- Implements Retract Button-->
+    <section class="retract-amendment">
+      {% if request.user.username == amendment.author.name %}
+      <hr>
+      <h2 class="h4">{% trans "Retract amendment" %}</h2>
+      <form method="POST">
+        {% csrf_token %}
+        <button class="btn btn-sm  submitButton" type="submit" name="retracted">{% trans 'Retract amendment' %}</button>
+      </form>
+      {% endif %}
+    </section>
+    <!-- Implements Retract Button-->
+
     <br><br>
+    <hr>
     <a class="btn btn-sm  backButton" href="{% url 'paper-detail' amendment.paper.pk %}">Back</a>
   </div>
 
@@ -171,11 +186,11 @@
 
 {% block scripts %}
 <script>
-    $(document).ready(function(){
-        $("#cb-sign-amendment").click(function(){
-        if($("#cb-sign-amendment").is(':checked'))
+  $(document).ready(function(){
+      $("#cb-sign-amendment").click(function(){
+          if($("#cb-sign-amendment").is(':checked'))
             $("#btn-support-amendment").attr("disabled",false)
-        else
+          else
             $("#btn-support-amendment").attr("disabled",true)
         })
     });
