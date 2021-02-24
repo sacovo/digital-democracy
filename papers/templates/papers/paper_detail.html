@@ -9,7 +9,7 @@
   <nav class="col">
     <div class="nav nav-tabs" id="nav-tab" role="tablist">
       {% for translation in paper.translation_set.all %}
-      <a class="nav-link {% if forloop.first %}active{% endif %}" href="#{{translation.language_code}}" data-toggle="tab">
+      <a class="nav-link {% if language_code == translation.language_code %}active{% endif %}" href="#{{translation.language_code}}" data-toggle="tab">
         {{translation.get_language_code_display}}
       </a>
       {% endfor %}
@@ -26,7 +26,7 @@
 
 <div class="tab-content" id="nav-tab-content">
   {% for translation in paper.translation_set.all %}
-  <div class="tab-pane {% if forloop.first %}active show{% endif %}" id="{{translation.language_code}}" role="tabpanel">
+  <div class="tab-pane {% if language_code == translation.language_code %}active show{% endif %}" id="{{translation.language_code}}" role="tabpanel">
     <div class="row mt-4">
       <div class="col-md-8">
         <h2>
@@ -35,14 +35,14 @@
         {% trans 'Authors' %}:
         {% for authors in paper.authors.all %}
         {{authors.name}}{% if not forloop.last %},{% endif %}
-        {% endfor %}  
+        {% endfor %}
           <h3 class="h5">{% trans 'Deadline for this paper: ' %}{{paper.amendment_deadline}}</h3>
         <div id="paperContent-{{translation.language_code}}" class="content">
           <article>
             <div> {{translation.content_safe}}</div>
           </article>
         </div>
-        <div class="btn-group my-2" role="group">
+        <div class="my-2" role="group">
           <a class="btn btn-secondary" href="{% url 'create-amendment' translation.paper.pk translation.language_code %}">
             {% trans 'create amendment' %}
           </a>
@@ -60,10 +60,12 @@
         <h2 id="amendments">{% trans 'amendments' %}</h2>
         <ul>
           {% for amendment in translation.amendment_list %}
+          {% if amendment.state != "retracted" or request.user.username == amendment.author.name %}
           <a class="link" href="{% url 'amendment-detail' amendment.pk %}" data-content="{{amendment.extract_content|safe}}">
             <h3 class="h5">{{amendment.title}}</h3>
             {% blocktrans with name=amendment.author.name created_at=amendment.created_at %}{{name}} at {{created_at}}{% endblocktrans %}
           </a>
+          {% endif %}
           {% endfor %}
         </ul>
       </div>
@@ -79,7 +81,7 @@
 <script>
   $(document).ready(function(){
     var paperConent{{translation.language_code}} = $("#paperContent-{{translation.language_code}} article div").html()
-    $("#{{translation.language_code}} .link").hover(function(){      
+    $("#{{translation.language_code}} .link").hover(function(){
       var content = $(this).data("content")
       $("#paperContent-{{translation.language_code}} article div").html(content);
       }, function(){

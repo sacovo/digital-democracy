@@ -14,7 +14,7 @@
     <h1 class="h3">
       {{amendment.translation.title}} - {{amendment.title}}
     </h1>
-    <section class="amendment-copntent">
+    <section class="amendment-content">
       <span>
         {% blocktrans with name=amendment.author.name created=amendment.created_at %}By <strong>{{name}}</strong> at {{created}}{% endblocktrans %}
       </span>
@@ -28,7 +28,7 @@
     </section>
     <section class="translation">
       <h2 class="h4">{% trans 'translations' %}</h2>
-      <div class="btn-group btn-group-sm translations">
+      <div class="btn-group-sm translations">
         {% for translation in amendment.translation_list %}
         <a href="{{translation.get_absolute_url}}" class="btn btn-secondary">{{translation.language_code}}</a>
         {% endfor %}
@@ -47,14 +47,17 @@
       <section class="reason">
         {{amendment.reason|safe}}
       </section>
-      <div class="btn-group btn-group-sm">
-        {% if amendment.state == 'draft' %}
+      <div class="row">
+
+        {% if amendment.state == 'draft' or amendment.state == 'retracted'%}
         <form method="POST">
           {% csrf_token %}
-          <button class="btn btn-sm  submitButton" type="submit" value="publish">{% trans 'publish' %}</button>
+          <div class="col">
+            <button class="btn btn-sm submitButton" type="submit" value="publish">{% trans 'publish' %}</button>
+          </div>
         </form>
         {% endif %}
-        <a class="btn btn-sm  submitButton" href="{% url 'amendment-edit' amendment.pk %}">{% trans 'edit' %}</a>
+        <a class="btn btn-sm submitButton" href="{% url 'amendment-edit' amendment.pk %}">{% trans 'edit' %}</a>
       </div>
     </section>
 
@@ -75,11 +78,11 @@
         {% csrf_token %}
         <input type="checkbox" id="cb-sign-amendment" name="sign-amendment" value="sign-amendment">
         <label for="sign-amendment">
-            {% if request.user in amendment.supporters.all %}
-            {% trans "I revoke my signature." %}
-            {% else %}
-            {% trans "I hereby sign this amendment." %}
-            {% endif %}
+          {% if request.user in amendment.supporters.all %}
+          {% trans "I revoke my signature." %}
+          {% else %}
+          {% trans "I hereby sign this amendment." %}
+          {% endif %}
         </label>
         <button type="submit" id="btn-support-amendment" class="btn btn-sm submitButton" disabled>
           {% if request.user in amendment.supporters.all %}
@@ -99,7 +102,22 @@
         {% endfor %}
       </ul>
     </section>
+
+    <!-- Implements Retract Button-->
+    <section class="retract-amendment">
+      {% if request.user.username == amendment.author.name %}
+      <hr>
+      <h2 class="h4">{% trans "Retract amendment" %}</h2>
+      <form method="POST">
+        {% csrf_token %}
+        <button class="btn btn-sm  submitButton" type="submit" name="retracted">{% trans 'Retract amendment' %}</button>
+      </form>
+      {% endif %}
+    </section>
+    <!-- Implements Retract Button-->
+
     <br><br>
+    <hr>
     <a class="btn btn-sm  backButton" href="{% url 'paper-detail' amendment.paper.pk %}">Back</a>
   </div>
 
@@ -168,11 +186,11 @@
 
 {% block scripts %}
 <script>
-    $(document).ready(function(){
-        $("#cb-sign-amendment").click(function(){
-        if($("#cb-sign-amendment").is(':checked'))
+  $(document).ready(function(){
+      $("#cb-sign-amendment").click(function(){
+          if($("#cb-sign-amendment").is(':checked'))
             $("#btn-support-amendment").attr("disabled",false)
-        else
+          else
             $("#btn-support-amendment").attr("disabled",true)
         })
     });
