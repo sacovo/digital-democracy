@@ -3,6 +3,7 @@ Paper views
 """
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required, permission_required
+from django.db.models import Q
 from django.http import Http404
 from django.shortcuts import redirect, render
 from django.utils import timezone
@@ -124,13 +125,19 @@ def amendment_detail(request, amendment_pk):
 
             return redirect("amendment-detail", amendment.pk)
 
+    comments = models.Comment.objects.filter(
+        Q(amendment=amendment) | Q(amendment__in=amendment.translations.all())
+    )
+
     if "retracted" in request.POST:
         amendment.state = "retracted"
         amendment.save()
         form = forms.CommentForm(request.POST)  # needed?
 
     return render(
-        request, "papers/amendment_detail.html", {"amendment": amendment, "form": form}
+        request,
+        "papers/amendment_detail.html",
+        {"amendment": amendment, "form": form, "comments": comments},
     )
 
 
