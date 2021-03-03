@@ -24,7 +24,7 @@ class PaperCreateForm(forms.Form):
     content = forms.CharField(widget=CKEditorWidget, label=_("content"))
     state = forms.ChoiceField(
         widget=forms.RadioSelect(attrs={"class": "radioSelection"}),
-        choices=models.STATES,
+        choices=models.PAPER_STATES,
         label=_("state"),
         help_text="ⓘ Hover over the states for more information.",
     )
@@ -43,7 +43,7 @@ class PaperCreateForm(forms.Form):
 class PaperUpdateForm(forms.ModelForm):
     state = forms.ChoiceField(
         widget=forms.RadioSelect(attrs={"class": "radioSelection"}),
-        choices=models.STATES,
+        choices=models.PAPER_STATES,
         label=_("state"),
         help_text="ⓘ Hover over the states for more information.",
     )
