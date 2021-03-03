@@ -43,9 +43,11 @@
           </article>
         </div>
         <div class="my-2" role="group">
+		  {% if create_amendment_allowed %}
           <a class="btn btn-secondary" href="{% url 'create-amendment' translation.paper.pk translation.language_code %}">
             {% trans 'create amendment' %}
           </a>
+		  {% endif %}
           {% if perms.papers.change_translation %}
           <a class="btn btn-secondary" href="{%url 'paper-translation-update' translation.paper.pk translation.language_code%}">
             {% trans 'update translation' %}

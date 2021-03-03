@@ -5,6 +5,8 @@ import bleach
 from ckeditor.widgets import CKEditorWidget
 from django import forms
 from django.conf import settings
+from django.core.exceptions import ValidationError
+from django.utils import timezone
 from django.utils.translation import gettext as _
 
 from papers import models
@@ -95,6 +97,14 @@ class AmendmentForm(forms.Form):
             state="draft",
             reason=reason,
         )
+
+    def clean(self):
+        # prevent the creation of new amendments if the server time is past the paper's deadline
+        deadline = self.translation.paper.amendment_deadline
+        if timezone.now() > deadline:
+            raise ValidationError(
+                _("Cannot create new amendments past a paper's deadline.")
+            )
 
     def clean_content(self):
         """

@@ -41,6 +41,7 @@ def paper_detail(request, paper_pk, language_code=None):
             or paper.is_author(request.user),
             "language_code": language_code
             or paper.translation_set.first().language_code,
+            "create_amendment_allowed": paper.amendment_deadline > timezone.now(),
         },
     )
 
