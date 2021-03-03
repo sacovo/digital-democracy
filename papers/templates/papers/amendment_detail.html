@@ -20,13 +20,9 @@
       </span>
       <div id="paperContent" class="content">
         <article>
-          {% if amendment.start_index != amendment.end_index %}
           <div class="amendment-content">
             {{amendment.extract_content|safe}}
           </div>
-          {% else %}
-          <p>{% trans 'This amendment does not change the content of the paper, see the reason for more information.' %}</p>
-          {% endif %}
         </article>
       </div>
     </section>

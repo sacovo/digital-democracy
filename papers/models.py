@@ -238,6 +238,11 @@ class Amendment(models.Model):
         """
         Returns only the part of the paper that is changed through this amendment
         """
+        if self.start_index == self.end_index:
+            return _(
+                "This amendment does not change the content of the paper, "
+                "see the reason for more information."
+            )
 
         return utils.extract_content(self.content)
 
