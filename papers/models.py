@@ -13,7 +13,7 @@ from papers.utils import index_of_first_change, index_of_last_change
 
 # Create your models here.
 
-STATES = (
+PAPER_STATES = (
     (
         "draft",
         mark_safe(
@@ -32,12 +32,16 @@ STATES = (
             u'<u title="ⓘ This paper is final no more changes can be made.">Finalized</u>'
         ),
     ),
+)
+
+AMENDMENT_STATES = (
+    ("draft", mark_safe(u'<u title="ⓘ This amendment is a draft.">Draft</u>')),
+    ("public", mark_safe(u'<u title="ⓘ This amendment is public.">Published</u>')),
     (
         "retracted",
-        mark_safe(
-            u'<u title="ⓘ This paper is final no more changes can be made.">Finalized</u>'
-        ),
+        mark_safe(u'<u title="ⓘ This amendment is retracted.">Retracted</u>'),
     ),
+    ("approved", mark_safe(u'<u title="ⓘ This amendment is a approved.">Approved</u>')),
 )
 
 
@@ -92,7 +96,9 @@ class Paper(models.Model):
 
     working_title = models.CharField(max_length=255, verbose_name=_("working title"))
 
-    state = models.CharField(choices=STATES, max_length=20, verbose_name=_("state"))
+    state = models.CharField(
+        choices=PAPER_STATES, max_length=20, verbose_name=_("state")
+    )
 
     authors = models.ManyToManyField(Author, blank=True, verbose_name=_("authors"))
 
@@ -210,7 +216,9 @@ class Amendment(models.Model):
     author = models.ForeignKey(Author, models.CASCADE, verbose_name=_("author"))
     created_at = models.DateTimeField(auto_now_add=True, verbose_name=_("created at"))
 
-    state = models.CharField(max_length=12, verbose_name=_("state"), choices=STATES)
+    state = models.CharField(
+        max_length=12, verbose_name=_("state"), choices=AMENDMENT_STATES
+    )
     reason = RichTextField(config_name="basic", verbose_name=_("reason"))
     supporters = models.ManyToManyField(settings.AUTH_USER_MODEL)
     tags = models.ManyToManyField(Tag, related_name="tag")
