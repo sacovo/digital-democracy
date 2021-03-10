@@ -43,13 +43,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="8714a3bb-f930-4dea-8404-4a035b8c67ff" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/backend.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/backend.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/papers/forms.py" beforeDir="false" afterPath="$PROJECT_DIR$/papers/forms.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/papers/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/papers/models.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/papers/static/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/papers/static/style.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/papers/templates/papers/paper_detail.html" beforeDir="false" afterPath="$PROJECT_DIR$/papers/templates/papers/paper_detail.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/papers/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/papers/views.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />

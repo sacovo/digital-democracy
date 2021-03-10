@@ -41,11 +41,7 @@ def paper_detail(request, paper_pk, language_code=None):
 
             author, _ = models.Author.objects.get_or_create(user=request.user)
 
-            models.PaperComment.objects.create(
-                paper=paper,
-                body=body,
-                author=author,
-            )
+            models.PaperComment.objects.create(paper=paper, body=body, author=author)
             return redirect("paper-detail", paper.pk)
 
     return render(
