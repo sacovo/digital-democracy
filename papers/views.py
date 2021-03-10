@@ -31,11 +31,28 @@ def paper_detail(request, paper_pk, language_code=None):
     Detail view of paper
     """
     paper = models.Paper.objects.get(pk=paper_pk)
+    form = forms.CommentForm()
+
+    if request.method == "POST":
+        form = forms.CommentForm(request.POST)
+
+        if form.is_valid():
+            body = form.cleaned_data["comment"]
+
+            author, _ = models.Author.objects.get_or_create(user=request.user)
+
+            models.PaperComment.objects.create(
+                paper=paper,
+                body=body,
+                author=author,
+            )
+            return redirect("paper-detail", paper.pk)
 
     return render(
         request,
         "papers/paper_detail.html",
         {
+            "form": form,
             "paper": paper,
             "update_allowed": request.user.is_superuser
             or paper.is_author(request.user),

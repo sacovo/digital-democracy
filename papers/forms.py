@@ -133,7 +133,7 @@ class CommentForm(forms.Form):
     """
 
     comment = forms.CharField(
-        widget=CKEditorWidget(config_name="basic"), label=_("comment")
+        widget=CKEditorWidget(config_name="basic"), label=_("Comment")
     )
 
     def clean_comment(self):

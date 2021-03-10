@@ -334,3 +334,43 @@ class Comment(models.Model):
     class Meta:
         verbose_name = _("comment")
         verbose_name_plural = _("comments")
+
+
+class PaperComment(models.Model):
+    """
+    A comment to an amendment
+    """
+
+    paper = models.ForeignKey(
+        Paper,
+        models.CASCADE,
+        verbose_name=_("paper"),
+        related_name="comments",
+        null=True,
+    )
+    author = models.ForeignKey(
+        Author, models.CASCADE, verbose_name=_("author"), blank=True, null=True
+    )
+    body = models.TextField(verbose_name=_("body"))
+    created_on = models.DateTimeField(auto_now_add=True, verbose_name=_("created at"))
+    likes = models.ManyToManyField(settings.AUTH_USER_MODEL, verbose_name=_("likes"))
+
+    @property
+    def name(self):
+        """
+        The name of the author of this comment
+        """
+        return self.author.name
+
+    def __str__(self):
+        return "Comment {} by {}".format(self.body, self.name)
+
+    def num_likes(self):
+        """
+        Number of likes for this comment
+        """
+        return self.likes.all().count()
+
+    class Meta:
+        verbose_name = _("comment")
+        verbose_name_plural = _("comments")
