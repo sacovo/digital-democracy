@@ -6,6 +6,7 @@ from django.contrib.auth.decorators import login_required, permission_required
 from django.core.exceptions import PermissionDenied
 from django.db.models import Q
 from django.http import Http404
+from django.http.response import HttpResponse
 from django.shortcuts import redirect, render
 from django.utils import timezone
 from django.utils.translation import gettext as _
@@ -57,6 +58,19 @@ def paper_detail(request, paper_pk, language_code=None):
             "create_amendment_allowed": paper.amendment_deadline > timezone.now(),
         },
     )
+
+
+@login_required
+def paper_presentation(request, paper_pk):
+
+    response = HttpResponse(
+        content_type="application/vnd.openxmlformats-officedocument.presentationml.presentation"
+    )
+    response["Content-Disposition"] = f'attachment; filename="paper_{paper_pk}.pptx"'
+    presentation = utils.generate_powerpoint(models.Paper.objects.get(pk=paper_pk))
+    presentation.save(response)
+
+    return response
 
 
 @login_required

@@ -12,6 +12,11 @@ from django.contrib.auth import get_user_model
 from django.core.validators import validate_email
 from django.utils.translation import gettext as _
 
+# Imports for PP genaration feature
+from pptx import Presentation
+
+from papers import models
+
 
 def index_of_first_change(content):
     """
@@ -93,3 +98,42 @@ def import_users_from_csv(csv_file):
         )
 
     return imported_users
+
+
+def generate_powerpoint(paper):
+    """
+    Generates a pp-presentation based on all current papers.
+    """
+
+    # Create new presentation
+    prs = Presentation()
+
+    # Set the title
+
+    title_layout = prs.slide_layouts[0]
+
+    title_slide = prs.slides.add_slide(title_layout)
+    title_slide.shapes.title.text = "\n".join(
+        (translation.title for translation in paper.translation_set.all())
+    )
+    regular_slide_layout = prs.slide_layouts[1]
+
+    paper_title = " / ".join(
+        (translation.title for translation in paper.translation_set.all())
+    )
+
+    for i, amendment in enumerate(
+        paper.amendment_set.filter(
+            language_code=paper.translation_set.first().language_code
+        )
+    ):
+        amendment_slide = prs.slides.add_slide(regular_slide_layout)
+        amendment_slide.shapes.title.text = paper_title + f"\nA{i+1}"
+        body = amendment_slide.shapes.placeholders[1]
+        body.text_frame.text = amendment.title
+
+        for translation in amendment.translation_list():
+            bullet = body.text_frame.add_paragraph()
+            bullet.text = translation.title
+
+    return prs

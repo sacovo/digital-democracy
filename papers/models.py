@@ -158,6 +158,12 @@ class Paper(models.Model):
             .first()
         )
 
+    def get_all_papers(self):
+        """
+        Return all papers for further use
+        """
+        return Paper.objects.all()
+
     class Meta:
         verbose_name = _("paper")
         verbose_name_plural = _("papers")
