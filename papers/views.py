@@ -106,6 +106,7 @@ def paper_create(request):
 @login_required
 def paper_update(request, paper_pk):
     paper = models.Paper.objects.get(pk=paper_pk)
+
     # Check if user may edit paper
     if not (request.user.is_superuser or paper.is_author(request.user)):
         raise PermissionDenied(_("You are not allowed to edit this paper."))
@@ -113,6 +114,7 @@ def paper_update(request, paper_pk):
     form = forms.PaperUpdateForm(instance=paper)
 
     if request.method == "POST":
+        translations_need_update = True
         form = forms.PaperUpdateForm(request.POST, instance=paper)
 
         if form.is_valid():
@@ -209,6 +211,11 @@ def translation_update(request, paper_pk, language_code):
         form = forms.TranslationForm(request.POST, instance=translation)
         if form.is_valid():
             form.save()
+            paper.translation_set.exclude(pk=translation.pk).filter(
+                needs_update=False
+            ).update(needs_update=form.cleaned_data["needs_update"])
+            translation.needs_update = False
+            translation.save()
             return redirect("paper-detail-language", paper.pk, language_code)
 
     return render(

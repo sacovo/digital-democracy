@@ -29,6 +29,11 @@
   <div class="tab-pane {% if language_code == translation.language_code %}active show{% endif %}" id="{{translation.language_code}}" role="tabpanel">
     <div class="row mt-4">
       <div class="col-md-8">
+        {% if translation.needs_update %}
+            <div class="alert alert-warning" role="alert">
+                {% trans 'This translation needs an update.' %}
+            </div>
+        {% endif %}
         <h2>
           {{translation.title}}
         </h2>
