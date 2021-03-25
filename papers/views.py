@@ -6,6 +6,7 @@ from django.contrib.auth.decorators import login_required, permission_required
 from django.core.exceptions import PermissionDenied
 from django.db.models import Q
 from django.http import Http404
+from django.http.response import HttpResponse
 from django.shortcuts import redirect, render
 from django.utils import timezone
 from django.utils.translation import gettext as _
@@ -31,11 +32,24 @@ def paper_detail(request, paper_pk, language_code=None):
     Detail view of paper
     """
     paper = models.Paper.objects.get(pk=paper_pk)
+    form = forms.CommentForm()
+
+    if request.method == "POST":
+        form = forms.CommentForm(request.POST)
+
+        if form.is_valid():
+            body = form.cleaned_data["comment"]
+
+            author, _ = models.Author.objects.get_or_create(user=request.user)
+
+            models.PaperComment.objects.create(paper=paper, body=body, author=author)
+            return redirect("paper-detail", paper.pk)
 
     return render(
         request,
         "papers/paper_detail.html",
         {
+            "form": form,
             "paper": paper,
             "update_allowed": request.user.is_superuser
             or paper.is_author(request.user),
@@ -44,6 +58,19 @@ def paper_detail(request, paper_pk, language_code=None):
             "create_amendment_allowed": paper.amendment_deadline > timezone.now(),
         },
     )
+
+
+@login_required
+def paper_presentation(request, paper_pk):
+
+    response = HttpResponse(
+        content_type="application/vnd.openxmlformats-officedocument.presentationml.presentation"
+    )
+    response["Content-Disposition"] = f'attachment; filename="paper_{paper_pk}.pptx"'
+    presentation = utils.generate_powerpoint(models.Paper.objects.get(pk=paper_pk))
+    presentation.save(response)
+
+    return response
 
 
 @login_required

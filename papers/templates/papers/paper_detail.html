@@ -1,4 +1,5 @@
 {% extends 'papers/base.html' %}
+{% load bootstrap4 %}
 {% load i18n %}
 
 {% block title %}{{paper.working_title}}{% endblock %}
@@ -80,6 +81,42 @@
           {% endif %}
           {% endfor %}
         </ul>
+        <!-- Implements Comment section-->
+        <h2 id="comments">{% trans 'Comments' %}</h2>
+            <div class="comments">
+              {% if not paper.comments.all %}
+              {% blocktrans %}No Comments Yet...{% endblocktrans %}
+              {% else %}
+
+              {% for comment in paper.comments.all %}
+              <div class="comment">
+                <h3 class="h6">
+                  {{ comment.name }} - {{ comment.created_on }}
+                </h3>
+                <section class="comment-body">
+                  {{ comment.body|safe|urlize }}
+                </section>
+              </div>
+              {% endfor %}
+              {% endif %}
+            </div>
+            <h5 class="mt-4">{% trans 'Leave a comment' %}</h5>
+            {{form.media}}
+            <form action="" method="POST" id="create_comment">
+              {% csrf_token %}
+              {% bootstrap_form form  form_group_class='form-group'%}
+              {% buttons %}
+              <div class="row">
+                <div class="col">
+                  <button type="submit" class="btn btn-sm btn-block submitButton">
+                    {% trans 'Submit' %}
+                  </button>
+                </div>
+              </div>
+              {% endbuttons %}
+            </form>
+            <!-- Implements Comment section-->
+
       </div>
     </div>
   </div>

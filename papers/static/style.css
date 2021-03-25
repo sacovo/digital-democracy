@@ -184,7 +184,7 @@ footer #languages a:hover{
     border: 1px solid var(--black);
     border-radius: 10px;
 }
-#amendments{
+#amendments,#comments{
     text-align: center;
 }
 
