@@ -41,7 +41,8 @@ AMENDMENT_STATES = (
         "retracted",
         mark_safe(u'<u title="ⓘ This amendment is retracted.">Retracted</u>'),
     ),
-    ("approved", mark_safe(u'<u title="ⓘ This amendment is a approved.">Approved</u>')),
+    ("accepted", mark_safe(u'<u title="ⓘ This amendment is accepted.">Accepted</u>')),
+    ("rejected", mark_safe(u'<u title="ⓘ This amendment is rejected.">Rejected</u>')),
 )
 
 

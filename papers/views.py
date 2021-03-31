@@ -58,6 +58,16 @@ def paper_detail(request, paper_pk, language_code=None):
             "create_amendment_allowed": paper.amendment_deadline > timezone.now(),
         },
     )
+def paper_amendmentlist(request, paper_pk):
+    amendment_list = models.Amendment.objects.filter(paper_id=paper_pk)
+    if request.method == 'POST':
+        for amendment in amendment_list:
+            value = request.POST.get(str(amendment.pk), '')
+            if value:
+                amendment.state = value
+                amendment.save()
+
+    return render( request,"papers/amendment_list.html",{"amendment_list": amendment_list})
 
 
 @login_required

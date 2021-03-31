@@ -1,0 +1,45 @@
+{% extends 'papers/base.html' %}
+{% load i18n %}
+
+{% block content %}
+
+<h1>{% trans 'Papers' %}</h1>
+<form method="post">
+{% csrf_token %}
+<table class="table">
+  <caption class="sr-only">{% trans 'amendments' %}</caption>
+  <thead>
+    <tr>
+         <th scope="col">
+        {% trans 'Title' %}
+      </th>
+           <th scope="col">
+        {% trans 'Accepted' %}
+      </th>
+          <th scope="col">
+        {% trans 'Rejected' %}
+      </th>
+    </tr>
+     </thead>
+  <tbody>
+  {% for amendment in amendment_list %}
+   <tr>
+       <td>
+          <a href="{% url 'amendment-detail' amendment.pk %}">
+            {{amendment.title}}
+          </a>
+        </td>
+       <td>
+           <input type="radio" name="{{ amendment.pk }}" value="accepted" {% if amendment.state == 'accepted' %}checked{% endif %}>
+       </td>
+       <td>
+           <input type="radio" name="{{ amendment.pk }}" value="rejected"  {% if amendment.state == 'rejected' %}checked{% endif %}>
+       </td>
+   </tr>
+  {% endfor %}
+  </tbody>
+</table>
+    <a href="{% url 'paper-list'%}" class="btn cancelButton">{% trans 'Back' %}</a>
+    <button type='submit' class="btn submitButton">{% trans 'Save' %}</button>
+</form>
+{% endblock %}
