@@ -137,7 +137,7 @@ class TranslationForm(forms.ModelForm):
 
     class Meta:
         model = models.PaperTranslation
-        fields = ["title", "content"]
+        fields = ["title", "content", "needs_update"]
 
 
 class CommentForm(forms.Form):

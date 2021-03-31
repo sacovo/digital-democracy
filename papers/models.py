@@ -174,6 +174,11 @@ class PaperTranslation(models.Model):
     The content of a paper in a specific language.
     """
 
+    needs_update = models.BooleanField(
+        default=False,
+        help_text=_("Do the other translations need an update after this edit?"),
+    )
+
     paper = models.ForeignKey(
         Paper, models.CASCADE, verbose_name=_("paper"), related_name="translation_set"
     )
