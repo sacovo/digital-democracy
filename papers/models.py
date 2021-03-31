@@ -436,9 +436,7 @@ class Recommendation(models.Model):
             for translation in self.amendment.translations.all():
                 rec, created = Recommendation.objects.update_or_create(
                     amendment=translation,
-                    defaults={
-                        "recommendation": self.recommendation,
-                    },
+                    defaults={"recommendation": self.recommendation},
                 )
 
         return super().save(*args, **kwargs)
