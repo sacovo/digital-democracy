@@ -100,11 +100,12 @@ class AmendmentForm(forms.Form):
 
     def clean(self):
         # prevent the creation of new amendments if the server time is past the paper's deadline
+        deadline = None
         if self.translation:
             deadline = self.translation.paper.amendment_deadline
         if self.amendment:
             deadline = self.amendment.paper.amendment_deadline
-        if timezone.now() > deadline:
+        if deadline and timezone.now() > deadline:
             raise ValidationError(
                 _("Cannot create new amendments past a paper's deadline.")
             )
