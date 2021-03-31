@@ -103,6 +103,21 @@ def amendment_create(request, paper_pk, language_code):
 
 
 @login_required
+def recommendation_create(request, amendment_pk):
+    pass
+
+
+@login_required
+def recommendation_update(request, pk):
+    pass
+
+
+@login_required
+def add_alternative_amendment(request, pk):
+    pass
+
+
+@login_required
 def paper_create(request):
     """
     View to create a new paper
@@ -202,7 +217,7 @@ def amendment_edit(request, amendment_pk):
     form = forms.AmendmentForm(amendment=amendment)
 
     if request.method == "POST":
-        form = forms.AmendmentForm(request.POST)
+        form = forms.AmendmentForm(request.POST, amendment=amendment)
 
         if form.is_valid():
             content = form.cleaned_data.get("content")

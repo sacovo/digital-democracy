@@ -78,39 +78,39 @@
         </ul>
         <!-- Implements Comment section-->
         <h2 id="comments">{% trans 'Comments' %}</h2>
-            <div class="comments">
-              {% if not paper.comments.all %}
-              {% blocktrans %}No Comments Yet...{% endblocktrans %}
-              {% else %}
+        <div class="comments">
+          {% if not paper.comments.all %}
+          {% blocktrans %}No Comments Yet...{% endblocktrans %}
+          {% else %}
 
-              {% for comment in paper.comments.all %}
-              <div class="comment">
-                <h3 class="h6">
-                  {{ comment.name }} - {{ comment.created_on }}
-                </h3>
-                <section class="comment-body">
-                  {{ comment.body|safe|urlize }}
-                </section>
-              </div>
-              {% endfor %}
-              {% endif %}
+          {% for comment in paper.comments.all %}
+          <div class="comment">
+            <h3 class="h6">
+              {{ comment.name }} - {{ comment.created_on }}
+            </h3>
+            <section class="comment-body">
+              {{ comment.body|safe|urlize }}
+            </section>
+          </div>
+          {% endfor %}
+          {% endif %}
+        </div>
+        <h5 class="mt-4">{% trans 'Leave a comment' %}</h5>
+        {{form.media}}
+        <form action="" method="POST" id="create_comment">
+          {% csrf_token %}
+          {% bootstrap_form form  form_group_class='form-group'%}
+          {% buttons %}
+          <div class="row">
+            <div class="col">
+              <button type="submit" class="btn btn-sm btn-block submitButton">
+                {% trans 'Submit' %}
+              </button>
             </div>
-            <h5 class="mt-4">{% trans 'Leave a comment' %}</h5>
-            {{form.media}}
-            <form action="" method="POST" id="create_comment">
-              {% csrf_token %}
-              {% bootstrap_form form  form_group_class='form-group'%}
-              {% buttons %}
-              <div class="row">
-                <div class="col">
-                  <button type="submit" class="btn btn-sm btn-block submitButton">
-                    {% trans 'Submit' %}
-                  </button>
-                </div>
-              </div>
-              {% endbuttons %}
-            </form>
-            <!-- Implements Comment section-->
+          </div>
+          {% endbuttons %}
+        </form>
+        <!-- Implements Comment section-->
 
       </div>
     </div>
@@ -121,17 +121,17 @@
 
 {% block scripts %}
 {{block.super}}
-  {% for translation in paper.translation_set.all %}
+{% for translation in paper.translation_set.all %}
 <script>
   $(document).ready(function(){
-    var paperConent{{translation.language_code}} = $("#paperContent-{{translation.language_code}} article div").html()
-    $("#{{translation.language_code}} .link").hover(function(){
-      var content = $(this).data("content")
-      $("#paperContent-{{translation.language_code}} article div").html(content);
-      }, function(){
-        $("#paperContent-{{translation.language_code}} article div").html(paperConent{{translation.language_code}})
+      var paperConent{{translation.language_code}} = $("#paperContent-{{translation.language_code}} article div").html()
+      $("#{{translation.language_code}} .link").hover(function(){
+          var content = $(this).data("content")
+          $("#paperContent-{{translation.language_code}} article div").html(content);
+        }, function(){
+            $("#paperContent-{{translation.language_code}} article div").html(paperConent{{translation.language_code}})
+          })
     })
-  })
 </script>
-  {% endfor %}
+{% endfor %}
 {% endblock %}
