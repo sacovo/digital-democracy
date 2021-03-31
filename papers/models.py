@@ -393,3 +393,47 @@ class PaperComment(models.Model):
     class Meta:
         verbose_name = _("comment")
         verbose_name_plural = _("comments")
+
+
+REJECT = "reject"
+ACCEPT = "accept"
+MODIFIED = "modified"
+
+RECOMMENDATIONS = (
+    (REJECT, _("reject")),
+    (ACCEPT, _("accept")),
+    (MODIFIED, _("modified")),
+)
+
+
+class Recommendation(models.Model):
+    """
+    A recommendation for an amendent, either: accept, reject or a modification
+    """
+
+    amendment = models.OneToOneField(
+        Amendment, models.CASCADE, verbose_name=_("amendment")
+    )
+
+    recommendation = models.CharField(max_length=80, choices=RECOMMENDATIONS)
+    reason = RichTextField(blank=True)
+    alternative = models.ForeignKey(
+        Amendment,
+        models.SET_NULL,
+        verbose_name=_("alternative"),
+        null=True,
+        blank=True,
+        related_name="recommended_by",
+    )
+
+    def save(self, *args, **kwargs):
+        if not kwargs.get("update_translations"):
+            for translation in self.amendment.translations.all():
+                rec, created = Recommendation.objects.update_or_create(
+                    amendment=translation,
+                    defaults={
+                        "recommendation": self.recommendation,
+                    },
+                )
+
+        return super().save(*args, **kwargs)
