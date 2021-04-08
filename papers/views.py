@@ -131,16 +131,57 @@ def amendment_create(request, paper_pk, language_code):
 
 @login_required
 def recommendation_create(request, amendment_pk):
-    pass
+    amendment = models.Amendment.objects.get(pk=amendment_pk)
+    if hasattr(amendment, "recommendation"):
+        return redirect("recommendation-edit", amendment.recommendation.pk)
+    form = forms.RecommendationForm()
+
+    if request.method == "POST":
+        form = forms.RecommendationForm(request.POST)
+        if form.is_valid():
+            form.instance.amendment = amendment
+            form.save(commit=False)
+            form.instance.save(update_translations=True)
+            return redirect("amendment-detail", amendment.pk)
+    return render(
+        request,
+        "papers/recommendation_form.html",
+        {"form": form, "amendment": amendment},
+    )
 
 
 @login_required
 def recommendation_update(request, pk):
-    pass
+    recommendation = models.Recommendation.objects.get(pk=pk)
+    form = forms.RecommendationForm(instance=recommendation)
+
+    if request.method == "POST":
+        form = forms.RecommendationForm(request.POST, instance=recommendation)
+
+        if form.is_valid():
+            form.save(commit=False)
+            form.instance.save(update_translations=True)
+            return redirect("amendment-detail", recommendation.amendment.pk)
+
+    return render(
+        request,
+        "papers/recommendation_form.html",
+        {"form": form, "amendment": recommendation.amendment},
+    )
 
 
 @login_required
 def add_alternative_amendment(request, pk):
+    recommendation = models.Recommendation.objects.get(pk=pk)
+    paper = recommendation.amendment.paper
+    translation = paper.translation_set.get(
+        language_code=recommendation.amendment.language_code
+    )
+
+    form = forms.AmendmentForm(translation=translation)
+
+    if request.method == "POST":
+        pass
     pass
 
 

@@ -167,3 +167,19 @@ class UserUploadForm(forms.Form):
     """
 
     csv_file = forms.FileField()
+
+
+class RecommendationForm(forms.ModelForm):
+    class Meta:
+        model = models.Recommendation
+        fields = ["recommendation", "reason"]
+
+    def clean_reason(self):
+        """
+        Clean comments from script tasks
+        """
+        return bleach.clean(
+            self.cleaned_data["reason"],
+            tags=settings.BLEACH_ALLOWED_TAGS,
+            attributes=settings.BLEACH_ALLOWED_ATTRIBUTES,
+        )

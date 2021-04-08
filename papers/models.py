@@ -432,11 +432,18 @@ class Recommendation(models.Model):
     )
 
     def save(self, *args, **kwargs):
-        if not kwargs.get("update_translations"):
+        if kwargs.pop("update_translations", False):
             for translation in self.amendment.translations.all():
-                rec, created = Recommendation.objects.update_or_create(
-                    amendment=translation,
-                    defaults={"recommendation": self.recommendation},
-                )
+                translated_recomendation = Recommendation.objects.filter(
+                    amendment=translation
+                ).first()
+                if translated_recomendation:
+                    translated_recomendation.recommendation = self.recommendation
+                    translated_recomendation.save(update_translations=False)
+                else:
+                    translated_recomendation = Recommendation(
+                        amendment=translation, recommendation=self.recommendation
+                    )
+                    translated_recomendation.save(update_translations=False)
 
         return super().save(*args, **kwargs)
