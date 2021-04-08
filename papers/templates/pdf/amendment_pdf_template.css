@@ -1,0 +1,23 @@
+#title {
+	page-break-after: always;
+	text-align: center;
+	font-size: 30px;
+	color: white;
+	height; 100%;
+	padding-top: 7cm;
+}
+
+@page :first {
+	margin: 0cm;
+	background-color: #D22430;
+	vertical-align: middle;
+	@bottom-right{
+		content: '';
+	}
+}
+
+@page {
+	@bottom-right{
+		content: counter(page);
+	}
+}
