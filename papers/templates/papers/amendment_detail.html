@@ -47,19 +47,32 @@
       <section class="reason">
         {{amendment.reason|safe}}
       </section>
-      <div class="row">
-
-        {% if amendment.state == 'draft' or amendment.state == 'retracted'%}
-        <form method="POST">
-          {% csrf_token %}
-          <div class="col">
-            <button class="btn btn-sm submitButton" type="submit" value="publish">{% trans 'publish' %}</button>
-          </div>
-        </form>
-        {% endif %}
-        <a class="btn btn-sm submitButton" href="{% url 'amendment-edit' amendment.pk %}">{% trans 'edit' %}</a>
-      </div>
+    <div class="row">
+      {% if amendment.state == 'draft' or amendment.state == 'retracted'%}
+      <form method="POST">
+        {% csrf_token %}
+        <div class="col">
+          <button class="btn btn-sm submitButton" type="submit" value="publish">{% trans 'publish' %}</button>
+        </div>
+      </form>
+      {% endif %}
+      <a class="btn btn-sm submitButton" href="{% url 'amendment-edit' amendment.pk %}">{% trans 'edit' %}</a>
+    </div>
     </section>
+    {% if amendment.recommendation %}
+    <h2 class="h4">{% trans 'Recommendation' %}</h2>
+    <em>
+      {{amendment.recommendation.get_recommendation_display}}
+    </em>
+    <section class="recommendation">
+      {{amendment.recommendation.reason|safe}}
+    <a class="btn btn-sm" href="{% url 'recommendation-edit' amendment.recommendation.pk %}">{% trans 'edit recommendation' %}</a>
+    </section>
+    {% else %}
+    <section class="recommendation">
+    <a class="btn btn-sm" href="{% url 'recommendation-create' amendment.pk %}">{% trans 'create recommendation' %}</a>
+    </section>
+    {% endif %}
 
     <section class="tags">
       <h2 class="h4">{% trans "Tags" %}</h2>

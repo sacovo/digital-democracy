@@ -47,6 +47,16 @@ urlpatterns = [
         views.amendment_edit,
         name="amendment-edit",
     ),
+    path(
+        "amendments/<int:pk>/recommendation/update/",
+        views.recommendation_update,
+        name="recommendation-edit",
+    ),
+    path(
+        "amendments/<int:amendment_pk>/recommendation/create/",
+        views.recommendation_create,
+        name="recommendation-create",
+    ),
     path("members/login/", auth_views.LoginView.as_view(), name="login"),
     path("members/logout/", auth_views.LogoutView.as_view(), name="logout"),
     path(
