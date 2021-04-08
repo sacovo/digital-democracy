@@ -1,10 +1,40 @@
+:root {
+    --red-deleted: #ffa9a9;
+    --green-inserted: #a8ffa8;
+}
 #title {
 	page-break-after: always;
 	text-align: center;
 	font-size: 30px;
 	color: white;
-	height; 100%;
+	height: 100%;
 	padding-top: 7cm;
+}
+
+#amendments {
+	page-break-before: always;
+}
+
+#amendments article {
+	margin-top: 4em;
+}
+#amendments article:first-child {
+	margin-top: 0em;
+}
+
+#amendments .content {
+	background-color: lightgrey;
+	padding: 0.2em;
+}
+
+#amendments .reason {
+	background-color: grey;
+	padding: 0.2em;
+}
+
+#amendments .recommendation {
+	background-color: lightgrey;
+	padding: 0.2em;
 }
 
 @page :first {
@@ -20,4 +50,13 @@
 	@bottom-right{
 		content: counter(page);
 	}
+}
+
+
+del {
+  background-color: var(--red-deleted);
+}
+
+ins {
+    background: var(--green-inserted);
 }

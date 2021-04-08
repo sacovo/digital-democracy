@@ -73,11 +73,14 @@ def paper_detail(request, paper_pk, language_code=None):
 @login_required
 def paper_detail_create_pdf(request, paper_pk, language_code):
     paper = models.Paper.objects.get(pk=paper_pk).translation_for(language_code)
+    amendments = models.Amendment.objects.filter(
+        paper_id=paper_pk, language_code=language_code
+    )
 
     filename = "Digital-Democracy-Paper-" + str(paper_pk) + "-" + language_code + ".pdf"
     html = render_to_string(
         "./pdf/amendment_pdf_template.html",
-        {"title": paper.title, "content": paper.content},
+        {"title": paper.title, "content": paper.content, "amendments": amendments},
     )
     css = CSS(filename="papers/templates/pdf/amendment_pdf_template.css")
     pdf = HTML(string=html).write_pdf(stylesheets=[css])
@@ -85,6 +88,10 @@ def paper_detail_create_pdf(request, paper_pk, language_code):
     buffer.write(pdf)
     buffer.seek(0)
     return FileResponse(buffer, as_attachment=True, filename=filename)
+
+
+def amendments_as_pdf(request, paper_pk, language_code):
+    pass
 
 
 @login_required

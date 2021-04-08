@@ -66,11 +66,9 @@
           <a class="btn btn-secondary" href="{% url 'paper-presentation' paper.pk %}">
             {% trans 'Download as PPTX' %}
           </a>
-		  {% if paper.state == 'final' %}
           <a class="btn btn-secondary" href="{%url 'paper-detail-language-create-pdf' paper.pk translation.language_code %}">
             {% trans 'download as PDF' %}
           </a>
-          {% endif %}
         </div>
         <a class="btn" href="{%url 'paper-list' %}">
           {% trans 'back' %}
