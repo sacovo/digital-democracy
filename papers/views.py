@@ -1,15 +1,25 @@
 """
 Paper views
 """
+import io
+import tempfile
+from textwrap import TextWrapper
+
+import reportlab
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required, permission_required
 from django.core.exceptions import PermissionDenied
 from django.db.models import Q
 from django.http import Http404
-from django.http.response import HttpResponse
+from django.http.response import FileResponse, HttpResponse
 from django.shortcuts import redirect, render
+from django.template.loader import render_to_string
 from django.utils import timezone
 from django.utils.translation import gettext as _
+from reportlab.lib.colors import HexColor, white
+from reportlab.lib.pagesizes import A4
+from reportlab.pdfgen import canvas
+from weasyprint import CSS, HTML
 
 from papers import forms, models, utils
 
@@ -58,6 +68,23 @@ def paper_detail(request, paper_pk, language_code=None):
             "create_amendment_allowed": paper.amendment_deadline > timezone.now(),
         },
     )
+
+
+@login_required
+def paper_detail_create_pdf(request, paper_pk, language_code):
+    paper = models.Paper.objects.get(pk=paper_pk).translation_for(language_code)
+
+    filename = "Digital-Democracy-Paper-" + str(paper_pk) + "-" + language_code + ".pdf"
+    html = render_to_string(
+        "./pdf/amendment_pdf_template.html",
+        {"title": paper.title, "content": paper.content},
+    )
+    css = CSS(filename="papers/templates/pdf/amendment_pdf_template.css")
+    pdf = HTML(string=html).write_pdf(stylesheets=[css])
+    buffer = io.BytesIO()
+    buffer.write(pdf)
+    buffer.seek(0)
+    return FileResponse(buffer, as_attachment=True, filename=filename)
 
 
 @login_required

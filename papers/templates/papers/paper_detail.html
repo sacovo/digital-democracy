@@ -4,7 +4,6 @@
 
 {% block title %}{{paper.working_title}}{% endblock %}
 
-
 {% block content %}
 <div class="row">
   <nav class="col">
@@ -36,7 +35,7 @@
             </div>
         {% endif %}
         <h2>
-          {{translation.title}}
+          {{translation.title}}ssss
         </h2>
         {% trans 'Authors' %}:
         {% for authors in paper.authors.all %}
@@ -62,6 +61,11 @@
           {% if update_allowed %}
           <a class="btn btn-secondary" href="{%url 'paper-update' paper.pk %}">
             {% trans 'update paper' %}
+          </a>
+          {% endif %}
+		  {% if paper.state == 'final' %}
+          <a class="btn btn-secondary" href="{%url 'paper-detail-language-create-pdf' paper.pk translation.language_code %}">
+            {% trans 'download as PDF' %}
           </a>
           {% endif %}
         </div>
