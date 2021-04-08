@@ -12,6 +12,11 @@ from django.contrib.auth import get_user_model
 from django.core.validators import validate_email
 from django.utils.translation import gettext as _
 from pptx import Presentation
+from pptx.dml.color import RGBColor
+from pptx.dml.line import LineFormat
+from pptx.enum.shapes import MSO_CONNECTOR_TYPE
+from pptx.enum.text import MSO_VERTICAL_ANCHOR, PP_PARAGRAPH_ALIGNMENT
+from pptx.util import Cm, Pt
 
 
 def index_of_first_change(content):
@@ -104,32 +109,108 @@ def generate_powerpoint(paper):
     # Create new presentation
     prs = Presentation()
 
-    # Set the title
+    # Create layouts
+    title_layout = prs.slide_layouts[5]
+    amendment_layout = prs.slide_layouts[1]
 
-    title_layout = prs.slide_layouts[0]
-
+    # Add the title slide to the prs
     title_slide = prs.slides.add_slide(title_layout)
+
+    # Add title text to slide
     title_slide.shapes.title.text = "\n".join(
         (translation.title for translation in paper.translation_set.all())
     )
-    regular_slide_layout = prs.slide_layouts[1]
+    shape = title_slide.shapes
+    title_shape = shape.title
+    title = title_slide.shapes.title
+    title.top = Cm(10)
+    title.left = Cm(2)
 
-    paper_title = " / ".join(
-        (translation.title for translation in paper.translation_set.all())
+    x = 0
+    for translation in paper.translation_set.all():
+        title_shape.text_frame.paragraphs[x].font.size = Pt(18)
+        title_shape.text_frame.paragraphs[x].font.bold = True
+        title_shape.text_frame.paragraphs[x].font.color.rgb = RGBColor(0xFF, 0xFF, 0xFF)
+        x += 1
+
+    title_shape.text_frame.paragraphs[0].alignment = PP_PARAGRAPH_ALIGNMENT.LEFT
+
+    # Underline title
+    underline = title_slide.shapes.add_connector(
+        MSO_CONNECTOR_TYPE.STRAIGHT, Cm(23), Cm(9.5), Cm(2.25), Cm(9.5)
     )
+    line = LineFormat(underline)
+    line.fill.solid()
+    line.fill.fore_color.rgb = RGBColor(255, 255, 255)
 
+    # Set background
+    background = title_slide.background
+    background.fill.solid()
+    background.fill.fore_color.rgb = RGBColor(255, 0, 0)
+
+    # Set title slide
+    title_textbox = title_slide.shapes.add_textbox(Cm(5.25), Cm(6), Cm(5), Cm(20))
+    title_tf = title_textbox.text_frame
+    p = title_tf.add_paragraph()
+    p.text = " PAPER TITLE:"
+    p.font.size = Pt(45)
+    p.font.bold = True
+    p.font.color.rgb = RGBColor(0xFF, 0xFF, 0xFF)
+
+    # Generating amendment slides
     for i, amendment in enumerate(
         paper.amendment_set.filter(
             language_code=paper.translation_set.first().language_code
         )
     ):
-        amendment_slide = prs.slides.add_slide(regular_slide_layout)
-        amendment_slide.shapes.title.text = paper_title + f"\nA{i+1}"
+        amendment_slide = prs.slides.add_slide(amendment_layout)
+
+        amendment_nr_textbox = amendment_slide.shapes.add_textbox(
+            Cm(0.25), Cm(0.25), Cm(5), Cm(4)
+        )
+        paper_title_textbox = amendment_slide.shapes.add_textbox(
+            Cm(10), Cm(0.6), Cm(7), Cm(5)
+        )
+
+        txz_frame = amendment_nr_textbox.text_frame
+        amendment_nr_paragraph = txz_frame.paragraphs[0]
+        amendment_nr_paragraph.text = f"A{i + 1}:"
+        amendment_nr_paragraph.font.size = Pt(60)
+        amendment_nr_paragraph.font.bold = True
+        amendment_nr_paragraph.font.color.rgb = RGBColor(0x0, 0x0, 0x0)
+
+        # Paper title on amendment page
+        title_textframe = paper_title_textbox.text_frame
+        amendment_paper_title_paragraph1 = title_textframe.paragraphs[0]
+
+        amendment_paper_title_paragraph1.text = "\n".join(
+            (translation.title for translation in paper.translation_set.all())
+        )
+        amendment_paper_title_paragraph1.font.size = Pt(14)
+        amendment_paper_title_paragraph1.font.bold = True
+        amendment_paper_title_paragraph1.font.color.rgb = RGBColor(0x0, 0x0, 0x0)
+        amendment_paper_title_paragraph1.vertical_anchor = MSO_VERTICAL_ANCHOR.TOP
+        amendment_paper_title_paragraph1.alignment = PP_PARAGRAPH_ALIGNMENT.LEFT
+
+        # Underline title
+        underline2 = amendment_slide.shapes.add_connector(
+            MSO_CONNECTOR_TYPE.STRAIGHT, Cm(25), Cm(3), Cm(0.5), Cm(3)
+        )
+        underline2 = LineFormat(underline2)
+        underline2.fill.solid()
+        underline2.fill.fore_color.rgb = RGBColor(0, 0, 0)
+
+        # Removing unused placeholder
+        textbox = amendment_slide.shapes[0]
+        sp = textbox.element
+        sp.getparent().remove(sp)
+
+        # Adding body bullet points
         body = amendment_slide.shapes.placeholders[1]
-        body.text_frame.text = amendment.title
+        body.text_frame.text = amendment.title + "\n"
 
         for translation in amendment.translation_list():
             bullet = body.text_frame.add_paragraph()
-            bullet.text = translation.title
+            bullet.text = translation.title + "\n"
 
     return prs
