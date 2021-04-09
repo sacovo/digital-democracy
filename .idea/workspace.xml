@@ -43,12 +43,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="8714a3bb-f930-4dea-8404-4a035b8c67ff" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/backend.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/backend.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/papers/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/papers/models.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/papers/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/papers/urls.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/papers/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/papers/views.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -150,6 +145,8 @@
       <workItem from="1615982459024" duration="593000" />
       <workItem from="1616484186476" duration="738000" />
       <workItem from="1616485041388" duration="3791000" />
+      <workItem from="1617268037470" duration="89000" />
+      <workItem from="1617955665215" duration="1244000" />
     </task>
     <servers />
   </component>
@@ -169,6 +166,10 @@
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="WindowStateProjectService">
+    <state x="1972" y="838" key="RollbackChangesDialog" timestamp="1617957187664">
+      <screen x="0" y="23" width="2560" height="1360" />
+    </state>
+    <state x="1972" y="838" key="RollbackChangesDialog/0.23.2560.1360@0.23.2560.1360" timestamp="1617957187664" />
     <state x="963" y="378" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1609525596116">
       <screen x="0" y="23" width="1680" height="983" />
     </state>
