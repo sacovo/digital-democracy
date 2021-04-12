@@ -70,6 +70,20 @@ def paper_detail(request, paper_pk, language_code=None):
     )
 
 
+def paper_amendmentlist(request, paper_pk):
+    amendment_list = models.Amendment.objects.filter(paper_id=paper_pk)
+    if request.method == "POST":
+        for amendment in amendment_list:
+            value = request.POST.get(str(amendment.pk), "")
+            if value:
+                amendment.state = value
+                amendment.save()
+
+    return render(
+        request, "papers/amendment_list.html", {"amendment_list": amendment_list}
+    )
+
+
 @login_required
 def paper_detail_create_pdf(request, paper_pk, language_code):
     paper = models.Paper.objects.get(pk=paper_pk).translation_for(language_code)
