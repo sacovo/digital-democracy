@@ -66,11 +66,11 @@
     </em>
     <section class="recommendation">
       {{amendment.recommendation.reason|safe}}
-    <a class="btn btn-sm" href="{% url 'recommendation-edit' amendment.recommendation.pk %}">{% trans 'edit recommendation' %}</a>
+    <a class="btn btn-sm submitButton" href="{% url 'recommendation-edit' amendment.recommendation.pk %}">{% trans 'edit recommendation' %}</a>
     </section>
     {% else %}
     <section class="recommendation">
-    <a class="btn btn-sm" href="{% url 'recommendation-create' amendment.pk %}">{% trans 'create recommendation' %}</a>
+    <a class="btn btn-sm submitButton" href="{% url 'recommendation-create' amendment.pk %}">{% trans 'create recommendation' %}</a>
     </section>
     {% endif %}
 
