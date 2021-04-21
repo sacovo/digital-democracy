@@ -110,25 +110,25 @@ def generate_powerpoint(paper):
     prs = Presentation()
 
     # Create layouts
-    title_layout = prs.slide_layouts[6]
-    amendment_layout = prs.slide_layouts[1]
+    t_layout = prs.slide_layouts[6]
+    a_layout = prs.slide_layouts[1]
 
     # Add the title slide to the prs
-    title_slide = prs.slides.add_slide(title_layout)
-    titles_textbox = title_slide.shapes.add_textbox(
+    title_slide = prs.slides.add_slide(t_layout)
+    titles_txtbox = title_slide.shapes.add_textbox(
         Cm(2), Cm(10), Cm(21), Cm(5)
     )  # (left, top, width, height)
-    titles_textframe = titles_textbox.text_frame
-    titles_textframe.word_wrap = True
-    p0_titles_textframe = titles_textframe.paragraphs[0]
-    p0_titles_textframe.text = "\n".join(
+    titles_txtframe = titles_txtbox.text_frame
+    titles_txtframe.word_wrap = True
+    p0_t_txtfrm = titles_txtframe.paragraphs[0]
+    p0_t_txtfrm.text = "\n".join(
         (translation.title for translation in paper.translation_set.all())
     )
-    p0_titles_textframe.font.size = Pt(22)
-    p0_titles_textframe.font.bold = True
-    p0_titles_textframe.font.color.rgb = RGBColor(0xFF, 0xFF, 0xFF)
-    p0_titles_textframe.vertical_anchor = MSO_VERTICAL_ANCHOR.TOP
-    p0_titles_textframe.alignment = PP_PARAGRAPH_ALIGNMENT.LEFT
+    p0_t_txtfrm.font.size = Pt(22)
+    p0_t_txtfrm.font.bold = True
+    p0_t_txtfrm.font.color.rgb = RGBColor(0xFF, 0xFF, 0xFF)
+    p0_t_txtfrm.vertical_anchor = MSO_VERTICAL_ANCHOR.TOP
+    p0_t_txtfrm.alignment = PP_PARAGRAPH_ALIGNMENT.LEFT
 
     # Underline title
     underline = title_slide.shapes.add_connector(
@@ -144,8 +144,8 @@ def generate_powerpoint(paper):
     background.fill.fore_color.rgb = RGBColor(255, 0, 0)
 
     # Set title slide
-    title_textbox = title_slide.shapes.add_textbox(Cm(2), Cm(6.5), Cm(21), Cm(3))
-    subtitle_tf = title_textbox.text_frame
+    title_txtbx = title_slide.shapes.add_textbox(Cm(2), Cm(6.5), Cm(21), Cm(3))
+    subtitle_tf = title_txtbx.text_frame
     p2 = subtitle_tf.paragraphs[0]
     p2.text = "PAPER TITLE:"
     p2.font.size = Pt(60)
@@ -158,7 +158,7 @@ def generate_powerpoint(paper):
             language_code=paper.translation_set.first().language_code
         )
     ):
-        amendment_slide = prs.slides.add_slide(amendment_layout)
+        amendment_slide = prs.slides.add_slide(a_layout)
 
         amendment_nr_textbox = amendment_slide.shapes.add_textbox(
             Cm(0.25), Cm(0), Cm(4), Cm(2.8)
@@ -188,16 +188,16 @@ def generate_powerpoint(paper):
         p0_amendment_paper_title.alignment = PP_PARAGRAPH_ALIGNMENT.LEFT
 
         # Underline title
-        underline2 = amendment_slide.shapes.add_connector(
+        u_line2 = amendment_slide.shapes.add_connector(
             MSO_CONNECTOR_TYPE.STRAIGHT, Cm(25), Cm(3), Cm(0.5), Cm(3)
         )
-        underline2 = LineFormat(underline2)
-        underline2.fill.solid()
-        underline2.fill.fore_color.rgb = RGBColor(0, 0, 0)
+        u_line2 = LineFormat(u_line2)
+        u_line2.fill.solid()
+        u_line2.fill.fore_color.rgb = RGBColor(0, 0, 0)
 
         # Removing unused placeholder
-        textbox = amendment_slide.shapes[0]
-        sp = textbox.element
+        txtbx = amendment_slide.shapes[0]
+        sp = txtbx.element
         sp.getparent().remove(sp)
 
         # Adding body bullet points
