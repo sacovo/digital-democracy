@@ -9,7 +9,7 @@ from django.core.exceptions import ValidationError
 from django.utils import timezone
 from django.utils.translation import gettext as _
 
-from papers import models
+from papers import models, utils
 
 
 class PaperCreateForm(forms.Form):
@@ -76,7 +76,9 @@ class AmendmentForm(forms.Form):
 
         elif self.amendment:
             self.fields["title"].initial = self.amendment.title
-            self.fields["content"].initial = self.amendment.content
+            self.fields["content"].initial = utils.add_lite_classes(
+                self.amendment.content
+            )
             self.fields["reason"].initial = self.amendment.reason
 
     def create_amendment(self, translation, author):
@@ -139,6 +141,16 @@ class TranslationForm(forms.ModelForm):
     class Meta:
         model = models.PaperTranslation
         fields = ["title", "content", "needs_update"]
+
+    def clean_content(self):
+        """
+        Clean content
+        """
+        return bleach.clean(
+            self.cleaned_data["content"],
+            tags=settings.BLEACH_ALLOWED_TAGS,
+            attributes=settings.BLEACH_ALLOWED_ATTRIBUTES,
+        )
 
 
 class CommentForm(forms.Form):
@@ -208,7 +220,9 @@ class AmendmentSelect(forms.Form):
             state="accepted",
         )
 
+
 class FinalizePaperForm(forms.Form):
     title = forms.CharField(label=_("title"))
-    content = forms.CharField(widget=CKEditorWidget(config_name="track-changes"), label=_("content"))
-
+    content = forms.CharField(
+        widget=CKEditorWidget(config_name="track-changes"), label=_("content")
+    )

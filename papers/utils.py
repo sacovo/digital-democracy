@@ -7,6 +7,7 @@ import re
 import secrets
 from itertools import zip_longest
 from typing import List
+from bs4 import BeautifulSoup
 
 from django.conf import settings
 from django.contrib.auth import get_user_model
@@ -24,16 +25,29 @@ class Change:
     start: int
     end: int
     content: str  # eg: <ins>...</ins> or <del>...</del>
+
     def __init__(self, start, end, content):
         self.start = start
         self.end = end
         self.content = content
 
 
+def add_classes_to_tags(tag_name, class_list, html) -> str:
+    soup = BeautifulSoup(html, "html.parser")
+    for tag in soup.find_all(tag_name):
+        tag["class"] = tag.get("class", []) + class_list
+    return str(soup)
+
+
+def add_lite_classes(text) -> str:
+    text = add_classes_to_tags("del", ["ice-del", "ice-cts"], text)
+    text = add_classes_to_tags("ins", ["ice-ins", "ice-cts"], text)
+    return text
+
+
 def apply_change(original_text: str, change: Change) -> str:
-    return "".join((
-        original_text[: change.start], change.content, original_text[change.end :]
-        )
+    return "".join(
+        (original_text[: change.start], change.content, original_text[change.end :])
     )
 
 
@@ -50,17 +64,22 @@ def create_changes_of_amendment(text: str) -> List[Change]:
     Subtraction of 11, because <del></del> is 11 characters.
     """
     changes = []
-    p = re.compile(r"(\<del>(.*?)\<\/del>)")
+    p = re.compile(r"(\<del>(.*?)\<\/del>)|(\<ins>(.*?)\<\/ins>)")
 
     matches = p.finditer(text)
+    counter = 0
     for match in matches:
-        changes.append(Change(match.start(), match.end()-11, match.group()))
-
-    p = re.compile(r"(\<ins>(.*?)\<\/ins>)")
-
-    matches = p.finditer(text)
-    for match in matches:
-        changes.append(Change(match.start(), match.start(), match.group()))
+        content = match.group()
+        if content.startswith("<del>"):
+            changes.append(
+                Change(match.start() - counter, match.end() - 11 - counter, content)
+            )
+            counter += len("<del></del>")
+        else:
+            changes.append(
+                Change(match.start() - counter, match.start() - counter, content)
+            )
+            counter += len(content)
 
     return changes
 
