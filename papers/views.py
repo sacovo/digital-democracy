@@ -15,6 +15,7 @@ from django.http.response import FileResponse, HttpResponse
 from django.shortcuts import redirect, render
 from django.template.loader import render_to_string
 from django.utils import timezone
+from django.utils.safestring import mark_safe
 from django.utils.translation import gettext as _
 from reportlab.lib.colors import HexColor, white
 from reportlab.lib.pagesizes import A4
@@ -117,13 +118,15 @@ def finalize_view(request, paper_pk, language_code):
             {"form": form, "translation": translation},
         )
 
-    modified_text = utils.create_modified_text(
+    modified_text = mark_safe(utils.create_modified_text(
         translation.content, form.cleaned_data["merge"]
-    )
+    ))
+    form = forms.FinalizePaperForm(initial = {"content": modified_text})
+
 
     return render(
         request,
-        "papers/finalize_paper.html",
+        "papers/modified_text.html",
         {
             "translation": translation,
             "modified_text": modified_text,

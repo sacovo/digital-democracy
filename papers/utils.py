@@ -24,11 +24,16 @@ class Change:
     start: int
     end: int
     content: str  # eg: <ins>...</ins> or <del>...</del>
+    def __init__(self, start, end, content):
+        self.start = start
+        self.end = end
+        self.content = content
 
 
 def apply_change(original_text: str, change: Change) -> str:
-    return "".join(
+    return "".join((
         original_text[: change.start], change.content, original_text[change.end :]
+        )
     )
 
 
@@ -41,8 +46,23 @@ def update_change(change: Change, applied: Change):
 
 
 def create_changes_of_amendment(text: str) -> List[Change]:
-    """text contains changes marked up with <del> or <ins> tags."""
-    pass
+    """text contains changes marked up with <del> or <ins> tags.
+    Subtraction of 11, because <del></del> is 11 characters.
+    """
+    changes = []
+    p = re.compile(r"(\<del>(.*?)\<\/del>)")
+
+    matches = p.finditer(text)
+    for match in matches:
+        changes.append(Change(match.start(), match.end()-11, match.group()))
+
+    p = re.compile(r"(\<ins>(.*?)\<\/ins>)")
+
+    matches = p.finditer(text)
+    for match in matches:
+        changes.append(Change(match.start(), match.start(), match.group()))
+
+    return changes
 
 
 def create_modified_text(original_text: str, amendments) -> str:
@@ -51,11 +71,10 @@ def create_modified_text(original_text: str, amendments) -> str:
         changes += create_changes_of_amendment(amendment.content)
     modified_text = original_text
 
-    while changes:
-        change = changes.pop()
+    changes.sort(key=lambda change: change.start)
+    changes.reverse()
+    for change in changes:
         modified_text = apply_change(modified_text, change)
-        for other in changes:
-            update_change(other, change)
     return modified_text
 
 

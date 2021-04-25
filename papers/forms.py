@@ -207,3 +207,8 @@ class AmendmentSelect(forms.Form):
             language_code=translation.language_code,
             state="accepted",
         )
+
+class FinalizePaperForm(forms.Form):
+    title = forms.CharField(label=_("title"))
+    content = forms.CharField(widget=CKEditorWidget(config_name="track-changes"), label=_("content"))
+
