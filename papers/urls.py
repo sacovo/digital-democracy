@@ -27,16 +27,6 @@ urlpatterns = [
         name="paper-detail-language",
     ),
     path(
-        "paper/<int:paper_pk>/<str:language_code>/select-amendments/",
-        views.selected_amendments_view,
-        name="paper-select-amendments",
-    ),
-    path(
-        "paper/<int:paper_pk>/<str:language_code>/finalize/",
-        views.finalize_view,
-        name="paper-finalize",
-    ),
-    path(
         "paper/<int:paper_pk>/<str:language_code>/create-pdf",
         views.paper_detail_create_pdf,
         name="paper-detail-language-create-pdf",
