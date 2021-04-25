@@ -84,6 +84,54 @@ def paper_amendmentlist(request, paper_pk):
     )
 
 
+def selected_amendments_view(request, paper_pk, language_code):
+    translation = models.PaperTranslation.objects.get(
+        paper_id=paper_pk, language_code=language_code
+    )
+    form = forms.AmendmentSelect(translation=translation)
+
+    return render(
+        request,
+        "papers/select_amendments.html",
+        {"form": form, "translation": translation},
+    )
+
+
+def finalize_view(request, paper_pk, language_code):
+    translation = models.PaperTranslation.objects.get(
+        paper_id=paper_pk, language_code=language_code
+    )
+    form = forms.AmendmentSelect(request.GET, translation=translation)
+
+    if request.method == "POST":
+        translation.finalized_content = request.POST.get("finalized_content")
+        translation.save()
+        return redirect(
+            "paper-detail", args=(translation.paper_id, translation.language_code)
+        )
+
+    if not form.is_valid():
+        return render(
+            request,
+            "papers/select_amendments.html",
+            {"form": form, "translation": translation},
+        )
+
+    modified_text = utils.create_modified_text(
+        translation.content, form.cleaned_data["merge"]
+    )
+
+    return render(
+        request,
+        "papers/finalize_paper.html",
+        {
+            "translation": translation,
+            "modified_text": modified_text,
+            "form": form,
+        },
+    )
+
+
 @login_required
 def paper_detail_create_pdf(request, paper_pk, language_code):
     paper = models.Paper.objects.get(pk=paper_pk).translation_for(language_code)

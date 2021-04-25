@@ -6,6 +6,7 @@ import io
 import re
 import secrets
 from itertools import zip_longest
+from typing import List
 
 from django.conf import settings
 from django.contrib.auth import get_user_model
@@ -17,6 +18,45 @@ from pptx.dml.line import LineFormat
 from pptx.enum.shapes import MSO_CONNECTOR_TYPE
 from pptx.enum.text import MSO_VERTICAL_ANCHOR, PP_PARAGRAPH_ALIGNMENT
 from pptx.util import Cm, Pt
+
+
+class Change:
+    start: int
+    end: int
+    content: str  # eg: <ins>...</ins> or <del>...</del>
+
+
+def apply_change(original_text: str, change: Change) -> str:
+    return "".join(
+        original_text[: change.start], change.content, original_text[change.end :]
+    )
+
+
+def update_change(change: Change, applied: Change):
+    if change.start < applied.start:
+        return
+    delta = len(applied.content) - (applied.end - applied.start)
+    change.start += delta
+    change.end += delta
+
+
+def create_changes_of_amendment(text: str) -> List[Change]:
+    """text contains changes marked up with <del> or <ins> tags."""
+    pass
+
+
+def create_modified_text(original_text: str, amendments) -> str:
+    changes = []
+    for amendment in amendments:
+        changes += create_changes_of_amendment(amendment.content)
+    modified_text = original_text
+
+    while changes:
+        change = changes.pop()
+        modified_text = apply_change(modified_text, change)
+        for other in changes:
+            update_change(other, change)
+    return modified_text
 
 
 def index_of_first_change(content):

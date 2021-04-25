@@ -183,3 +183,27 @@ class RecommendationForm(forms.ModelForm):
             tags=settings.BLEACH_ALLOWED_TAGS,
             attributes=settings.BLEACH_ALLOWED_ATTRIBUTES,
         )
+
+
+class AmendmentChoiceField(forms.ModelMultipleChoiceField):
+    def label_from_instance(self, amendment):
+        return amendment.title
+
+
+class AmendmentSelect(forms.Form):
+    merge = AmendmentChoiceField(
+        queryset=models.Amendment.objects.all(), widget=forms.CheckboxSelectMultiple
+    )
+
+    def __init__(self, *args, **kwargs):
+        translation = kwargs.pop("translation")
+        super().__init__(*args, **kwargs)
+        self.fields["merge"].queryset = models.Amendment.objects.filter(
+            paper_id=translation.paper_id,
+            language_code=translation.language_code,
+        )
+        self.fields["merge"].initial = models.Amendment.objects.filter(
+            paper_id=translation.paper_id,
+            language_code=translation.language_code,
+            state="accepted",
+        )
