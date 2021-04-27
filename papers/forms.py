@@ -211,8 +211,7 @@ class AmendmentSelect(forms.Form):
         translation = kwargs.pop("translation")
         super().__init__(*args, **kwargs)
         self.fields["merge"].queryset = models.Amendment.objects.filter(
-            paper_id=translation.paper_id,
-            language_code=translation.language_code,
+            paper_id=translation.paper_id, language_code=translation.language_code
         )
         self.fields["merge"].initial = models.Amendment.objects.filter(
             paper_id=translation.paper_id,

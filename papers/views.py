@@ -121,17 +121,13 @@ def finalize_view(request, paper_pk, language_code):
     modified_text = utils.create_modified_text(
         translation.content, form.cleaned_data["merge"]
     )
-    modified_text= utils.add_lite_classes(modified_text)
+    modified_text = utils.add_lite_classes(modified_text)
     form = forms.FinalizePaperForm(initial={"content": modified_text})
 
     return render(
         request,
         "papers/modified_text.html",
-        {
-            "translation": translation,
-            "modified_text": modified_text,
-            "form": form,
-        },
+        {"translation": translation, "modified_text": modified_text, "form": form},
     )
 
 

@@ -7,8 +7,8 @@ import re
 import secrets
 from itertools import zip_longest
 from typing import List
-from bs4 import BeautifulSoup
 
+from bs4 import BeautifulSoup
 from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.core.validators import validate_email
