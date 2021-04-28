@@ -35,42 +35,53 @@
             </div>
         {% endif %}
         <h2>
-          {{translation.title}}ssss
+          {{translation.title}}
         </h2>
         {% trans 'Authors' %}:
         {% for authors in paper.authors.all %}
         {{authors.name}}{% if not forloop.last %},{% endif %}
         {% endfor %}
+        {% if paper.state != 'final' %}
           <h3 class="h5">{% trans 'Deadline for this paper: ' %}{{paper.amendment_deadline}}</h3>
+        {% endif %}
         <div id="paperContent-{{translation.language_code}}" class="content">
           <article>
             <div> {{translation.content_safe}}</div>
           </article>
         </div>
         <div class="my-2" role="group">
-		  {% if create_amendment_allowed %}
-          <a class="btn btn-secondary" href="{% url 'create-amendment' translation.paper.pk translation.language_code %}">
-            {% trans 'create amendment' %}
+          {% if paper.state != 'final' %}
+          {% if create_amendment_allowed %}
+              <a class="btn btn-secondary" href="{% url 'create-amendment' translation.paper.pk translation.language_code %}">
+                {% trans 'Create amendment' %}
+              </a>
+          {% endif %}
+          {% if request.user.is_staff %}
+          <a class="btn btn-secondary" href="{% url 'paper-amendment-list' translation.paper.pk %}">
+            {% trans 'Enter results' %}
           </a>
-		  {% endif %}
           <a class="btn btn-secondary" href="{% url 'paper-select-amendments' translation.paper.pk translation.language_code %}">
-            {% trans 'view amendments' %}
+            {% trans 'Merge amendments' %}
           </a>
+          {% endif %}
           {% if perms.papers.change_translation %}
           <a class="btn btn-secondary" href="{%url 'paper-translation-update' translation.paper.pk translation.language_code%}">
-            {% trans 'update translation' %}
+            {% trans 'Update translation' %}
           </a>
+          {% endif %}
           {% endif %}
           {% if update_allowed %}
           <a class="btn btn-secondary" href="{%url 'paper-update' paper.pk %}">
-            {% trans 'update paper' %}
+            {% trans 'Update paper' %}
           </a>
           {% endif %}
+          {% if paper.state == 'public' %}
           <a class="btn btn-secondary" href="{% url 'paper-presentation' paper.pk %}">
             {% trans 'Download as PPTX' %}
           </a>
+          {% endif %}
           <a class="btn btn-secondary" href="{%url 'paper-detail-language-create-pdf' paper.pk translation.language_code %}">
-            {% trans 'download as PDF' %}
+            {% trans 'Download as PDF' %}
           </a>
         </div>
         <a class="btn" href="{%url 'paper-list' %}">
@@ -78,6 +89,7 @@
         </a>
       </div>
       <div class="col-md-4">
+        {% if paper.state != 'final' %}
         <h2 id="amendments">{% trans 'amendments' %}</h2>
         <ul>
           {% for amendment in translation.amendment_list %}
@@ -124,7 +136,7 @@
           {% endbuttons %}
         </form>
         <!-- Implements Comment section-->
-
+        {% endif %}
       </div>
     </div>
   </div>

@@ -2,10 +2,7 @@
 Paper views
 """
 import io
-import tempfile
-from textwrap import TextWrapper
 
-import reportlab
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required, permission_required
 from django.core.exceptions import PermissionDenied
@@ -15,11 +12,7 @@ from django.http.response import FileResponse, HttpResponse
 from django.shortcuts import redirect, render
 from django.template.loader import render_to_string
 from django.utils import timezone
-from django.utils.safestring import mark_safe
 from django.utils.translation import gettext as _
-from reportlab.lib.colors import HexColor, white
-from reportlab.lib.pagesizes import A4
-from reportlab.pdfgen import canvas
 from weasyprint import CSS, HTML
 
 from papers import forms, models, utils
@@ -81,7 +74,9 @@ def paper_amendmentlist(request, paper_pk):
                 amendment.save()
 
     return render(
-        request, "papers/amendment_list.html", {"amendment_list": amendment_list}
+        request,
+        "papers/amendment_list.html",
+        {"amendment_list": amendment_list, "paper_pk": paper_pk},
     )
 
 
@@ -105,11 +100,9 @@ def finalize_view(request, paper_pk, language_code):
     form = forms.AmendmentSelect(request.GET, translation=translation)
 
     if request.method == "POST":
-        translation.finalized_content = request.POST.get("finalized_content")
+        translation.content = request.POST.get("content")
         translation.save()
-        return redirect(
-            "paper-detail", args=(translation.paper_id, translation.language_code)
-        )
+        return redirect("paper-detail", translation.paper_id)
 
     if not form.is_valid():
         return render(
@@ -122,7 +115,9 @@ def finalize_view(request, paper_pk, language_code):
         translation.content, form.cleaned_data["merge"]
     )
     modified_text = utils.add_lite_classes(modified_text)
-    form = forms.FinalizePaperForm(initial={"content": modified_text})
+    form = forms.FinalizePaperForm(
+        initial={"content": modified_text, "title": translation.title}
+    )
 
     return render(
         request,
@@ -140,8 +135,13 @@ def paper_detail_create_pdf(request, paper_pk, language_code):
 
     filename = "Digital-Democracy-Paper-" + str(paper_pk) + "-" + language_code + ".pdf"
     html = render_to_string(
-        "./pdf/amendment_pdf_template.html",
-        {"title": paper.title, "content": paper.content, "amendments": amendments},
+        "pdf/amendment_pdf_template.html",
+        {
+            "title": paper.title,
+            "content": paper.content,
+            "amendments": amendments,
+            "paper": paper.paper,
+        },
     )
     css = CSS(filename="papers/templates/pdf/amendment_pdf_template.css")
     pdf = HTML(string=html).write_pdf(stylesheets=[css])

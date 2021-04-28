@@ -114,6 +114,7 @@ footer #languages a:hover{
 /* Buttons */
 .btn{
     border-color: var(--red);
+    margin: 0.1em 0;
 }
 /* Submit- / Secondary-Button */
 .submitButton,.btn-secondary{

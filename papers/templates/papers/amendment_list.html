@@ -26,7 +26,7 @@
    <tr>
        <td>
           <a href="{% url 'amendment-detail' amendment.pk %}">
-            {{amendment.title}}
+            {{amendment.title}} ({{amendment.language_code}})
           </a>
         </td>
        <td>
@@ -39,7 +39,7 @@
   {% endfor %}
   </tbody>
 </table>
-    <a href="{% url 'paper-list'%}" class="btn cancelButton">{% trans 'Back' %}</a>
+    <a href="{% url 'paper-detail' paper_pk %}" class="btn cancelButton">{% trans 'Back' %}</a>
     <button type='submit' class="btn submitButton">{% trans 'Save' %}</button>
 </form>
 {% endblock %}

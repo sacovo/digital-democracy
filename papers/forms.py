@@ -204,7 +204,13 @@ class AmendmentChoiceField(forms.ModelMultipleChoiceField):
 
 class AmendmentSelect(forms.Form):
     merge = AmendmentChoiceField(
-        queryset=models.Amendment.objects.all(), widget=forms.CheckboxSelectMultiple
+        queryset=models.Amendment.objects.all(),
+        widget=forms.CheckboxSelectMultiple,
+        label=_("Amendments to merge into final paper"),
+        help_text=_(
+            "Select all amendments that you wish to merge into the final paper. "
+            "Accepted amendments have already been selected."
+        ),
     )
 
     def __init__(self, *args, **kwargs):
