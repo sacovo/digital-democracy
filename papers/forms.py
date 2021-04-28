@@ -9,7 +9,7 @@ from django.core.exceptions import ValidationError
 from django.utils import timezone
 from django.utils.translation import gettext as _
 
-from papers import models
+from papers import models, utils
 
 
 class PaperCreateForm(forms.Form):
@@ -76,7 +76,9 @@ class AmendmentForm(forms.Form):
 
         elif self.amendment:
             self.fields["title"].initial = self.amendment.title
-            self.fields["content"].initial = self.amendment.content
+            self.fields["content"].initial = utils.add_lite_classes(
+                self.amendment.content
+            )
             self.fields["reason"].initial = self.amendment.reason
 
     def create_amendment(self, translation, author):
@@ -140,6 +142,16 @@ class TranslationForm(forms.ModelForm):
         model = models.PaperTranslation
         fields = ["title", "content", "needs_update"]
 
+    def clean_content(self):
+        """
+        Clean content
+        """
+        return bleach.clean(
+            self.cleaned_data["content"],
+            tags=settings.BLEACH_ALLOWED_TAGS,
+            attributes=settings.BLEACH_ALLOWED_ATTRIBUTES,
+        )
+
 
 class CommentForm(forms.Form):
     """
@@ -183,3 +195,39 @@ class RecommendationForm(forms.ModelForm):
             tags=settings.BLEACH_ALLOWED_TAGS,
             attributes=settings.BLEACH_ALLOWED_ATTRIBUTES,
         )
+
+
+class AmendmentChoiceField(forms.ModelMultipleChoiceField):
+    def label_from_instance(self, amendment):
+        return amendment.title
+
+
+class AmendmentSelect(forms.Form):
+    merge = AmendmentChoiceField(
+        queryset=models.Amendment.objects.all(),
+        widget=forms.CheckboxSelectMultiple,
+        label=_("Amendments to merge into final paper"),
+        help_text=_(
+            "Select all amendments that you wish to merge into the final paper. "
+            "Accepted amendments have already been selected."
+        ),
+    )
+
+    def __init__(self, *args, **kwargs):
+        translation = kwargs.pop("translation")
+        super().__init__(*args, **kwargs)
+        self.fields["merge"].queryset = models.Amendment.objects.filter(
+            paper_id=translation.paper_id, language_code=translation.language_code
+        )
+        self.fields["merge"].initial = models.Amendment.objects.filter(
+            paper_id=translation.paper_id,
+            language_code=translation.language_code,
+            state="accepted",
+        )
+
+
+class FinalizePaperForm(forms.Form):
+    title = forms.CharField(label=_("title"))
+    content = forms.CharField(
+        widget=CKEditorWidget(config_name="track-changes"), label=_("content")
+    )

@@ -6,7 +6,9 @@ import io
 import re
 import secrets
 from itertools import zip_longest
+from typing import List
 
+from bs4 import BeautifulSoup
 from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.core.validators import validate_email
@@ -17,6 +19,82 @@ from pptx.dml.line import LineFormat
 from pptx.enum.shapes import MSO_CONNECTOR_TYPE
 from pptx.enum.text import MSO_VERTICAL_ANCHOR, PP_PARAGRAPH_ALIGNMENT
 from pptx.util import Cm, Pt
+
+
+class Change:
+    start: int
+    end: int
+    content: str  # eg: <ins>...</ins> or <del>...</del>
+
+    def __init__(self, start, end, content):
+        self.start = start
+        self.end = end
+        self.content = content
+
+
+def add_classes_to_tags(tag_name, class_list, html) -> str:
+    soup = BeautifulSoup(html, "html.parser")
+    for tag in soup.find_all(tag_name):
+        tag["class"] = tag.get("class", []) + class_list
+    return str(soup)
+
+
+def add_lite_classes(text) -> str:
+    text = add_classes_to_tags("del", ["ice-del", "ice-cts"], text)
+    text = add_classes_to_tags("ins", ["ice-ins", "ice-cts"], text)
+    return text
+
+
+def apply_change(original_text: str, change: Change) -> str:
+    return "".join(
+        (original_text[: change.start], change.content, original_text[change.end :])
+    )
+
+
+def update_change(change: Change, applied: Change):
+    if change.start < applied.start:
+        return
+    delta = len(applied.content) - (applied.end - applied.start)
+    change.start += delta
+    change.end += delta
+
+
+def create_changes_of_amendment(text: str) -> List[Change]:
+    """text contains changes marked up with <del> or <ins> tags.
+    Subtraction of 11, because <del></del> is 11 characters.
+    """
+    changes = []
+    p = re.compile(r"(\<del>(.*?)\<\/del>)|(\<ins>(.*?)\<\/ins>)")
+
+    matches = p.finditer(text)
+    counter = 0
+    for match in matches:
+        content = match.group()
+        if content.startswith("<del>"):
+            changes.append(
+                Change(match.start() - counter, match.end() - 11 - counter, content)
+            )
+            counter += len("<del></del>")
+        else:
+            changes.append(
+                Change(match.start() - counter, match.start() - counter, content)
+            )
+            counter += len(content)
+
+    return changes
+
+
+def create_modified_text(original_text: str, amendments) -> str:
+    changes = []
+    for amendment in amendments:
+        changes += create_changes_of_amendment(amendment.content)
+    modified_text = original_text
+
+    changes.sort(key=lambda change: change.start)
+    changes.reverse()
+    for change in changes:
+        modified_text = apply_change(modified_text, change)
+    return modified_text
 
 
 def index_of_first_change(content):

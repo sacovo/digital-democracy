@@ -2,10 +2,7 @@
 Paper views
 """
 import io
-import tempfile
-from textwrap import TextWrapper
 
-import reportlab
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required, permission_required
 from django.core.exceptions import PermissionDenied
@@ -16,9 +13,6 @@ from django.shortcuts import redirect, render
 from django.template.loader import render_to_string
 from django.utils import timezone
 from django.utils.translation import gettext as _
-from reportlab.lib.colors import HexColor, white
-from reportlab.lib.pagesizes import A4
-from reportlab.pdfgen import canvas
 from weasyprint import CSS, HTML
 
 from papers import forms, models, utils
@@ -80,7 +74,55 @@ def paper_amendmentlist(request, paper_pk):
                 amendment.save()
 
     return render(
-        request, "papers/amendment_list.html", {"amendment_list": amendment_list}
+        request,
+        "papers/amendment_list.html",
+        {"amendment_list": amendment_list, "paper_pk": paper_pk},
+    )
+
+
+def selected_amendments_view(request, paper_pk, language_code):
+    translation = models.PaperTranslation.objects.get(
+        paper_id=paper_pk, language_code=language_code
+    )
+    form = forms.AmendmentSelect(translation=translation)
+
+    return render(
+        request,
+        "papers/select_amendments.html",
+        {"form": form, "translation": translation},
+    )
+
+
+def finalize_view(request, paper_pk, language_code):
+    translation = models.PaperTranslation.objects.get(
+        paper_id=paper_pk, language_code=language_code
+    )
+    form = forms.AmendmentSelect(request.GET, translation=translation)
+
+    if request.method == "POST":
+        translation.content = request.POST.get("content")
+        translation.save()
+        return redirect("paper-detail", translation.paper_id)
+
+    if not form.is_valid():
+        return render(
+            request,
+            "papers/select_amendments.html",
+            {"form": form, "translation": translation},
+        )
+
+    modified_text = utils.create_modified_text(
+        translation.content, form.cleaned_data["merge"]
+    )
+    modified_text = utils.add_lite_classes(modified_text)
+    form = forms.FinalizePaperForm(
+        initial={"content": modified_text, "title": translation.title}
+    )
+
+    return render(
+        request,
+        "papers/modified_text.html",
+        {"translation": translation, "modified_text": modified_text, "form": form},
     )
 
 
@@ -93,8 +135,13 @@ def paper_detail_create_pdf(request, paper_pk, language_code):
 
     filename = "Digital-Democracy-Paper-" + str(paper_pk) + "-" + language_code + ".pdf"
     html = render_to_string(
-        "./pdf/amendment_pdf_template.html",
-        {"title": paper.title, "content": paper.content, "amendments": amendments},
+        "pdf/amendment_pdf_template.html",
+        {
+            "title": paper.title,
+            "content": paper.content,
+            "amendments": amendments,
+            "paper": paper.paper,
+        },
     )
     css = CSS(filename="papers/templates/pdf/amendment_pdf_template.css")
     pdf = HTML(string=html).write_pdf(stylesheets=[css])
@@ -102,10 +149,6 @@ def paper_detail_create_pdf(request, paper_pk, language_code):
     buffer.write(pdf)
     buffer.seek(0)
     return FileResponse(buffer, as_attachment=True, filename=filename)
-
-
-def amendments_as_pdf(request, paper_pk, language_code):
-    pass
 
 
 @login_required
@@ -245,7 +288,6 @@ def paper_update(request, paper_pk):
     form = forms.PaperUpdateForm(instance=paper)
 
     if request.method == "POST":
-        translations_need_update = True
         form = forms.PaperUpdateForm(request.POST, instance=paper)
 
         if form.is_valid():
