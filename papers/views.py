@@ -151,10 +151,6 @@ def paper_detail_create_pdf(request, paper_pk, language_code):
     return FileResponse(buffer, as_attachment=True, filename=filename)
 
 
-def amendments_as_pdf(request, paper_pk, language_code):
-    pass
-
-
 @login_required
 def paper_presentation(request, paper_pk):
 
@@ -292,7 +288,6 @@ def paper_update(request, paper_pk):
     form = forms.PaperUpdateForm(instance=paper)
 
     if request.method == "POST":
-        translations_need_update = True
         form = forms.PaperUpdateForm(request.POST, instance=paper)
 
         if form.is_valid():
