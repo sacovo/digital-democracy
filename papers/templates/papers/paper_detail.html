@@ -53,6 +53,9 @@
             {% trans 'create amendment' %}
           </a>
 		  {% endif %}
+          <a class="btn btn-secondary" href="{% url 'paper-select-amendments' translation.paper.pk translation.language_code %}">
+            {% trans 'view amendments' %}
+          </a>
           {% if perms.papers.change_translation %}
           <a class="btn btn-secondary" href="{%url 'paper-translation-update' translation.paper.pk translation.language_code%}">
             {% trans 'update translation' %}
