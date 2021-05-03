@@ -186,7 +186,7 @@ footer #languages a:hover{
     border-radius: 10px;
 }
 #amendments,#comments{
-    text-align: center;
+    text-align: left;
 }
 
 .amendmentListReason{
@@ -205,6 +205,12 @@ del {
 
 ins {
     background: var(--green-inserted);
+}
+
+.amendment{
+	margin: 0.25em;
+	padding-bottom: 0.5em;
+	
 }
 
 .comment {
