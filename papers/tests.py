@@ -12,6 +12,7 @@ from django.utils import timezone
 from papers import models, utils
 
 # Create your tests here.
+workingTitle = "Test missing translations"
 
 
 class PaperTestCase(TestCase):
@@ -276,7 +277,7 @@ class AmendmentSupporterTestCase(TestCase):
 
         paper = models.Paper.objects.create(
             amendment_deadline=timezone.now() + timedelta(days=10),
-            working_title="Test missing translations",
+            working_title="Test Amendment Supporter",
             state="public",
         )
 
@@ -302,7 +303,7 @@ class LikeCommentTestCase(TestCase):
 
         paper = models.Paper.objects.create(
             amendment_deadline=timezone.now() + timedelta(days=10),
-            working_title="Test missing translations",
+            working_title="Test Amount of Likes",
             state="public",
         )
 
@@ -324,6 +325,8 @@ class BulkUserImportTestCase(TestCase):
     Tests for the feature for importing users
     """
 
+    path_var = "/members/upload-users/"
+
     def setUp(self):
         user = get_user_model().objects.create_superuser(username="csv-admin")
         self.client = Client()
@@ -337,14 +340,14 @@ class BulkUserImportTestCase(TestCase):
         )
 
     def test_import_single_user_csv(self):
-        self.client.post("/members/upload-users/", {"csv_file": self.csv_file})
+        self.client.post(BulkUserImportTestCase.path_var, {"csv_file": self.csv_file})
 
         self.assertTrue(get_user_model().objects.filter(username="test-user").exists())
         self.assertTrue(get_user_model().objects.filter(username="test2").exists())
 
     def test_import_wrong_csv(self):
         response = self.client.post(
-            "/members/upload-users/", {"csv_file": self.invalid_csv}
+            BulkUserImportTestCase.path_var, {"csv_file": self.invalid_csv}
         )
 
         self.assertTrue(response.context["error"])
@@ -355,6 +358,8 @@ class BulkUserImportTestCase(TestCase):
 
     def test_login_required(self):
         client = Client()
-        response = client.post("/members/upload-users/", {"csv_file": self.csv_file})
+        response = client.post(
+            BulkUserImportTestCase.path_var, {"csv_file": self.csv_file}
+        )
 
         self.assertNotEqual(response.status_code, 200)
