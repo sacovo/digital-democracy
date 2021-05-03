@@ -5,6 +5,20 @@
 
 {% block content %}
 
+
+
+
+
+    <form class="" method="POST" action="{% url 'search-result' %}">
+    {% csrf_token %}
+    <input class="form-control" type="search" placeholder="Search for..." aria-label="Search" name="searched"><br>
+    <button class="button" type="submit">Search</button>
+    </form>
+    <br>
+
+
+
+
 <h1>{% trans 'Papers' %}</h1>
 
 <table class="table">
