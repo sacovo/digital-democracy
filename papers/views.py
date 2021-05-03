@@ -235,21 +235,6 @@ def recommendation_update(request, pk):
 
 
 @login_required
-def add_alternative_amendment(request, pk):
-    recommendation = models.Recommendation.objects.get(pk=pk)
-    paper = recommendation.amendment.paper
-    translation = paper.translation_set.get(
-        language_code=recommendation.amendment.language_code
-    )
-
-    form = forms.AmendmentForm(translation=translation)
-
-    if request.method == "POST":
-        pass
-    pass
-
-
-@login_required
 def paper_create(request):
     """
     View to create a new paper
@@ -347,6 +332,36 @@ def amendment_edit(request, amendment_pk):
     """
     amendment = models.Amendment.objects.get(pk=amendment_pk)
 
+    form = forms.AmendmentForm(amendment=amendment)
+
+    if request.method == "POST":
+        form = forms.AmendmentForm(request.POST, amendment=amendment)
+
+        if form.is_valid():
+            content = form.cleaned_data.get("content")
+            reason = form.cleaned_data.get("reason")
+            title = form.cleaned_data.get("title")
+
+            amendment.content = content
+            amendment.reason = reason
+            amendment.title = title
+            amendment.save()
+
+            return redirect("amendment-detail", amendment.pk)
+
+    return render(
+        request, "papers/amendment_edit.html", {"form": form, "amendment": amendment}
+    )
+
+
+@login_required
+def amendment_clone(request, amendment_pk):
+    """
+    Clone an amendment
+    """
+    amendment = models.Amendment.objects.get(pk=amendment_pk)
+    amendment.pk = None
+    amendment.save()
     form = forms.AmendmentForm(amendment=amendment)
 
     if request.method == "POST":
