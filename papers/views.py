@@ -544,10 +544,15 @@ def search_result(request):
     if request.method == "POST":
         searched = request.POST["searched"]
         result_papers = models.Paper.objects.filter(working_title__contains=searched)
+        result_amendments = models.Amendment.objects.filter(title__contains=searched)
         return render(
             request,
             "papers/search_result.html",
-            {"searched": searched, "result_papers": result_papers},
+            {
+                "searched": searched,
+                "result_papers": result_papers,
+                "result_amendments": result_amendments,
+            },
         )
     else:
         return render(request, "papers/search_result.html")
