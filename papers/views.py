@@ -360,14 +360,13 @@ def amendment_clone(request, amendment_pk):
     Clone an amendment
     """
     amendment = models.Amendment.objects.get(pk=amendment_pk)
-    amendment.pk = None
-    amendment.save()
     form = forms.AmendmentForm(amendment=amendment)
 
     if request.method == "POST":
         form = forms.AmendmentForm(request.POST, amendment=amendment)
 
         if form.is_valid():
+            amendment.pk = None
             content = form.cleaned_data.get("content")
             reason = form.cleaned_data.get("reason")
             title = form.cleaned_data.get("title")
