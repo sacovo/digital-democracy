@@ -30,7 +30,7 @@
     {% csrf_token %}
     {% bootstrap_form form  form_group_class='form-group'%}
     <button type="submit" class="btn btn-sm btn-block submitButton">{% trans 'submit' %}</button>
-    <a href="{% url 'amendment-detail' amendment.pk %}" class="btn btn-sm btn-block">{% trans 'Back' %}</a>
+    <a class="btn btn-sm btn-block cancelButton" href="{% url 'amendment-detail' amendment.pk %}">{% trans 'Back' %}</a>
 </form>
 
 {% endblock %}
