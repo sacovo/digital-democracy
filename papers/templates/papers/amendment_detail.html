@@ -97,6 +97,7 @@
           {% trans "I hereby sign this amendment." %}
           {% endif %}
         </label>
+		</br>
         <button type="submit" id="btn-support-amendment" class="btn btn-sm submitButton" disabled>
           {% if request.user in amendment.supporters.all %}
           {% trans "Don't support anymore" %}
@@ -105,7 +106,7 @@
           {% endif %}
         </button>
       </form>
-
+	  </br>
       <h5 class="h5">{% trans "This amendment is supported by" %} {{amendment.num_supporters}} {% trans "members" %}</h5>
       <ul>
         {% for supporter in amendment.supporters.all %}
