@@ -73,7 +73,7 @@ msgid "paper"
 msgstr "Papier"
 
 #: papers/models.py:157 papers/templates/papers/base.html:29
-msgid "Papers"
+msgid "papers"
 msgstr "Papiere"
 
 #: papers/models.py:169 papers/models.py:203
@@ -281,11 +281,11 @@ msgid "newsfeed"
 msgstr "Newsfeed"
 
 #: papers/templates/papers/base.html:37
-msgid "Account"
+msgid "account"
 msgstr "Account"
 
 #: papers/templates/papers/base.html:39
-msgid "Sign in"
+msgid "sign in"
 msgstr "Anmelden"
 
 #: papers/templates/papers/includes/translation_list.html:19
