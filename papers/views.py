@@ -543,8 +543,8 @@ def upload_users(request):
 def search_result(request):
     if request.method == "GET":
         searched = request.GET["searched"]
-        result_papers = models.Paper.objects.filter(working_title__contains=searched)
-        result_amendments = models.Amendment.objects.filter(title__contains=searched)
+        result_papers = models.Paper.objects.filter(working_title__icontains=searched)
+        result_amendments = models.Amendment.objects.filter(title__icontains=searched)
         return render(
             request,
             "papers/search_result.html",
