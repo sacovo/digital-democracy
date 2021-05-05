@@ -57,6 +57,9 @@
       </form>
       {% endif %}
       <a class="btn btn-sm submitButton" href="{% url 'amendment-edit' amendment.pk %}">{% trans 'edit' %}</a>
+      <div class="col">
+        <a class="btn btn-sm submitButton" href="{% url 'amendment-clone' amendment.pk %}">{% trans 'Clone amendment' %}</a>
+      </div>
     </div>
     </section>
     {% if amendment.recommendation %}
@@ -73,6 +76,8 @@
     <a class="btn btn-sm submitButton" href="{% url 'recommendation-create' amendment.pk %}">{% trans 'create recommendation' %}</a>
     </section>
     {% endif %}
+
+
 
     <section class="tags">
       <h2 class="h4">{% trans "Tags" %}</h2>
