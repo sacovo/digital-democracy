@@ -39,7 +39,7 @@
   {% endfor %}
   </tbody>
 </table>
-    <a href="{% url 'paper-detail' paper_pk %}" class="btn cancelButton">{% trans 'Back' %}</a>
+    <a class="btn cancelButton" href="{% url 'paper-detail' paper_pk %}">{% trans 'Back' %}</a>
     <button type='submit' class="btn submitButton">{% trans 'Save' %}</button>
 </form>
 {% endblock %}
