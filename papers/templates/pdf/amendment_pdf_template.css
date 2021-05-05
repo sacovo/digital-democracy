@@ -2,6 +2,9 @@
     --red-deleted: #ffa9a9;
     --green-inserted: #a8ffa8;
 }
+body {
+	font-family: '{{body_font}}';
+}
 #title {
 	page-break-after: always;
 	text-align: center;
@@ -9,6 +12,11 @@
 	color: white;
 	height: 100%;
 	padding-top: 7cm;
+}
+
+#title h1 {
+	font-family: '{{title_font}}';
+	text-transform: uppercase;
 }
 
 #amendments {
