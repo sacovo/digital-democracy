@@ -27,7 +27,7 @@
       </div>
     </section>
     <section class="translation">
-      <h2 class="h4">{% trans 'translations' %}</h2>
+      <h2 class="h4">{% trans 'Translations' %}</h2>
       <div class="btn-group-sm translations">
         {% for translation in amendment.translation_list %}
         <a href="{{translation.get_absolute_url}}" class="btn btn-secondary">{{translation.language_code}}</a>
@@ -41,32 +41,33 @@
       </div>
       {% endif %}
     </section>
+    <hr>
 
     <section class="reason">
       <h2 class="h4">{% trans 'Reason' %}</h2>
       <section class="reason">
         {{amendment.reason|safe}}
       </section>
-
     <div class="row">
       {% if amendment.state == 'draft' or amendment.state == 'retracted'%}
       <form method="POST">
         {% csrf_token %}
         <div class="col-auto">
-          <button class="btn btn-sm submitButton" type="submit" value="publish">{% trans 'publish' %}</button>
+          <button class="btn btn-sm submitButton" type="submit" value="publish">{% trans 'Publish' %}</button>
         </div>
       </form>
       {% endif %}
-
       <div class="col-auto">
-        <a class="btn btn-sm submitButton" href="{% url 'amendment-edit' amendment.pk %}">{% trans 'edit' %}</a>
+        <a class="btn btn-sm submitButton" href="{% url 'amendment-edit' amendment.pk %}">{% trans 'Edit' %}</a>
       </div>
       <div class="col-auto">
-        <a class="btn btn-sm submitButton" href="{% url 'amendment-clone' amendment.pk %}">{% trans 'Clone amendment' %}</a>
+        <a class="btn btn-sm submitButton" href="{% url 'amendment-clone' amendment.pk %}">{% trans 'Clone' %}</a>
       </div>
     </div>
-
     </section>
+    <hr>
+
+    <!-- Recommendation -->
     {% if amendment.recommendation %}
     <h2 class="h4">{% trans 'Recommendation' %}</h2>
     <em>
@@ -74,14 +75,16 @@
     </em>
     <section class="recommendation">
       {{amendment.recommendation.reason|safe}}
-    <a class="btn btn-sm submitButton" href="{% url 'recommendation-edit' amendment.recommendation.pk %}">{% trans 'edit recommendation' %}</a>
+    <a class="btn btn-sm submitButton" href="{% url 'recommendation-edit' amendment.recommendation.pk %}">{% trans 'Edit recommendation' %}</a>
     </section>
     {% else %}
     <section class="recommendation">
-    <a class="btn btn-sm submitButton" href="{% url 'recommendation-create' amendment.pk %}">{% trans 'create recommendation' %}</a>
+    <a class="btn btn-sm submitButton" href="{% url 'recommendation-create' amendment.pk %}">{% trans 'Create recommendation' %}</a>
     </section>
     {% endif %}
+    <hr>
 
+    <!-- Tags -->
     <section class="tags">
       <h2 class="h4">{% trans "Tags" %}</h2>
       <ul>
@@ -92,7 +95,9 @@
         {% endfor %}
       </ul>
     </section>
+    <hr>
 
+    <!-- Sign amendments -->
     <section class="support">
       <h2 class="h4">{% trans "Sign this amendment" %}</h2>
       <form action="{% url 'support-amendment' amendment.pk %}" method="POST">
@@ -136,9 +141,8 @@
       </form>
       {% endif %}
     </section>
-    <!-- Implements Retract Button-->
 
-    <br><br>
+    <!-- Implements Retract Button-->
     <hr>
     <a class="btn btn-sm cancelButton" href="{% url 'paper-detail' amendment.paper.pk %}">Back</a>
   </div>
@@ -200,7 +204,6 @@
       </div>
       {% endbuttons %}
     </form>
-    <!-- Implements Comment section-->
   </div>
 </div>
 
