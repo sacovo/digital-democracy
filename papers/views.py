@@ -162,7 +162,6 @@ def paper_detail_create_pdf(request, paper_pk, language_code):
 
 @login_required
 def paper_presentation(request, paper_pk):
-
     response = HttpResponse(
         content_type="application/vnd.openxmlformats-officedocument.presentationml.presentation"
     )
@@ -564,3 +563,21 @@ def upload_users(request):
                 )
 
     return render(request, "members/user_upload.html", {"form": upload_form})
+
+
+def search_result(request):
+    if request.method == "GET":
+        searched = request.GET["searched"]
+        result_papers = models.Paper.objects.filter(working_title__icontains=searched)
+        result_amendments = models.Amendment.objects.filter(title__icontains=searched)
+        return render(
+            request,
+            "papers/search_result.html",
+            {
+                "searched": searched,
+                "result_papers": result_papers,
+                "result_amendments": result_amendments,
+            },
+        )
+    else:
+        return render(request, "papers/search_result.html")

@@ -132,4 +132,5 @@ urlpatterns = [
         views.add_amendment_translation,
         name="amendment-add-translation",
     ),
+    path("search_result", views.search_result, name="search-result"),
 ]

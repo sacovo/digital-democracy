@@ -49,6 +49,10 @@ a:hover,
     color: var(--black);
     text-decoration:none;
 }
+#navBarAccount{
+    color: var(--white);
+    text-decoration:none;
+}
 footer{
   margin-top: 5em;
     
@@ -132,6 +136,20 @@ footer #languages a:hover{
     background-color: var(--red-hover);
     border-color: var(--red-hover);
 }
+
+
+.searchButton{
+    color: var(--white);
+    background-color: var(--red);
+    margin-right: 10px
+}
+
+.accountButton{
+    color: var(--white);
+    background-color: var(--red);
+}
+
+
 /* Cancel Button */
 .cancelButton{
     color: var(--red);
@@ -147,6 +165,7 @@ footer #languages a:hover{
     margin-left: 30px;
     vertical-align: middle;
 }
+
  /* paper list page*/
  #paperLabel{
     color: var(--red);
@@ -220,4 +239,8 @@ ins {
 
 .amendment-content p {
   margin-bottom: 0;
+}
+
+.magnifierIcon{
+  margin-left: 8px
 }
