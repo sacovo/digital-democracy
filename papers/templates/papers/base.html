@@ -13,7 +13,7 @@
     {% block head %}
     {% endblock %}
   </head>
-  <body >
+  <body>
     <div id="wrapper">
       <header class="navbar navbar-expand navbar-light container">
         <a class="navbar-brand" href="/">
@@ -21,15 +21,12 @@
         </a>
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <div>
-        <a href="/" class="primaryColor" id="navBarItem">
+        <a href="/" class="navbar-brand mb-0 h1" id="navBarItem">
           {% trans 'Digital Democracy' %}</a>
       </div>
       <ul class="navbar-nav mr-auto">
         <li class="nav-item">
           <a class="nav-link" id= "navBarItem" href="{% url 'paper-list' %}">{% trans 'papers' %}</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" id= "navBarItem" href="{% url 'newsfeed' %}">{% trans 'newsfeed' %}</a>
         </li>
       </ul>
 

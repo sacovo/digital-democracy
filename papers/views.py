@@ -519,14 +519,6 @@ def support_amendment(request, amendment_pk):
 
 
 @login_required
-def newsfeed(request):
-    """
-    Display a newsfeed with recent activity
-    """
-    return render(request, "papers/newsfeed.html")
-
-
-@login_required
 def amendment_list(request, paper_pk, tag, language_code):
     """
     List of all papers
