@@ -42,7 +42,7 @@
             </button>
             <button class="btn btn-secondary " type="button" class="btn btn-primary">
                 <a class="my-2 my-sm-0" id="navBarAccount" href="{% url 'profile' %}">
-                    {% trans 'My Account' %}
+                    {{ user }}
                     <i class="fas fa-user-alt magnifierIcon"></i>
                 </a>
             </button>
