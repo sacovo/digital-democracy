@@ -11,12 +11,11 @@
 
 <div class="row mt-4">
   <div class="col-md-8">
-    <h1 class="h3">
-      {{amendment.translation.title}} - {{amendment.title}}
-    </h1>
+    <h2 class="h5">{% trans 'Paper' %}: {{amendment.translation.title}}</h2>
+    <h1 class="h3">{% trans 'Amendment' %}: {{amendment.title}}</h1>
     <section class="amendment-content">
       <span>
-        {% blocktrans with name=amendment.author.name created=amendment.created_at %}By <strong>{{name}}</strong> at {{created}}{% endblocktrans %}
+        {% blocktrans with name=amendment.author.name created=amendment.created_at %}By <strong>{{name}}</strong> on {{created}}{% endblocktrans %}
       </span>
       <div id="paperContent" class="content">
         <article>
@@ -26,6 +25,28 @@
         </article>
       </div>
     </section>
+    <!-- amendment options -->
+    <section class="amendment-options">
+    <div class="row">
+      {% if amendment.state == 'draft' or amendment.state == 'retracted'%}
+      <form method="POST">
+        {% csrf_token %}
+        <div class="col-auto">
+          <button class="btn btn-sm submitButton" type="submit" value="publish">{% trans 'Publish' %}</button>
+        </div>
+      </form>
+      {% endif %}
+      <div class="col-auto">
+        <a class="btn btn-sm submitButton" href="{% url 'amendment-edit' amendment.pk %}">{% trans 'Edit' %}</a>
+      </div>
+      <div class="col-auto">
+        <a class="btn btn-sm submitButton" href="{% url 'amendment-clone' amendment.pk %}">{% trans 'Clone' %}</a>
+      </div>
+    </div>
+    </section>
+    <hr>
+
+    <!-- Translations -->
     <section class="translation">
       <h2 class="h4">{% trans 'Translations' %}</h2>
       <div class="btn-group-sm translations">
@@ -43,27 +64,12 @@
     </section>
     <hr>
 
+    <!-- Reason -->
     <section class="reason">
       <h2 class="h4">{% trans 'Reason' %}</h2>
       <section class="reason">
         {{amendment.reason|safe}}
       </section>
-    <div class="row">
-      {% if amendment.state == 'draft' or amendment.state == 'retracted'%}
-      <form method="POST">
-        {% csrf_token %}
-        <div class="col-auto">
-          <button class="btn btn-sm submitButton" type="submit" value="publish">{% trans 'Publish' %}</button>
-        </div>
-      </form>
-      {% endif %}
-      <div class="col-auto">
-        <a class="btn btn-sm submitButton" href="{% url 'amendment-edit' amendment.pk %}">{% trans 'Edit' %}</a>
-      </div>
-      <div class="col-auto">
-        <a class="btn btn-sm submitButton" href="{% url 'amendment-clone' amendment.pk %}">{% trans 'Clone' %}</a>
-      </div>
-    </div>
     </section>
     <hr>
 
