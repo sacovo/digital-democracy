@@ -379,7 +379,7 @@ def amendment_clone(request, amendment_pk):
             return redirect("amendment-detail", amendment.pk)
 
     return render(
-        request, "papers/amendment_edit.html", {"form": form, "amendment": amendment}
+        request, "papers/amendment_edit.html", {"form": form, "amendment": amendment, "clone": True}
     )
 
 
