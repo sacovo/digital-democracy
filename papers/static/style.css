@@ -204,7 +204,12 @@ footer #languages a:hover{
     border: 1px solid var(--black);
     border-radius: 10px;
 }
-#amendments,#comments{
+#amendments{
+    text-align: left;
+}
+
+#comments{
+    padding-top: 2.2em;
     text-align: left;
 }
 
@@ -214,7 +219,6 @@ footer #languages a:hover{
     padding: 20px; 
     margin-bottom: 30px;
     margin-top: 5px;
-    
 }
 
 
@@ -227,14 +231,13 @@ ins {
 }
 
 .amendment{
-	margin: 0.25em;
-	padding-bottom: 0.5em;
+	padding-bottom: 1.5em;
+    border-top: solid var(--black) 1px;
 }
 
 .comment {
-  margin: 0.25em;
-  border-bottom: solid var(--black) 1px;
-  padding-bottom: 0.5em;
+  border-top: solid var(--black) 1px;
+  padding-bottom: 0.4em;
 }
 
 .amendment-content p {
