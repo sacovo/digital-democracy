@@ -13,7 +13,7 @@
     {% block head %}
     {% endblock %}
   </head>
-  <body >
+  <body>
     <div id="wrapper">
       <header class="navbar navbar-expand navbar-light container">
         <a class="navbar-brand" href="/">
@@ -21,19 +21,19 @@
         </a>
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <div>
-        <a href="/" class="primaryColor" id="navBarItem">
+        <a href="/" class="navbar-brand mb-0 h1" id="navBarItem">
           {% trans 'Digital Democracy' %}</a>
       </div>
       <ul class="navbar-nav mr-auto">
         <li class="nav-item">
-          <a class="nav-link" id= "navBarItem" href="{% url 'paper-list' %}">{% trans 'papers' %}</a>
+          <a class="nav-link" id= "navBarItem" href="{% url 'paper-list' %}">{% trans 'Papers' %}</a>
         </li>
       </ul>
       <div class="my-2 my-lg-0">
         {% if request.user.is_authenticated %}
-        <a class="my-2 my-sm-0 blackColor" id="navBarItem" href="{% url 'profile' %}">{% trans 'account' %}</a>
+        <a class="my-2 my-sm-0 blackColor" id="navBarItem" href="{% url 'profile' %}">{% trans 'Account' %}</a>
         {% else %}
-        <a class="my-2 my-sm-0 blackColor" id="navBarItem" href="{% url 'login' %}">{% trans 'sign in' %}</a>
+        <a class="my-2 my-sm-0 blackColor" id="navBarItem" href="{% url 'Login' %}">{% trans 'Sign in' %}</a>
         {% endif %}
       </div>
     </div>
