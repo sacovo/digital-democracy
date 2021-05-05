@@ -35,21 +35,21 @@
 
       <div class="my-2 my-lg-0">
           {% if request.user.is_authenticated %}
-          <form class="example" method="POST" action="{% url 'search-result' %}">
+          <form method="GET" action="{% url 'search-result' %}">
             {% csrf_token %}
             <input type="text" placeholder="Search.." name="searched">
-            <button class="btn btn-secondary " type="submit" style="margin-right: 10px">
+            <button class="btn searchButton" type="submit">
                 <i class="fa fa-search"></i>
             </button>
             <button class="btn btn-secondary " type="button" class="btn btn-primary">
-                <a class="my-2 my-sm-0 blackColor" id="navBarItem" href="{% url 'profile' %}" style="color: white">
+                <a class="my-2 my-sm-0" id="navBarAccount" href="{% url 'profile' %}">
                     {% trans 'My Account' %}
-                    <i class="fas fa-user-alt" style="margin-left: 8px"></i>
+                    <i class="fas fa-user-alt magnifierIcon"></i>
                 </a>
             </button>
             {% else %}
             <button class="btn btn-secondary " type="button" class="btn btn-primary">
-                <a class="my-2 my-sm-0 blackColor" id="navBarItem" href="{% url 'login' %}" style="color: white">
+                <a class="my-2 my-sm-0" id="navBarAccount" href="{% url 'login' %}">
                     {% trans 'sign in' %}
                 </a>
             </button>
