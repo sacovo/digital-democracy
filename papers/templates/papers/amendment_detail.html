@@ -57,6 +57,9 @@
       </form>
       {% endif %}
       <a class="btn btn-sm submitButton" href="{% url 'amendment-edit' amendment.pk %}">{% trans 'edit' %}</a>
+      <div class="col">
+        <a class="btn btn-sm submitButton" href="{% url 'amendment-clone' amendment.pk %}">{% trans 'Clone amendment' %}</a>
+      </div>
     </div>
     </section>
     {% if amendment.recommendation %}
@@ -73,6 +76,8 @@
     <a class="btn btn-sm submitButton" href="{% url 'recommendation-create' amendment.pk %}">{% trans 'create recommendation' %}</a>
     </section>
     {% endif %}
+
+
 
     <section class="tags">
       <h2 class="h4">{% trans "Tags" %}</h2>
@@ -97,6 +102,7 @@
           {% trans "I hereby sign this amendment." %}
           {% endif %}
         </label>
+		</br>
         <button type="submit" id="btn-support-amendment" class="btn btn-sm submitButton" disabled>
           {% if request.user in amendment.supporters.all %}
           {% trans "Don't support anymore" %}
@@ -105,7 +111,7 @@
           {% endif %}
         </button>
       </form>
-
+	  </br>
       <h5 class="h5">{% trans "This amendment is supported by" %} {{amendment.num_supporters}} {% trans "members" %}</h5>
       <ul>
         {% for supporter in amendment.supporters.all %}
@@ -131,7 +137,7 @@
 
     <br><br>
     <hr>
-    <a class="btn btn-sm  backButton" href="{% url 'paper-detail' amendment.paper.pk %}">Back</a>
+    <a class="btn btn-sm cancelButton" href="{% url 'paper-detail' amendment.paper.pk %}">Back</a>
   </div>
 
 

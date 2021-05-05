@@ -84,23 +84,26 @@
             {% trans 'Download as PDF' %}
           </a>
         </div>
-        <a class="btn" href="{%url 'paper-list' %}">
+        <a class="btn cancelButton" href="{%url 'paper-list' %}">
           {% trans 'back' %}
         </a>
       </div>
       <div class="col-md-4">
+	    <!-- Amendments section -->
         {% if paper.state != 'final' %}
         <h2 id="amendments">{% trans 'amendments' %}</h2>
-        <ul>
+		<div class="amendments">
           {% for amendment in translation.amendment_list %}
           {% if amendment.state != "retracted" or request.user.username == amendment.author.name %}
-          <a class="link" href="{% url 'amendment-detail' amendment.pk %}" data-content="{{amendment.extract_content|safe}}">
-            <h3 class="h5">{{amendment.title}}</h3>
-            {% blocktrans with name=amendment.author.name created_at=amendment.created_at %}{{name}} at {{created_at}}{% endblocktrans %}
-          </a>
+		  <div class="amendment">
+			<a class="link" href="{% url 'amendment-detail' amendment.pk %}" data-content="{{amendment.extract_content|safe}}">
+			  <h3 class="h5">{{amendment.title}}</h3>
+			  {% blocktrans with name=amendment.author.name created_at=amendment.created_at %}{{name}} at {{created_at}}{% endblocktrans %}
+			</a>
+		  </div>
           {% endif %}
           {% endfor %}
-        </ul>
+		</div>
         <!-- Implements Comment section-->
         <h2 id="comments">{% trans 'Comments' %}</h2>
         <div class="comments">

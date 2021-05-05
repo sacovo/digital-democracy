@@ -3,6 +3,7 @@ Paper views
 """
 import io
 
+from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required, permission_required
 from django.core.exceptions import PermissionDenied
@@ -143,7 +144,15 @@ def paper_detail_create_pdf(request, paper_pk, language_code):
             "paper": paper.paper,
         },
     )
-    css = CSS(filename="papers/templates/pdf/amendment_pdf_template.css")
+    css = CSS(
+        string=render_to_string(
+            "pdf/amendment_pdf_template.css",
+            {
+                "body_font": settings.PDF_BODY_FONT,
+                "title_font": settings.PDF_TITLE_FONT,
+            },
+        )
+    )
     pdf = HTML(string=html).write_pdf(stylesheets=[css])
     buffer = io.BytesIO()
     buffer.write(pdf)
@@ -153,7 +162,6 @@ def paper_detail_create_pdf(request, paper_pk, language_code):
 
 @login_required
 def paper_presentation(request, paper_pk):
-
     response = HttpResponse(
         content_type="application/vnd.openxmlformats-officedocument.presentationml.presentation"
     )
@@ -232,21 +240,6 @@ def recommendation_update(request, pk):
         "papers/recommendation_form.html",
         {"form": form, "amendment": recommendation.amendment},
     )
-
-
-@login_required
-def add_alternative_amendment(request, pk):
-    recommendation = models.Recommendation.objects.get(pk=pk)
-    paper = recommendation.amendment.paper
-    translation = paper.translation_set.get(
-        language_code=recommendation.amendment.language_code
-    )
-
-    form = forms.AmendmentForm(translation=translation)
-
-    if request.method == "POST":
-        pass
-    pass
 
 
 @login_required
@@ -366,6 +359,37 @@ def amendment_edit(request, amendment_pk):
 
     return render(
         request, "papers/amendment_edit.html", {"form": form, "amendment": amendment}
+    )
+
+
+@login_required
+def amendment_clone(request, amendment_pk):
+    """
+    Clone an amendment
+    """
+    amendment = models.Amendment.objects.get(pk=amendment_pk)
+    form = forms.AmendmentForm(amendment=amendment)
+
+    if request.method == "POST":
+        form = forms.AmendmentForm(request.POST, amendment=amendment)
+
+        if form.is_valid():
+            amendment.pk = None
+            content = form.cleaned_data.get("content")
+            reason = form.cleaned_data.get("reason")
+            title = form.cleaned_data.get("title")
+
+            amendment.content = content
+            amendment.reason = reason
+            amendment.title = title
+            amendment.save()
+
+            return redirect("amendment-detail", amendment.pk)
+
+    return render(
+        request,
+        "papers/amendment_edit.html",
+        {"form": form, "amendment": amendment, "clone": True},
     )
 
 
@@ -531,3 +555,21 @@ def upload_users(request):
                 )
 
     return render(request, "members/user_upload.html", {"form": upload_form})
+
+
+def search_result(request):
+    if request.method == "GET":
+        searched = request.GET["searched"]
+        result_papers = models.Paper.objects.filter(working_title__icontains=searched)
+        result_amendments = models.Amendment.objects.filter(title__icontains=searched)
+        return render(
+            request,
+            "papers/search_result.html",
+            {
+                "searched": searched,
+                "result_papers": result_papers,
+                "result_amendments": result_amendments,
+            },
+        )
+    else:
+        return render(request, "papers/search_result.html")

@@ -16,7 +16,7 @@
   <br>
   <div class="row">
     <div class="col">
-      <a href="{% url 'paper-detail' paper.pk %}" class="btn btn-sm btn-block btn-secondary">{% trans 'cancel' %}</a>
+      <a class="btn btn-sm btn-block btn-secondary cancelButton" href="{% url 'paper-detail' paper.pk %}">{% trans 'cancel' %}</a>
     </div>
     <div class="col">
       <button type="submit" class="btn btn-sm btn-block submitButton">{% trans 'submit' %}</button>

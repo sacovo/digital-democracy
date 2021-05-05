@@ -47,7 +47,7 @@
       {% buttons %}
       <div class="row">
         <div class="col">
-          <a href="{% url 'paper-detail' paper.pk %}">{% trans 'Cancel' %}</a>
+          <a class="btn btn-sm btn-block cancelButton" href="{% url 'paper-detail' paper.pk %}">{% trans 'Cancel' %}</a>
         </div>
         <div class="col">
           <button type="submit" class="btn btn-sm btn-block submitButton">{% trans 'Submit' %}</button>

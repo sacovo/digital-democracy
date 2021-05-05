@@ -62,6 +62,11 @@ urlpatterns = [
         name="amendment-edit",
     ),
     path(
+        "amendments/<int:amendment_pk>/clone/",
+        views.amendment_clone,
+        name="amendment-clone",
+    ),
+    path(
         "amendments/<int:pk>/recommendation/update/",
         views.recommendation_update,
         name="recommendation-edit",
@@ -126,4 +131,5 @@ urlpatterns = [
         views.add_amendment_translation,
         name="amendment-add-translation",
     ),
+    path("search_result", views.search_result, name="search-result"),
 ]
