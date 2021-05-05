@@ -47,20 +47,25 @@
       <section class="reason">
         {{amendment.reason|safe}}
       </section>
+
     <div class="row">
       {% if amendment.state == 'draft' or amendment.state == 'retracted'%}
       <form method="POST">
         {% csrf_token %}
-        <div class="col">
+        <div class="col-auto">
           <button class="btn btn-sm submitButton" type="submit" value="publish">{% trans 'publish' %}</button>
         </div>
       </form>
       {% endif %}
-      <a class="btn btn-sm submitButton" href="{% url 'amendment-edit' amendment.pk %}">{% trans 'edit' %}</a>
-      <div class="col">
+
+      <div class="col-auto">
+        <a class="btn btn-sm submitButton" href="{% url 'amendment-edit' amendment.pk %}">{% trans 'edit' %}</a>
+      </div>
+      <div class="col-auto">
         <a class="btn btn-sm submitButton" href="{% url 'amendment-clone' amendment.pk %}">{% trans 'Clone amendment' %}</a>
       </div>
     </div>
+
     </section>
     {% if amendment.recommendation %}
     <h2 class="h4">{% trans 'Recommendation' %}</h2>
@@ -76,8 +81,6 @@
     <a class="btn btn-sm submitButton" href="{% url 'recommendation-create' amendment.pk %}">{% trans 'create recommendation' %}</a>
     </section>
     {% endif %}
-
-
 
     <section class="tags">
       <h2 class="h4">{% trans "Tags" %}</h2>
