@@ -3,6 +3,7 @@ Paper views
 """
 import io
 
+from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required, permission_required
 from django.core.exceptions import PermissionDenied
@@ -143,7 +144,15 @@ def paper_detail_create_pdf(request, paper_pk, language_code):
             "paper": paper.paper,
         },
     )
-    css = CSS(filename="papers/templates/pdf/amendment_pdf_template.css")
+    css = CSS(
+        string=render_to_string(
+            "pdf/amendment_pdf_template.css",
+            {
+                "body_font": settings.PDF_BODY_FONT,
+                "title_font": settings.PDF_TITLE_FONT,
+            },
+        )
+    )
     pdf = HTML(string=html).write_pdf(stylesheets=[css])
     buffer = io.BytesIO()
     buffer.write(pdf)

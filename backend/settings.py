@@ -183,5 +183,8 @@ login with your username ({user.username}) and password ({password}).
 Have fun!
 """
 
+PDF_TITLE_FONT = os.environ.get("PDF_TITLE_FONT", "Nimbus")
+PDF_BODY_FONT = os.environ.get("PDF_BODY_FONT", "Nimbus")
+
 if DEBUG:
     EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
