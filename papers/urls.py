@@ -10,6 +10,7 @@ urlpatterns = [
     path("", views.paper_list, name="paper-list"),
     path("paper/create/", views.paper_create, name="paper-create"),
     path("paper/<int:paper_pk>/", views.paper_detail, name="paper-detail"),
+    path("paper/<int:paper_pk>/delete/", views.paper_delete, name="paper-delete"),
     path(
         "paper/<int:paper_pk>/presentation/",
         views.paper_presentation,
@@ -50,6 +51,11 @@ urlpatterns = [
         "paper/<int:paper_pk>/<str:language_code>/update/",
         views.translation_update,
         name="paper-translation-update",
+    ),
+    path(
+        "translation/<int:translation_pk>/delete/",
+        views.translation_delete,
+        name="translation-delete",
     ),
     path(
         "amendments/<int:amendment_pk>/",
@@ -116,6 +122,14 @@ urlpatterns = [
     path("members/profile/<int:user_id>", views.members_profile, name="profile"),
     path("members/upload-users/", views.upload_users, name="upload_users"),
     path("comments/<int:comment_pk>/like/", views.like_comment, name="comment_like"),
+    path(
+        "comments/<int:comment_pk>/delete/", views.comment_delete, name="comment-delete"
+    ),
+    path(
+        "paper-comments/<int:comment_pk>/delete/",
+        views.paper_comment_delete,
+        name="paper-comment-delete",
+    ),
     path(
         "amendments/<int:amendment_pk>/like/",
         views.support_amendment,

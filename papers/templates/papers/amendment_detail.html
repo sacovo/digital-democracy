@@ -178,13 +178,18 @@
           {% csrf_token %}
 
           <div class="row justify-content-between px-3">
-            <button type="submit" class="btn btn-sm submitButton col-auto">
+            <div class="col-auto">
+            <button type="submit" class="btn btn-sm submitButton">
               {% if request.user in comment.likes.all %}
               {% trans 'unlike' %}
               {% else %}
               {% trans 'like' %}
               {% endif %}
             </button>
+              {% if comment.author.user_id == request.user.pk %}
+              <a class="btn btn-sm cancelButton mx-1" href="{% url 'comment-delete' comment.pk %}">{% trans 'Delete' %}</a>
+              {% endif %}
+            </div>
             <div class="likes col-auto">
               {{ comment.num_likes }} <i class="far fa-thumbs-up"></i>
             </div>
