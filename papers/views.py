@@ -29,6 +29,9 @@ def paper_list(request):
     """
     papers = models.Paper.objects.all()
 
+    for paper in papers:
+        paper.created_at = paper.created_at.date()
+
     return render(request, "papers/paper_list.html", {"paper_list": papers})
 
 
