@@ -44,11 +44,13 @@
         {% if paper.state != 'final' %}
           <h3 class="h5">{% trans 'Deadline for this paper: ' %}{{paper.amendment_deadline}}</h3>
         {% endif %}
+      <hr>
         <div id="paperContent-{{translation.language_code}}" class="content">
           <article>
             <div> {{translation.content_safe}}</div>
           </article>
         </div>
+      <hr>
         <div class="my-2" role="group">
           {% if paper.state != 'final' %}
           {% if create_amendment_allowed %}
