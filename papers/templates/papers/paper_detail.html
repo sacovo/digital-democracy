@@ -49,11 +49,13 @@
         {% if paper.state != 'final' %}
           <h3 class="h5">{% trans 'Deadline for this paper: ' %}{{paper.amendment_deadline}}</h3>
         {% endif %}
+      <hr>
         <div id="paperContent-{{translation.language_code}}" class="content">
           <article>
             <div> {{translation.content_safe}}</div>
           </article>
         </div>
+      <hr>
         <div class="my-2" role="group">
           {% if paper.state != 'final' %}
           {% if create_amendment_allowed %}
@@ -86,6 +88,34 @@
             {% trans 'Delete paper' %}
           </a>
           {% endif %}
+          {% if paper.state != 'final' %}
+              {% if perms.papers.change_translation %}
+              <a class="btn btn-secondary" href="{%url 'paper-translation-update' translation.paper.pk translation.language_code%}">
+                {% trans 'Update translation' %}
+              </a>
+              {% endif %}
+              {% if create_amendment_allowed %}
+              <a class="btn btn-secondary" href="{% url 'create-amendment' translation.paper.pk translation.language_code %}">
+                {% trans 'Create amendment' %}
+              </a>
+              {% endif %}
+              <!-- Administrational -->
+              {% if request.user.is_staff %}
+              <hr>
+              <h2 class="h4">{% trans "Administrational" %}</h2>
+              <a class="btn btn-secondary" href="{% url 'paper-amendment-list' translation.paper.pk %}">
+                {% trans 'Enter results' %}
+              </a>
+              <a class="btn btn-secondary" href="{% url 'paper-select-amendments' translation.paper.pk translation.language_code %}">
+                {% trans 'Merge amendments' %}
+              </a>
+              {% endif %}
+          {% endif %}
+
+
+        <!-- Downloads -->
+        <hr>
+        <h2 class="h4">{% trans "Downloads" %}</h2>
           {% if paper.state == 'public' %}
           <a class="btn btn-secondary" href="{% url 'paper-presentation' paper.pk %}">
             {% trans 'Download as PPTX' %}
@@ -95,10 +125,13 @@
             {% trans 'Download as PDF' %}
           </a>
         </div>
+
+      <hr>
         <a class="btn cancelButton" href="{%url 'paper-list' %}">
           {% trans 'Back' %}
         </a>
       </div>
+
       <div class="col-md-4">
 	    <!-- Amendments section -->
         {% if paper.state != 'final' %}
@@ -115,7 +148,8 @@
           {% endif %}
           {% endfor %}
 		</div>
-        <!-- Implements Comment section-->
+
+        <!-- Comment section-->
         <h2 id="comments">{% trans 'Comments' %}</h2>
         <div class="comments">
           {% if not paper.comments.all %}
@@ -154,7 +188,6 @@
           </div>
           {% endbuttons %}
         </form>
-        <!-- Implements Comment section-->
         {% endif %}
       </div>
     </div>
