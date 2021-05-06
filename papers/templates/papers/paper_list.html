@@ -47,11 +47,17 @@
           {{paper.amendment_deadline}}
         </td>
         <td>
-          {% if paper.latest_comment %}
-              <a href="{% url 'amendment-detail' paper.latest_comment.amendment_id %}">
-                    {{paper.latest_comment.created_on}}<br>{{paper.latest_amendment}} EOL
-              </a>
-          {% endif %}
+            {% if paper.latest_comment %}
+                {% if paper.latest_amendment.created_at < paper.latest_comment.created_on %}
+                    <a href="{% url 'amendment-detail' paper.latest_amendment.pk %}">
+                        {{ paper.latest_amendment.created_at }}
+                    </a>
+                {% else %}
+                    <a href="{% url 'amendment-detail' paper.latest_comment.amendment_id %}">
+                        {{ paper.latest_comment.created_on }}
+                    </a>
+                {% endif %}
+            {% endif %}
         </td>
       </tr>
       {% endfor %}
