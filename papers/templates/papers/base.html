@@ -19,22 +19,22 @@
         <a class="navbar-brand" href="/">
           <img src="/static/logo.png" width="50" height="50" alt="logo">
         </a>
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-          <div>
-            <a href="/" class="navbar-brand mb-0 h1" id="navBarItem">
-              {% trans 'Digital Democracy' %}</a>
-          </div>
-          <ul class="navbar-nav mr-auto">
-            <li class="nav-item">
-              <a class="nav-link" id= "navBarItem" href="{% url 'paper-list' %}">{% trans 'papers' %}</a>
-            </li>
-          </ul>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <div>
+        <a href="/" class="navbar-brand mb-0 h1" id="navBarItem">
+          {% trans 'Digital Democracy' %}</a>
+      </div>
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item">
+          <a class="nav-link" id= "navBarItem" href="{% url 'paper-list' %}">{% trans 'Papers' %}</a>
+        </li>
+      </ul>
 
-          <div class="my-2 my-lg-0">
-            {% if request.user.is_authenticated %}
-            <form method="GET" action="{% url 'search-result' %}">
-              <input type="text" placeholder="Search.." name="searched">
-              <button class="btn searchButton" type="submit">
+      <div class="my-2 my-lg-0">
+          {% if request.user.is_authenticated %}
+          <form method="GET" action="{% url 'search-result' %}">
+            <input type="text" placeholder="{% trans 'Search...' %}" name="searched">
+            <button class="btn searchButton" type="submit">
                 <i class="fa fa-search"></i>
               </button>
               <button class="btn btn-secondary " type="button" class="btn btn-primary">

@@ -91,7 +91,7 @@
           </a>
         </div>
         <a class="btn cancelButton" href="{%url 'paper-list' %}">
-          {% trans 'back' %}
+          {% trans 'Back' %}
         </a>
       </div>
       <div class="col-md-4">
@@ -104,7 +104,7 @@
 		  <div class="amendment">
 			<a class="link" href="{% url 'amendment-detail' amendment.pk %}" data-content="{{amendment.extract_content|safe}}">
 			  <h3 class="h5">{{amendment.title}}</h3>
-			  {% blocktrans with name=amendment.author.name created_at=amendment.created_at %}{{name}} at {{created_at}}{% endblocktrans %}
+			  {% blocktrans with name=amendment.author.name created_at=amendment.created_at %}{{name}} on {{created_at}}{% endblocktrans %}
 			</a>
 		  </div>
           {% endif %}
@@ -114,7 +114,7 @@
         <h2 id="comments">{% trans 'Comments' %}</h2>
         <div class="comments">
           {% if not paper.comments.all %}
-          {% blocktrans %}No Comments Yet...{% endblocktrans %}
+          {% blocktrans %}No comments yet...{% endblocktrans %}
           {% else %}
 
           {% for comment in paper.comments.all %}
