@@ -15,16 +15,16 @@
         {% trans 'Title' %}
       </th>
       <th scope="col">
+        {% trans 'State' %}
+      </th>
+      <th scope="col">
         {% trans 'Created on' %}
       </th>
       <th scope="col">
         {% trans 'Deadline for amendments' %}
       </th>
       <th scope="col">
-        {% trans "Latest amendment" %}
-      </th>
-      <th scope="col">
-        {% trans "Latest comment" %}
+        {% trans "Last Change" %}
       </th>
     </tr>
   </thead>
@@ -38,6 +38,9 @@
           </a>
         </td>
         <td>
+          {{paper.state}}
+        </td>
+        <td>
           {{paper.created_at}}
         </td>
         <td>
@@ -45,16 +48,9 @@
         </td>
         <td>
           {% if paper.latest_comment %}
-          <a href="{% url 'amendment-detail' paper.latest_amendment.pk %}">
-          {{paper.latest_amendment.created_at}}
-          </a>
-          {% endif %}
-        </td>
-        <td>
-          {% if paper.latest_comment %}
-          <a href="{% url 'amendment-detail' paper.latest_comment.amendment_id %}">
-                {{paper.latest_comment.created_on}}
-          </a>
+              <a href="{% url 'amendment-detail' paper.latest_comment.amendment_id %}">
+                    {{paper.latest_comment.created_on}}<br>{{paper.latest_amendment}} EOL
+              </a>
           {% endif %}
         </td>
       </tr>
