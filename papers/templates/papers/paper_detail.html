@@ -55,10 +55,11 @@
             <div> {{translation.content_safe}}</div>
           </article>
         </div>
-      <hr>
+
         <div class="my-2" role="group">
           {% if paper.state != 'final' %}
               {% if create_amendment_allowed %}
+              <hr>
                   <a class="btn btn-secondary" href="{% url 'create-amendment' translation.paper.pk translation.language_code %}">
                     {% trans 'Create amendment' %}
                   </a>
