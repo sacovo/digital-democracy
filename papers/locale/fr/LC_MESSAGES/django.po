@@ -2,13 +2,13 @@
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
-# 
+#
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-05-06 05:43+0000\n"
+"POT-Creation-Date: 2021-05-06 07:23+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -147,10 +147,7 @@ msgstr ""
 msgid "amendment"
 msgstr ""
 
-#: papers/models.py:324 papers/templates/papers/amendment_list.html:10
-#: papers/templates/papers/search_result.html:13
-#: papers/templates/papers/search_result.html:32
-#: papers/templates/registration/profile.html:11
+#: papers/models.py:324 papers/templates/registration/profile.html:11
 #: papers/templates/registration/profile.html:48
 msgid "amendments"
 msgstr ""
@@ -206,12 +203,13 @@ msgid "Add translation"
 msgstr ""
 
 #: papers/templates/papers/add_amendment_translation.html:13
-msgid "original"
+msgid "Original"
 msgstr ""
 
 #: papers/templates/papers/add_amendment_translation.html:16
+#: papers/templates/papers/amendment_detail.html:18
 #, python-format
-msgid "By <strong>%(name)s</strong> at %(created)s"
+msgid "By <strong>%(name)s</strong> on %(created)s"
 msgstr ""
 
 #: papers/templates/papers/add_amendment_translation.html:26
@@ -222,10 +220,12 @@ msgid "Reason"
 msgstr ""
 
 #: papers/templates/papers/add_amendment_translation.html:34
-msgid "translation"
+msgid "Translation"
 msgstr ""
 
 #: papers/templates/papers/add_amendment_translation.html:44
+#: papers/templates/papers/paper_create.html:19
+#: papers/templates/papers/paper_update.html:19
 #: papers/templates/papers/select_amendments.html:21
 #: papers/templates/papers/translation_update.html:50
 msgid "Cancel"
@@ -251,11 +251,6 @@ msgstr ""
 #: papers/templates/papers/amendment_detail.html:15
 #: papers/templates/registration/profile.html:89
 msgid "Amendment"
-msgstr ""
-
-#: papers/templates/papers/amendment_detail.html:18
-#, python-format
-msgid "By <strong>%(name)s</strong> on %(created)s"
 msgstr ""
 
 #: papers/templates/papers/amendment_detail.html:35
@@ -373,6 +368,16 @@ msgstr ""
 msgid "Papers"
 msgstr ""
 
+#: papers/templates/papers/amendment_list.html:10
+#: papers/templates/papers/paper_detail.html:94
+#: papers/templates/papers/paper_list.html:11
+#: papers/templates/papers/search_result.html:13
+#: papers/templates/papers/search_result.html:30
+#: papers/templates/papers/search_result.html:32
+#: papers/templates/registration/profile.html:46
+msgid "Amendments"
+msgstr ""
+
 #: papers/templates/papers/amendment_list.html:17
 msgid "Accepted"
 msgstr ""
@@ -388,7 +393,7 @@ msgstr ""
 #: papers/templates/papers/amendments_by_tag.html:10
 #: papers/templates/papers/paper_detail.html:101
 #, python-format
-msgid "%(name)s at %(created_at)s"
+msgid "%(name)s on %(created_at)s"
 msgstr ""
 
 #: papers/templates/papers/base.html:25
@@ -424,18 +429,13 @@ msgstr ""
 msgid "Create new paper"
 msgstr ""
 
-#: papers/templates/papers/paper_create.html:19
-#: papers/templates/papers/paper_update.html:19
-msgid "cancel"
-msgstr ""
-
 #: papers/templates/papers/paper_create_success.html:4
 #, python-format
 msgid "%(title)s created! "
 msgstr ""
 
 #: papers/templates/papers/paper_create_success.html:9
-msgid "all papers"
+msgid "All papers"
 msgstr ""
 
 #: papers/templates/papers/paper_detail.html:34
@@ -474,18 +474,13 @@ msgstr ""
 msgid "Download as PDF"
 msgstr ""
 
-#: papers/templates/papers/paper_detail.html:94
-#: papers/templates/papers/paper_list.html:11
-#: papers/templates/papers/search_result.html:30
-#: papers/templates/registration/profile.html:46
-msgid "Amendments"
-msgstr ""
-
 #: papers/templates/papers/paper_list.html:18
+#: papers/templates/papers/search_result.html:17
 msgid "Created on"
 msgstr ""
 
 #: papers/templates/papers/paper_list.html:21
+#: papers/templates/papers/search_result.html:18
 msgid "Deadline for amendments"
 msgstr ""
 
@@ -509,16 +504,6 @@ msgstr ""
 msgid "Search Results:"
 msgstr ""
 
-#: papers/templates/papers/search_result.html:17
-#: papers/templates/registration/profile.html:18
-msgid "Created at"
-msgstr ""
-
-#: papers/templates/papers/search_result.html:18
-#: papers/templates/registration/profile.html:21
-msgid "deadline for amendments"
-msgstr ""
-
 #: papers/templates/papers/search_result.html:35
 #: papers/templates/registration/profile.html:55
 msgid "State"
@@ -527,6 +512,10 @@ msgstr ""
 #: papers/templates/papers/search_result.html:36
 #: papers/templates/registration/profile.html:58
 msgid "# Supporters"
+msgstr ""
+
+#: papers/templates/papers/search_result.html:48
+msgid "Nothing given to search for."
 msgstr ""
 
 #: papers/templates/papers/select_amendments.html:6
@@ -539,7 +528,7 @@ msgid "Continue"
 msgstr ""
 
 #: papers/templates/papers/translation_update.html:40
-msgid "update"
+msgid "Update"
 msgstr ""
 
 #: papers/templates/registration/login.html:5
@@ -597,7 +586,7 @@ msgid "Schreiben Sie Ihr neues Passwort in beide Felder um es zu setzen."
 msgstr ""
 
 #: papers/templates/registration/password_reset_done.html:10
-msgid "E-Mail zum zurücksenden des Passworts abgeschickt"
+msgid "E-Mail zum Zurücksenden des Passworts abgeschickt."
 msgstr ""
 
 #: papers/templates/registration/password_reset_done.html:11
@@ -608,7 +597,7 @@ msgstr ""
 
 #: papers/templates/registration/password_reset_done.html:12
 msgid ""
-"Falls sie die E-Mail nicht finden, schauen Sie in ihren Spam-Ordner nach."
+"Falls Sie die E-Mail nicht finden, schauen Sie in Ihren Spam-Ordner nach."
 msgstr ""
 
 #: papers/templates/registration/password_reset_form.html:11
@@ -624,6 +613,14 @@ msgstr ""
 #: papers/templates/registration/profile.html:8
 #, python-format
 msgid "Contributions by %(username)s"
+msgstr ""
+
+#: papers/templates/registration/profile.html:18
+msgid "Created at"
+msgstr ""
+
+#: papers/templates/registration/profile.html:21
+msgid "deadline for amendments"
 msgstr ""
 
 #: papers/templates/registration/profile.html:95

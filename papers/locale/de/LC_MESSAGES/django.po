@@ -2,13 +2,13 @@
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
-# 
+#
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-05-06 05:43+0000\n"
+"POT-Creation-Date: 2021-05-06 07:23+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -151,10 +151,7 @@ msgstr ""
 msgid "amendment"
 msgstr "Antrag"
 
-#: papers/models.py:324 papers/templates/papers/amendment_list.html:10
-#: papers/templates/papers/search_result.html:13
-#: papers/templates/papers/search_result.html:32
-#: papers/templates/registration/profile.html:11
+#: papers/models.py:324 papers/templates/registration/profile.html:11
 #: papers/templates/registration/profile.html:48
 msgid "amendments"
 msgstr "Anträge"
@@ -212,12 +209,16 @@ msgid "Add translation"
 msgstr "Übersetzung hinzufügen"
 
 #: papers/templates/papers/add_amendment_translation.html:13
-msgid "original"
+#, fuzzy
+#| msgid "original"
+msgid "Original"
 msgstr "Orginal"
 
 #: papers/templates/papers/add_amendment_translation.html:16
-#, python-format
-msgid "By <strong>%(name)s</strong> at %(created)s"
+#: papers/templates/papers/amendment_detail.html:18
+#, fuzzy, python-format
+#| msgid "By <strong>%(name)s</strong> at %(created)s"
+msgid "By <strong>%(name)s</strong> on %(created)s"
 msgstr "Von <strong>%(name)s</strong> am %(created)s"
 
 #: papers/templates/papers/add_amendment_translation.html:26
@@ -228,10 +229,14 @@ msgid "Reason"
 msgstr "Begründung"
 
 #: papers/templates/papers/add_amendment_translation.html:34
-msgid "translation"
-msgstr "Übersetzung"
+#, fuzzy
+#| msgid "translations"
+msgid "Translation"
+msgstr "Übersetzungen"
 
 #: papers/templates/papers/add_amendment_translation.html:44
+#: papers/templates/papers/paper_create.html:19
+#: papers/templates/papers/paper_update.html:19
 #: papers/templates/papers/select_amendments.html:21
 #: papers/templates/papers/translation_update.html:50
 msgid "Cancel"
@@ -261,12 +266,6 @@ msgstr "Papiere"
 msgid "Amendment"
 msgstr "Antrag"
 
-#: papers/templates/papers/amendment_detail.html:18
-#, fuzzy, python-format
-#| msgid "By <strong>%(name)s</strong> at %(created)s"
-msgid "By <strong>%(name)s</strong> on %(created)s"
-msgstr "Von <strong>%(name)s</strong> am %(created)s"
-
 #: papers/templates/papers/amendment_detail.html:35
 #, fuzzy
 #| msgid "Published"
@@ -275,11 +274,11 @@ msgstr "Veröffentlicht"
 
 #: papers/templates/papers/amendment_detail.html:40
 msgid "Edit"
-msgstr ""
+msgstr "Bearbeiten"
 
 #: papers/templates/papers/amendment_detail.html:43
 msgid "Clone"
-msgstr ""
+msgstr "Duplizieren"
 
 #: papers/templates/papers/amendment_detail.html:51
 #, fuzzy
@@ -350,7 +349,7 @@ msgstr "Antrag verfassen"
 #: papers/templates/papers/paper_edit_view.html:20
 #: papers/templates/papers/recommendation_form.html:33
 msgid "Back"
-msgstr ""
+msgstr "Zurück"
 
 #: papers/templates/papers/amendment_detail.html:159
 #: papers/templates/papers/paper_detail.html:108
@@ -386,7 +385,7 @@ msgstr "Kommentieren"
 #, fuzzy
 #| msgid "Sign this amendment"
 msgid "This is a cloned amendment."
-msgstr "Diesen Antrag unterschreiben"
+msgstr "Das ist ein duplizierter Antrag."
 
 #: papers/templates/papers/amendment_list.html:6
 #: papers/templates/papers/amendments_by_tag.html:4
@@ -399,6 +398,16 @@ msgstr "Diesen Antrag unterschreiben"
 #: papers/templates/registration/profile.html:9
 msgid "Papers"
 msgstr "Papiere"
+
+#: papers/templates/papers/amendment_list.html:10
+#: papers/templates/papers/paper_detail.html:94
+#: papers/templates/papers/paper_list.html:11
+#: papers/templates/papers/search_result.html:13
+#: papers/templates/papers/search_result.html:30
+#: papers/templates/papers/search_result.html:32
+#: papers/templates/registration/profile.html:46
+msgid "Amendments"
+msgstr "Anträge"
 
 #: papers/templates/papers/amendment_list.html:17
 msgid "Accepted"
@@ -414,9 +423,10 @@ msgstr ""
 
 #: papers/templates/papers/amendments_by_tag.html:10
 #: papers/templates/papers/paper_detail.html:101
-#, python-format
-msgid "%(name)s at %(created_at)s"
-msgstr "%(name)s um %(created_at)s"
+#, fuzzy, python-format
+#| msgid "%(name)s at %(created_at)s"
+msgid "%(name)s on %(created_at)s"
+msgstr "%(name)s am %(created_at)s"
 
 #: papers/templates/papers/base.html:25
 msgid "Digital Democracy"
@@ -424,11 +434,11 @@ msgstr "Digital Democracy"
 
 #: papers/templates/papers/base.html:36
 msgid "Search..."
-msgstr ""
+msgstr "Suche"
 
 #: papers/templates/papers/base.html:48
 msgid "Logout"
-msgstr ""
+msgstr "Ausloggen"
 
 #: papers/templates/papers/base.html:55
 #, fuzzy
@@ -455,23 +465,20 @@ msgstr "Neues Papier erstellen"
 msgid "Create new paper"
 msgstr "Neues Papier erstellen"
 
-#: papers/templates/papers/paper_create.html:19
-#: papers/templates/papers/paper_update.html:19
-msgid "cancel"
-msgstr "Zurück"
-
 #: papers/templates/papers/paper_create_success.html:4
 #, python-format
 msgid "%(title)s created! "
 msgstr "%(title)s erstellt! "
 
 #: papers/templates/papers/paper_create_success.html:9
-msgid "all papers"
+#, fuzzy
+#| msgid "all papers"
+msgid "All papers"
 msgstr "Alle Papiere"
 
 #: papers/templates/papers/paper_detail.html:34
 msgid "This translation needs an update."
-msgstr ""
+msgstr "Diese Übersetzung muss aktualisiert werden."
 
 #: papers/templates/papers/paper_detail.html:40
 msgid "Authors"
@@ -479,7 +486,7 @@ msgstr "Autor*innen"
 
 #: papers/templates/papers/paper_detail.html:45
 msgid "Deadline for this paper: "
-msgstr ""
+msgstr "Frist für dieses Papier: "
 
 #: papers/templates/papers/paper_detail.html:56
 #, fuzzy
@@ -489,7 +496,7 @@ msgstr "Antrag verfassen"
 
 #: papers/templates/papers/paper_detail.html:61
 msgid "Enter results"
-msgstr ""
+msgstr "Resultate eingeben"
 
 #: papers/templates/papers/paper_detail.html:64
 #, fuzzy
@@ -505,26 +512,21 @@ msgstr "Übersetzung aktualisieren"
 
 #: papers/templates/papers/paper_detail.html:80
 msgid "Download as PPTX"
-msgstr ""
+msgstr "Als PPTX herunterladen"
 
 #: papers/templates/papers/paper_detail.html:84
 msgid "Download as PDF"
-msgstr ""
-
-#: papers/templates/papers/paper_detail.html:94
-#: papers/templates/papers/paper_list.html:11
-#: papers/templates/papers/search_result.html:30
-#: papers/templates/registration/profile.html:46
-msgid "Amendments"
-msgstr "Anträge"
+msgstr "Als PDF herunterladen"
 
 #: papers/templates/papers/paper_list.html:18
+#: papers/templates/papers/search_result.html:17
 #, fuzzy
 #| msgid "Created at"
 msgid "Created on"
 msgstr "Erstellt am"
 
 #: papers/templates/papers/paper_list.html:21
+#: papers/templates/papers/search_result.html:18
 #, fuzzy
 #| msgid "deadline for amendments"
 msgid "Deadline for amendments"
@@ -540,25 +542,15 @@ msgstr "Letzter Kommentar"
 
 #: papers/templates/papers/recommendation_form.html:14
 msgid "Edit recommendation for"
-msgstr ""
+msgstr "Empfehlung bearbeiten für"
 
 #: papers/templates/papers/recommendation_form.html:16
 msgid "Create recommendation for"
-msgstr ""
+msgstr "Empfehlung für"
 
 #: papers/templates/papers/search_result.html:8
 msgid "Search Results:"
-msgstr ""
-
-#: papers/templates/papers/search_result.html:17
-#: papers/templates/registration/profile.html:18
-msgid "Created at"
-msgstr "Erstellt am"
-
-#: papers/templates/papers/search_result.html:18
-#: papers/templates/registration/profile.html:21
-msgid "deadline for amendments"
-msgstr "Antragsfrist"
+msgstr "Suchresultate:"
 
 #: papers/templates/papers/search_result.html:35
 #: papers/templates/registration/profile.html:55
@@ -570,6 +562,10 @@ msgstr "Status"
 msgid "# Supporters"
 msgstr "# Unterstützer*innen"
 
+#: papers/templates/papers/search_result.html:48
+msgid "Nothing given to search for."
+msgstr "Es wurde im Suchfeld nichts eingegeben."
+
 #: papers/templates/papers/select_amendments.html:6
 #: papers/templates/papers/select_amendments.html:13
 #, fuzzy
@@ -579,10 +575,12 @@ msgstr "Antrag verfassen"
 
 #: papers/templates/papers/select_amendments.html:24
 msgid "Continue"
-msgstr ""
+msgstr "Weiter"
 
 #: papers/templates/papers/translation_update.html:40
-msgid "update"
+#, fuzzy
+#| msgid "update"
+msgid "Update"
 msgstr "Aktualisieren"
 
 #: papers/templates/registration/login.html:5
@@ -648,34 +646,42 @@ msgid "Schreiben Sie Ihr neues Passwort in beide Felder um es zu setzen."
 msgstr ""
 
 #: papers/templates/registration/password_reset_done.html:10
-msgid "E-Mail zum zurücksenden des Passworts abgeschickt"
+msgid "E-Mail zum Zurücksenden des Passworts abgeschickt."
 msgstr ""
 
 #: papers/templates/registration/password_reset_done.html:11
 msgid ""
-"Sie sollten eine E-Mail bekommen haben mit der Sie ihr Passwort zurücksetzen "
+"Sie sollten eine E-Mail erhalten haben, mit der Sie ihr Passwort zurücksetzen "
 "können."
 msgstr ""
 
 #: papers/templates/registration/password_reset_done.html:12
 msgid ""
-"Falls sie die E-Mail nicht finden, schauen Sie in ihren Spam-Ordner nach."
+"Falls Sie die E-Mail nicht finden, schauen Sie in Ihren Spam-Ordner nach."
 msgstr ""
 
 #: papers/templates/registration/password_reset_form.html:11
 msgid ""
-"Geben Sie ihr Passwort und wir schicken Ihnen eine Email um ihr Passwort "
+"Geben Sie Ihr Passwort und wir schicken Ihnen eine Email um Ihr Passwort "
 "zurückzusetzen"
 msgstr ""
 
 #: papers/templates/registration/password_reset_form.html:17
-msgid "E-mail senden"
+msgid "E-Mail senden"
 msgstr ""
 
 #: papers/templates/registration/profile.html:8
 #, python-format
 msgid "Contributions by %(username)s"
-msgstr "Mitarbeiten von: %(username)s"
+msgstr "Beiträge von: %(username)s"
+
+#: papers/templates/registration/profile.html:18
+msgid "Created at"
+msgstr "Erstellt am"
+
+#: papers/templates/registration/profile.html:21
+msgid "deadline for amendments"
+msgstr "Antragsfrist"
 
 #: papers/templates/registration/profile.html:95
 msgid "Likes"
@@ -687,12 +693,21 @@ msgstr "Neuer Account für Digital Democracy"
 
 #: papers/views.py:279
 msgid "You are not allowed to edit this paper."
-msgstr ""
+msgstr "Sie haben nicht genug Rechte, um dieses Papier zu bearbeiten."
 
 #: papers/views.py:547
 #, python-brace-format
 msgid "{imported_users} were imported!"
 msgstr "{imported_users} importiert!"
+
+#~ msgid "cancel"
+#~ msgstr "Zurück"
+
+#~ msgid "translation"
+#~ msgstr "Übersetzung"
+
+#~ msgid "By <strong>%(name)s</strong> at %(created)s"
+#~ msgstr "Von <strong>%(name)s</strong> am %(created)s"
 
 #~ msgid "like"
 #~ msgstr "Like"
