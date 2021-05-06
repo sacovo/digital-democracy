@@ -187,7 +187,7 @@ BLEACH_ALLOWED_TAGS = [
     "div",
     "u",
     "sub",
-    "sup"
+    "sup",
 ]
 
 BLEACH_ALLOWED_ATTRIBUTES = {"a": ["href", "title"]}
