@@ -87,6 +87,8 @@ DATABASES = {
     }
 }
 
+DEFAULT_AUTO_FIELD = "django.db.models.AutoField"
+
 # Password validation
 # https://docs.djangoproject.com/en/3.0/ref/settings/#auth-password-validators
 
@@ -191,6 +193,7 @@ BLEACH_ALLOWED_TAGS = [
 ]
 
 BLEACH_ALLOWED_ATTRIBUTES = {"a": ["href", "title"]}
+
 
 LOGIN_URL = "/members/login"
 LOGIN_REDIRECT_URL = "/members/profile"
