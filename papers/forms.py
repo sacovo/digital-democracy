@@ -155,7 +155,7 @@ class TranslationForm(forms.ModelForm):
 
 class CommentForm(forms.Form):
     """
-    Form for comments
+    Form for comments and private notes
     """
 
     comment = forms.CharField(
@@ -171,7 +171,6 @@ class CommentForm(forms.Form):
             tags=settings.BLEACH_ALLOWED_TAGS,
             attributes=settings.BLEACH_ALLOWED_ATTRIBUTES,
         )
-
 
 class UserUploadForm(forms.Form):
     """

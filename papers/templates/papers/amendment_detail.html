@@ -185,7 +185,7 @@
       {% buttons %}
       <div class="row">
         <div class="col">
-          <button type="submit" class="btn btn-sm btn-block submitButton">
+          <button type="submit" name="submit-comment" class="btn btn-sm btn-block submitButton">
             {% trans 'Submit' %}
           </button>
         </div>
@@ -193,6 +193,48 @@
       {% endbuttons %}
     </form>
     <!-- Implements Comment section-->
+	
+	
+	<!-- Implements Note section-->
+	<h2 class="h3">{% trans 'Private Notes' %}</h2>
+
+    <div class="comments">
+
+      {% if not notes %}
+      {% blocktrans %}No notes written...{% endblocktrans %}
+      {% else %}
+
+      {% for note in notes %}
+      <div class="comment">
+        <h3 class="h6">
+          {{ note.created_on }}
+        </h3>
+
+        <section class="comment-body">
+          {{ note.body|safe|urlize }}
+        </section>
+      </div>
+      {% endfor %}
+      {% endif %}
+    </div>
+	
+    <h5 class="mt-4">{% trans 'Write a private note' %}</h5>
+    {{form.media}}
+    <form action="" method="POST" id="create_note">
+      {% csrf_token %}
+      {% bootstrap_form form  form_group_class='form-group'%}
+      {% buttons %}
+      <div class="row">
+        <div class="col">
+          <button type="submit" name="submit-note" class="btn btn-sm btn-block submitButton">
+            {% trans 'Submit' %}
+          </button>
+        </div>
+      </div>
+      {% endbuttons %}
+    </form>
+    <!-- Implements Note section-->
+	
   </div>
 </div>
 
