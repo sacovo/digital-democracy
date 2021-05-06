@@ -22,12 +22,6 @@ class PaperCreateForm(forms.Form):
         label=" ", widget=forms.RadioSelect, choices=settings.LANGUAGES
     )
     content = forms.CharField(widget=CKEditorWidget, label=_("Content"))
-    state = forms.ChoiceField(
-        widget=forms.RadioSelect(attrs={"class": "radioSelection"}),
-        choices=models.PAPER_STATES,
-        label=_("State"),
-        help_text="ⓘ Hover over the states for more information.",
-    )
 
     def clean_content(self):
         """
