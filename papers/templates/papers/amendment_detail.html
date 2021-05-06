@@ -150,7 +150,7 @@
 
     <!-- Implements Retract Button-->
     <hr>
-    <a class="btn btn-sm cancelButton" href="{% url 'paper-detail' amendment.paper.pk %}">Back</a>
+    <a class="btn btn-sm cancelButton" href="{% url 'paper-detail' amendment.paper.pk %}">{% trans 'Back' %}</a>
   </div>
 
 
@@ -161,7 +161,7 @@
     <div class="comments">
 
       {% if not comments %}
-      {% blocktrans %}No Comments Yet...{% endblocktrans %}
+      {% blocktrans %}No comments yet...{% endblocktrans %}
       {% else %}
 
       {% for comment in comments %}
@@ -178,13 +178,18 @@
           {% csrf_token %}
 
           <div class="row justify-content-between px-3">
-            <button type="submit" class="btn btn-sm submitButton col-auto">
+            <div class="col-auto">
+            <button type="submit" class="btn btn-sm submitButton">
               {% if request.user in comment.likes.all %}
-              {% trans 'unlike' %}
+              {% trans 'Unlike' %}
               {% else %}
-              {% trans 'like' %}
+              {% trans 'Like' %}
               {% endif %}
             </button>
+              {% if comment.author.user_id == request.user.pk %}
+              <a class="btn btn-sm cancelButton mx-1" href="{% url 'comment-delete' comment.pk %}">{% trans 'Delete' %}</a>
+              {% endif %}
+            </div>
             <div class="likes col-auto">
               {{ comment.num_likes }} <i class="far fa-thumbs-up"></i>
             </div>

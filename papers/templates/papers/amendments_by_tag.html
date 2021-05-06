@@ -7,12 +7,11 @@
 
 {% for amendment in amendment_list %}
     <a class="link" href="{% url 'amendment-detail' amendment.pk %}">
-            {% blocktrans with name=amendment.author.name created_at=amendment.created_at %}{{name}} at {{created_at}}{% endblocktrans %}
-            <div class="amandmentListReason">{{amendment.reason|safe}}</div>
+            {% blocktrans with name=amendment.author.name created_at=amendment.created_at %}{{name}} on {{created_at}}{% endblocktrans %}
+            <div class="amendmentListReason">{{amendment.reason|safe}}</div>
           </a>
 {% endfor %}
 
 <a class="btn cancelButton" href="{% url 'paper-list' %}">{% trans 'Back' %}</a>
 
 {% endblock %}
-git
