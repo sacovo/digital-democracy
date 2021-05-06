@@ -55,7 +55,6 @@ a:hover,
 }
 footer{
   margin-top: 5em;
-    
 }
 footer #languages{
     display: inline-block;
@@ -76,43 +75,39 @@ footer #languages a:hover{
     margin-left: 50px;
 }
 .form-group{
-  display: block;
+    display: block;
 }
 .form-group label{
     color: var(--red);
-    display: inline;
 }
 .form-group input{
     border: 1px solid var(--black);
-    box-shadow: none; 
+    box-shadow: none;
 }
 .form-group .form-control:focus{
     border: 1px solid var(--red);
     box-shadow: 0 0 0 0.2rem rgba(228,2,45,.25);
 }
-
-.radio .form-check{
-    display: inline-block;
-    float: right;
+.form-group .radio .form-check{
+    display: inline;
     padding-right: 20px;
+}
+.form-group .radio .form-check label{
+    color: var(--black);
 }
 #id_state .form-check{
     display: inline;
     float: left;
 }
 
-.form-group .radio .form-check label{
-    color: var(--black);
-}
 .django-ckeditor-widget{
     display: block;
     width: 100%;
-    margin-top: 10px;
 }
 .cke_chrome {
     border-radius: 5px;
     border: 1px solid var(--black);
-    border-width: thick;        
+    border-width: thick;
 }
 
 /* Buttons */
@@ -204,7 +199,12 @@ footer #languages a:hover{
     border: 1px solid var(--black);
     border-radius: 10px;
 }
-#amendments,#comments{
+#amendments{
+    text-align: left;
+}
+
+#comments{
+    padding-top: 2.2em;
     text-align: left;
 }
 
@@ -214,7 +214,6 @@ footer #languages a:hover{
     padding: 20px; 
     margin-bottom: 30px;
     margin-top: 5px;
-    
 }
 
 
@@ -227,14 +226,13 @@ ins {
 }
 
 .amendment{
-	margin: 0.25em;
-	padding-bottom: 0.5em;
+	padding-bottom: 1.5em;
+    border-top: solid var(--black) 1px;
 }
 
 .comment {
-  margin: 0.25em;
-  border-bottom: solid var(--black) 1px;
-  padding-bottom: 0.5em;
+  border-top: solid var(--black) 1px;
+  padding-bottom: 0.4em;
 }
 
 .amendment-content p {
