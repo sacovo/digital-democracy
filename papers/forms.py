@@ -22,6 +22,7 @@ class PaperCreateForm(forms.Form):
         label=" ", widget=forms.RadioSelect, choices=settings.LANGUAGES
     )
     content = forms.CharField(widget=CKEditorWidget, label=_("Content"))
+    deadline = forms.DateTimeField(initial=timezone.now(), label=_("Deadline"))
 
     def clean_content(self):
         """
