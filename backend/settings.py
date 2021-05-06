@@ -182,6 +182,12 @@ BLEACH_ALLOWED_TAGS = [
     "del",
     "ins",
     "strong",
+    "pre",
+    "address",
+    "div",
+    "u",
+    "sub",
+    "sup",
 ]
 
 BLEACH_ALLOWED_ATTRIBUTES = {"a": ["href", "title"]}
