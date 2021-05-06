@@ -123,6 +123,14 @@ urlpatterns = [
     path("members/upload-users/", views.upload_users, name="upload_users"),
     path("comments/<int:comment_pk>/like/", views.like_comment, name="comment_like"),
     path(
+        "comments/<int:comment_pk>/delete/", views.comment_delete, name="comment-delete"
+    ),
+    path(
+        "paper-comments/<int:comment_pk>/delete/",
+        views.paper_comment_delete,
+        name="paper-comment-delete",
+    ),
+    path(
         "amendments/<int:amendment_pk>/like/",
         views.support_amendment,
         name="support-amendment",

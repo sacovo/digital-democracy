@@ -125,6 +125,52 @@ def translation_delete(request, translation_pk):
     )
 
 
+def comment_delete(request, comment_pk):
+    comment = models.Comment.objects.get(pk=comment_pk)
+    if comment.author.user != request.user:
+        messages.warning(request, _("You are not allowed to delete this comment."))
+        return redirect("amendment-detail", args=(comment.amendment_id,))
+
+    if request.method == "POST":
+        amendment_pk = comment.amendment_id
+        comment.delete()
+        messages.success(request, _("Successfully deleted comment."))
+        return redirect("amendment-detail", amendment_pk)
+
+    return render(
+        request,
+        "papers/confirm_deletion.html",
+        {
+            "name": _("your comment"),
+            "back": reverse(
+                "amendment-detail", kwargs={"amendment_pk": comment.amendment_id}
+            ),
+        },
+    )
+
+
+def paper_comment_delete(request, comment_pk):
+    comment = models.PaperComment.objects.get(pk=comment_pk)
+    if comment.author.user != request.user:
+        messages.warning(request, _("You are not allowed to delete this comment."))
+        return redirect("amendment-detail", args=(comment.amendment_id,))
+
+    if request.method == "POST":
+        paper_pk = comment.paper_id
+        comment.delete()
+        messages.success(request, _("Successfully deleted comment."))
+        return redirect("paper-detail", paper_pk)
+
+    return render(
+        request,
+        "papers/confirm_deletion.html",
+        {
+            "name": _("your comment"),
+            "back": reverse("paper-detail", kwargs={"paper_pk": comment.paper_id}),
+        },
+    )
+
+
 def paper_delete(request, paper_pk):
     paper = models.Paper.objects.get(pk=paper_pk)
     if request.method == "POST":

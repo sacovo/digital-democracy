@@ -125,6 +125,11 @@
             <section class="comment-body">
               {{ comment.body|safe|urlize }}
             </section>
+            {% if comment.author.user == request.user %}
+            <a href="{% url 'paper-comment-delete' comment.pk %}" class="btn btn-sm cancelButton">
+              {% trans 'Delete' %}
+            </a>
+            {% endif %}
           </div>
           {% endfor %}
           {% endif %}
