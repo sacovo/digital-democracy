@@ -12,6 +12,7 @@ from django.http import Http404
 from django.http.response import FileResponse, HttpResponse
 from django.shortcuts import redirect, render
 from django.template.loader import render_to_string
+from django.urls import reverse
 from django.utils import timezone
 from django.utils.translation import gettext as _
 from weasyprint import CSS, HTML
@@ -91,6 +92,54 @@ def selected_amendments_view(request, paper_pk, language_code):
         request,
         "papers/select_amendments.html",
         {"form": form, "translation": translation},
+    )
+
+
+def translation_delete(request, translation_pk):
+    translation = models.PaperTranslation.objects.get(pk=translation_pk)
+
+    if translation.paper.translation_set.count() == 1:
+        messages.warning(request, _("Cannot delete only translation of this paper"))
+        return redirect("paper-detail", translation.paper_id)
+
+    if request.method == "POST":
+        paper_pk = translation.paper_id
+        translation.delete()
+        messages.success(request, _("Successfully deleted translation."))
+        return redirect("paper-detail", paper_pk)
+
+    return render(
+        request,
+        "papers/confirm_deletion.html",
+        {
+            "translation": translation,
+            "name": translation.title + f" ({translation.language_code})",
+            "back": reverse(
+                "paper-detail-language",
+                kwargs={
+                    "paper_pk": translation.paper_id,
+                    "language_code": translation.language_code,
+                },
+            ),
+        },
+    )
+
+
+def paper_delete(request, paper_pk):
+    paper = models.Paper.objects.get(pk=paper_pk)
+    if request.method == "POST":
+        paper.delete()
+        messages.success(request, _("Successfully deleted paper."))
+        return redirect("paper-list")
+
+    return render(
+        request,
+        "papers/confirm_deletion.html",
+        {
+            "paper": paper,
+            "name": paper.working_title,
+            "back": reverse("paper-detail", args=(paper_pk,)),
+        },
     )
 
 

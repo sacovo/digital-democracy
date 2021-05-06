@@ -68,11 +68,17 @@
           <a class="btn btn-secondary" href="{%url 'paper-translation-update' translation.paper.pk translation.language_code%}">
             {% trans 'Update translation' %}
           </a>
+          <a class="btn btn-secondary" href="{%url 'translation-delete' translation.pk %}">
+            {% trans 'Delete translation' %}
+          </a>
           {% endif %}
           {% endif %}
           {% if update_allowed %}
           <a class="btn btn-secondary" href="{%url 'paper-update' paper.pk %}">
             {% trans 'Update paper' %}
+          </a>
+          <a class="btn btn-secondary" href="{%url 'paper-delete' paper.pk %}">
+            {% trans 'Delete paper' %}
           </a>
           {% endif %}
           {% if paper.state == 'public' %}
