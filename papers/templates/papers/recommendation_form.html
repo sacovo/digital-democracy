@@ -29,7 +29,7 @@
 <form method="POST">
     {% csrf_token %}
     {% bootstrap_form form  form_group_class='form-group'%}
-    <button type="submit" class="btn btn-sm btn-block submitButton">{% trans 'submit' %}</button>
+    <button type="submit" class="btn btn-sm btn-block submitButton">{% trans 'Submit' %}</button>
     <a class="btn btn-sm btn-block cancelButton" href="{% url 'amendment-detail' amendment.pk %}">{% trans 'Back' %}</a>
 </form>
 

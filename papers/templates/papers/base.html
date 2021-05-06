@@ -26,14 +26,14 @@
       </div>
       <ul class="navbar-nav mr-auto">
         <li class="nav-item">
-          <a class="nav-link" id= "navBarItem" href="{% url 'paper-list' %}">{% trans 'papers' %}</a>
+          <a class="nav-link" id= "navBarItem" href="{% url 'paper-list' %}">{% trans 'Papers' %}</a>
         </li>
       </ul>
 
       <div class="my-2 my-lg-0">
           {% if request.user.is_authenticated %}
           <form method="GET" action="{% url 'search-result' %}">
-            <input type="text" placeholder="Search.." name="searched">
+            <input type="text" placeholder="{% trans 'Search...' %}" name="searched">
             <button class="btn searchButton" type="submit">
                 <i class="fa fa-search"></i>
             </button>
@@ -52,7 +52,7 @@
             {% else %}
             <button class="btn btn-secondary " type="button" class="btn btn-primary">
                 <a class="my-2 my-sm-0" id="navBarAccount" href="{% url 'login' %}">
-                    {% trans 'sign in' %}
+                    {% trans 'Sign in' %}
                 </a>
             </button>
 
