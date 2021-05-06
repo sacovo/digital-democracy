@@ -304,10 +304,10 @@ def paper_create(request):
             title = form.cleaned_data["title"]
             content = form.cleaned_data["content"]
             language_code = form.cleaned_data["language_code"]
-            state = form.cleaned_data["state"]
             author, _ = models.Author.objects.get_or_create(user=request.user)
+            amendment_deadline = form.cleaned_data["deadline"]
             paper = models.Paper.objects.create(
-                amendment_deadline=timezone.now(), working_title=title, state=state
+                amendment_deadline=amendment_deadline, working_title=title
             )
             paper.authors.add(author)
             models.PaperTranslation.objects.create(

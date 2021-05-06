@@ -9,7 +9,7 @@
 {% block content %}
 <h1 class="h3">{% trans 'Update paper' %}</h1>
 <hr>
-<form action="" method="POST" id="createPapperForm">
+<form action="" method="POST" id="createPaperForm">
   {% csrf_token %}
   {% bootstrap_form form  form_group_class='form-group'%}
   {% buttons %}

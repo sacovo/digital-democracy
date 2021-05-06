@@ -98,7 +98,10 @@ class Paper(models.Model):
     working_title = models.CharField(max_length=255, verbose_name=_("working title"))
 
     state = models.CharField(
-        choices=PAPER_STATES, max_length=20, verbose_name=_("state")
+        choices=PAPER_STATES,
+        max_length=20,
+        verbose_name=_("state"),
+        default=PAPER_STATES[0][0],
     )
 
     authors = models.ManyToManyField(Author, blank=True, verbose_name=_("authors"))

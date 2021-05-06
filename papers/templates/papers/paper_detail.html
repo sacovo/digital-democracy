@@ -97,7 +97,7 @@
       <div class="col-md-4">
 	    <!-- Amendments section -->
         {% if paper.state != 'final' %}
-        <h2 id="amendments">{% trans 'amendments' %}</h2>
+        <h2 id="amendments">{% trans 'Amendments' %}</h2>
 		<div class="amendments">
           {% for amendment in translation.amendment_list %}
           {% if amendment.state != "retracted" or request.user.username == amendment.author.name %}
@@ -119,7 +119,7 @@
 
           {% for comment in paper.comments.all %}
           <div class="comment">
-            <h3 class="h6">
+            <h3 class="h5">
               {{ comment.name }} - {{ comment.created_on }}
             </h3>
             <section class="comment-body">
@@ -129,7 +129,7 @@
           {% endfor %}
           {% endif %}
         </div>
-        <h5 class="mt-4">{% trans 'Leave a comment' %}</h5>
+
         {{form.media}}
         <form action="" method="POST" id="create_comment">
           {% csrf_token %}
