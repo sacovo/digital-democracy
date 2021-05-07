@@ -306,7 +306,7 @@ def amendment_detail(request, amendment_pk):
     amendment = models.Amendment.objects.get(pk=amendment_pk)
     form = forms.CommentForm()
     author, _ = models.Author.objects.get_or_create(user=request.user)
-    
+
     if request.method == "POST":
 
         amendment.state = "public"
@@ -333,7 +333,8 @@ def amendment_detail(request, amendment_pk):
         Q(amendment=amendment) | Q(amendment__in=amendment.translations.all())
     )
     notes = models.Note.objects.filter(
-        (Q(amendment=amendment) | Q(amendment__in=amendment.translations.all())) & Q(author=author)
+        (Q(amendment=amendment) | Q(amendment__in=amendment.translations.all()))
+        & Q(author=author)
     )
     if "retracted" in request.POST:
         amendment.state = "retracted"

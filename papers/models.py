@@ -320,10 +320,12 @@ class Amendment(models.Model):
         verbose_name = _("amendment")
         verbose_name_plural = _("amendments")
 
+
 class Note(models.Model):
     """
     Note for an amendment
     """
+
     amendment = models.ForeignKey(
         Amendment,
         models.CASCADE,
