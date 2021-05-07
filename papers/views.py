@@ -3,6 +3,7 @@ Paper views
 """
 import io
 
+from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required, permission_required
 from django.core.exceptions import PermissionDenied
@@ -11,6 +12,7 @@ from django.http import Http404
 from django.http.response import FileResponse, HttpResponse
 from django.shortcuts import redirect, render
 from django.template.loader import render_to_string
+from django.urls import reverse
 from django.utils import timezone
 from django.utils.translation import gettext as _
 from weasyprint import CSS, HTML
@@ -26,6 +28,9 @@ def paper_list(request):
     List of all papers
     """
     papers = models.Paper.objects.all()
+
+    for paper in papers:
+        paper.created_at = paper.created_at.date()
 
     return render(request, "papers/paper_list.html", {"paper_list": papers})
 
@@ -93,6 +98,100 @@ def selected_amendments_view(request, paper_pk, language_code):
     )
 
 
+def translation_delete(request, translation_pk):
+    translation = models.PaperTranslation.objects.get(pk=translation_pk)
+
+    if translation.paper.translation_set.count() == 1:
+        messages.warning(request, _("Cannot delete only translation of this paper"))
+        return redirect("paper-detail", translation.paper_id)
+
+    if request.method == "POST":
+        paper_pk = translation.paper_id
+        translation.delete()
+        messages.success(request, _("Successfully deleted translation."))
+        return redirect("paper-detail", paper_pk)
+
+    return render(
+        request,
+        "papers/confirm_deletion.html",
+        {
+            "translation": translation,
+            "name": translation.title + f" ({translation.language_code})",
+            "back": reverse(
+                "paper-detail-language",
+                kwargs={
+                    "paper_pk": translation.paper_id,
+                    "language_code": translation.language_code,
+                },
+            ),
+        },
+    )
+
+
+def comment_delete(request, comment_pk):
+    comment = models.Comment.objects.get(pk=comment_pk)
+    if comment.author.user != request.user:
+        messages.warning(request, _("You are not allowed to delete this comment."))
+        return redirect("amendment-detail", args=(comment.amendment_id,))
+
+    if request.method == "POST":
+        amendment_pk = comment.amendment_id
+        comment.delete()
+        messages.success(request, _("Successfully deleted comment."))
+        return redirect("amendment-detail", amendment_pk)
+
+    return render(
+        request,
+        "papers/confirm_deletion.html",
+        {
+            "name": _("your comment"),
+            "back": reverse(
+                "amendment-detail", kwargs={"amendment_pk": comment.amendment_id}
+            ),
+        },
+    )
+
+
+def paper_comment_delete(request, comment_pk):
+    comment = models.PaperComment.objects.get(pk=comment_pk)
+    if comment.author.user != request.user:
+        messages.warning(request, _("You are not allowed to delete this comment."))
+        return redirect("amendment-detail", args=(comment.amendment_id,))
+
+    if request.method == "POST":
+        paper_pk = comment.paper_id
+        comment.delete()
+        messages.success(request, _("Successfully deleted comment."))
+        return redirect("paper-detail", paper_pk)
+
+    return render(
+        request,
+        "papers/confirm_deletion.html",
+        {
+            "name": _("your comment"),
+            "back": reverse("paper-detail", kwargs={"paper_pk": comment.paper_id}),
+        },
+    )
+
+
+def paper_delete(request, paper_pk):
+    paper = models.Paper.objects.get(pk=paper_pk)
+    if request.method == "POST":
+        paper.delete()
+        messages.success(request, _("Successfully deleted paper."))
+        return redirect("paper-list")
+
+    return render(
+        request,
+        "papers/confirm_deletion.html",
+        {
+            "paper": paper,
+            "name": paper.working_title,
+            "back": reverse("paper-detail", args=(paper_pk,)),
+        },
+    )
+
+
 def finalize_view(request, paper_pk, language_code):
     translation = models.PaperTranslation.objects.get(
         paper_id=paper_pk, language_code=language_code
@@ -143,7 +242,15 @@ def paper_detail_create_pdf(request, paper_pk, language_code):
             "paper": paper.paper,
         },
     )
-    css = CSS(filename="papers/templates/pdf/amendment_pdf_template.css")
+    css = CSS(
+        string=render_to_string(
+            "pdf/amendment_pdf_template.css",
+            {
+                "body_font": settings.PDF_BODY_FONT,
+                "title_font": settings.PDF_TITLE_FONT,
+            },
+        )
+    )
     pdf = HTML(string=html).write_pdf(stylesheets=[css])
     buffer = io.BytesIO()
     buffer.write(pdf)
@@ -153,7 +260,6 @@ def paper_detail_create_pdf(request, paper_pk, language_code):
 
 @login_required
 def paper_presentation(request, paper_pk):
-
     response = HttpResponse(
         content_type="application/vnd.openxmlformats-officedocument.presentationml.presentation"
     )
@@ -235,21 +341,6 @@ def recommendation_update(request, pk):
 
 
 @login_required
-def add_alternative_amendment(request, pk):
-    recommendation = models.Recommendation.objects.get(pk=pk)
-    paper = recommendation.amendment.paper
-    translation = paper.translation_set.get(
-        language_code=recommendation.amendment.language_code
-    )
-
-    form = forms.AmendmentForm(translation=translation)
-
-    if request.method == "POST":
-        pass
-    pass
-
-
-@login_required
 def paper_create(request):
     """
     View to create a new paper
@@ -262,10 +353,10 @@ def paper_create(request):
             title = form.cleaned_data["title"]
             content = form.cleaned_data["content"]
             language_code = form.cleaned_data["language_code"]
-            state = form.cleaned_data["state"]
             author, _ = models.Author.objects.get_or_create(user=request.user)
+            amendment_deadline = form.cleaned_data["deadline"]
             paper = models.Paper.objects.create(
-                amendment_deadline=timezone.now(), working_title=title, state=state
+                amendment_deadline=amendment_deadline, working_title=title
             )
             paper.authors.add(author)
             models.PaperTranslation.objects.create(
@@ -374,6 +465,37 @@ def amendment_edit(request, amendment_pk):
 
     return render(
         request, "papers/amendment_edit.html", {"form": form, "amendment": amendment}
+    )
+
+
+@login_required
+def amendment_clone(request, amendment_pk):
+    """
+    Clone an amendment
+    """
+    amendment = models.Amendment.objects.get(pk=amendment_pk)
+    form = forms.AmendmentForm(amendment=amendment)
+
+    if request.method == "POST":
+        form = forms.AmendmentForm(request.POST, amendment=amendment)
+
+        if form.is_valid():
+            amendment.pk = None
+            content = form.cleaned_data.get("content")
+            reason = form.cleaned_data.get("reason")
+            title = form.cleaned_data.get("title")
+
+            amendment.content = content
+            amendment.reason = reason
+            amendment.title = title
+            amendment.save()
+
+            return redirect("amendment-detail", amendment.pk)
+
+    return render(
+        request,
+        "papers/amendment_edit.html",
+        {"form": form, "amendment": amendment, "clone": True},
     )
 
 
@@ -503,14 +625,6 @@ def support_amendment(request, amendment_pk):
 
 
 @login_required
-def newsfeed(request):
-    """
-    Display a newsfeed with recent activity
-    """
-    return render(request, "papers/newsfeed.html")
-
-
-@login_required
 def amendment_list(request, paper_pk, tag, language_code):
     """
     List of all papers
@@ -547,3 +661,21 @@ def upload_users(request):
                 )
 
     return render(request, "members/user_upload.html", {"form": upload_form})
+
+
+def search_result(request):
+    if request.method == "GET":
+        searched = request.GET["searched"]
+        result_papers = models.Paper.objects.filter(working_title__icontains=searched)
+        result_amendments = models.Amendment.objects.filter(title__icontains=searched)
+        return render(
+            request,
+            "papers/search_result.html",
+            {
+                "searched": searched,
+                "result_papers": result_papers,
+                "result_amendments": result_amendments,
+            },
+        )
+    else:
+        return render(request, "papers/search_result.html")

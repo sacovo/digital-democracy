@@ -1,0 +1,51 @@
+{% extends 'papers/base.html' %}
+{% load i18n %}
+
+{% block title %}{% trans 'Papers' %}{% endblock %}
+
+{% block content %}
+
+    <h1>{% trans 'Search Results:' %}</h1>
+    {% if searched %}
+        You have searched for: {{ searched }}<b></b><br><br>
+        <h2>{% trans 'Papers' %}</h2>
+        <table class="table">
+          <caption class="sr-only">{% trans 'Amendments' %}</caption>
+          <thead>
+            <tr>
+              <th scope="col">{% trans 'Title' %}</th>
+              <th scope="col">{% trans 'Created on' %}</th>
+              <th scope="col">{% trans 'Deadline for amendments' %}</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>{% for result_paper in result_papers %}<tr>
+                <td><a href="{% url 'paper-detail' result_paper.pk %}">{{ result_paper }}</a></td>
+                <td>{{ result_paper.created_at }}</td>
+                <td>{{ result_paper.amendment_deadline }}</td>
+              </tr>{% endfor %} </tr>
+          </tbody>
+        </table>
+
+        <h2>{% trans 'Amendments' %}</h2>
+        <table class="table">
+          <caption class="sr-only">{% trans 'Amendments' %}</caption>
+          <thead>
+            <tr><th scope="col">{% trans 'Title' %}</th>
+              <th scope="col">{% trans 'State' %}</th>
+              <th scope="col">{% trans '# Supporters' %}</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>{% for amendment in result_amendments %}<tr>
+                <td><a href="{% url 'amendment-detail' amendment.pk %}">{{ amendment.paper }}, {{ amendment.title }}</a></td>
+                <td>{{ amendment.state }}</td>
+                <td>{{ amendment.supporters.count }}</td>
+            </tr>{% endfor %} </tr>
+          </tbody>
+        </table>
+        {% else %}
+        {% trans 'Nothing given to search for.' %}
+    {% endif %}
+
+{% endblock %}

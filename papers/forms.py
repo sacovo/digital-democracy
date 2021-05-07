@@ -17,17 +17,12 @@ class PaperCreateForm(forms.Form):
     Form to create a new paper
     """
 
-    title = forms.CharField(label=_("title"))
+    title = forms.CharField(label=_("Title"))
     language_code = forms.ChoiceField(
         label=" ", widget=forms.RadioSelect, choices=settings.LANGUAGES
     )
-    content = forms.CharField(widget=CKEditorWidget, label=_("content"))
-    state = forms.ChoiceField(
-        widget=forms.RadioSelect(attrs={"class": "radioSelection"}),
-        choices=models.PAPER_STATES,
-        label=_("state"),
-        help_text="ⓘ Hover over the states for more information.",
-    )
+    content = forms.CharField(widget=CKEditorWidget, label=_("Content"))
+    deadline = forms.DateTimeField(initial=timezone.now(), label=_("Deadline"))
 
     def clean_content(self):
         """

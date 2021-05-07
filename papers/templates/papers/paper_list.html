@@ -8,23 +8,23 @@
 <h1>{% trans 'Papers' %}</h1>
 
 <table class="table">
-  <caption class="sr-only">{% trans 'amandments' %}</caption>
+  <caption class="sr-only">{% trans 'Amendments' %}</caption>
   <thead>
     <tr>
       <th scope="col">
         {% trans 'Title' %}
       </th>
       <th scope="col">
-        {% trans 'Created at' %}
+        {% trans 'State' %}
       </th>
       <th scope="col">
-        {% trans 'deadline for amandments' %}
+        {% trans 'Created on' %}
       </th>
       <th scope="col">
-        {% trans "Latest amendment" %}
+        {% trans 'Deadline for amendments' %}
       </th>
       <th scope="col">
-        {% trans "Latest comment" %}
+        {% trans "Last Change" %}
       </th>
     </tr>
   </thead>
@@ -38,24 +38,26 @@
           </a>
         </td>
         <td>
+          {{paper.state}}
+        </td>
+        <td>
           {{paper.created_at}}
         </td>
         <td>
           {{paper.amendment_deadline}}
         </td>
         <td>
-          {% if paper.latest_comment %}
-          <a href="{% url 'amendment-detail' paper.latest_amendment.pk %}">
-          {{paper.latest_amendment.created_at}}
-          </a>
-          {% endif %}
-        </td>
-        <td>
-          {% if paper.latest_comment %}
-          <a href="{% url 'amendment-detail' paper.latest_comment.amendment_id %}">
-                {{paper.latest_comment.created_on}}
-          </a>
-          {% endif %}
+            {% if paper.latest_comment %}
+                {% if paper.latest_amendment.created_at < paper.latest_comment.created_on %}
+                    <a href="{% url 'amendment-detail' paper.latest_amendment.pk %}">
+                        {{ paper.latest_amendment.created_at }}
+                    </a>
+                {% else %}
+                    <a href="{% url 'amendment-detail' paper.latest_comment.amendment_id %}">
+                        {{ paper.latest_comment.created_on }}
+                    </a>
+                {% endif %}
+            {% endif %}
         </td>
       </tr>
       {% endfor %}
