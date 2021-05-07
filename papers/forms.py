@@ -150,7 +150,7 @@ class TranslationForm(forms.ModelForm):
 
 class CommentForm(forms.Form):
     """
-    Form for comments
+    Form for comments and private notes
     """
 
     comment = forms.CharField(

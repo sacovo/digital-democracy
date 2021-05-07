@@ -324,6 +324,35 @@ class Amendment(models.Model):
         verbose_name_plural = _("amendments")
 
 
+class Note(models.Model):
+    """
+    Note for an amendment
+    """
+
+    amendment = models.ForeignKey(
+        Amendment,
+        models.CASCADE,
+        verbose_name=_("amendment"),
+        related_name="notes",
+        null=True,
+    )
+    author = models.ForeignKey(
+        Author, models.CASCADE, verbose_name=_("author"), blank=True, null=True
+    )
+    body = models.TextField(verbose_name=_("body"))
+    created_on = models.DateTimeField(auto_now_add=True, verbose_name=_("created at"))
+
+    @property
+    def name(self):
+        """
+        The name of the author of this note
+        """
+        return self.author.name
+
+    def __str__(self):
+        return "Note by {}: {}".format(self.name, self.body)
+
+
 class Comment(models.Model):
     """
     A comment to an amendment

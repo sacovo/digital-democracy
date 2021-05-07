@@ -396,29 +396,37 @@ def amendment_detail(request, amendment_pk):
     """
     amendment = models.Amendment.objects.get(pk=amendment_pk)
     form = forms.CommentForm()
+    author, _ = models.Author.objects.get_or_create(user=request.user)
 
     if request.method == "POST":
+
         amendment.state = "public"
         amendment.save()
         form = forms.CommentForm(request.POST)
 
         if form.is_valid():
             body = form.cleaned_data["comment"]
-
-            author, _ = models.Author.objects.get_or_create(user=request.user)
-
-            models.Comment.objects.create(
-                amendment=models.Amendment.objects.get(pk=amendment_pk),
-                body=body,
-                author=author,
-            )
-
+            if "submit-comment" in request.POST:
+                models.Comment.objects.create(
+                    amendment=models.Amendment.objects.get(pk=amendment_pk),
+                    body=body,
+                    author=author,
+                )
+            if "submit-note" in request.POST:
+                models.Note.objects.create(
+                    amendment=models.Amendment.objects.get(pk=amendment_pk),
+                    body=body,
+                    author=author,
+                )
             return redirect("amendment-detail", amendment.pk)
 
     comments = models.Comment.objects.filter(
         Q(amendment=amendment) | Q(amendment__in=amendment.translations.all())
     )
-
+    notes = models.Note.objects.filter(
+        (Q(amendment=amendment) | Q(amendment__in=amendment.translations.all()))
+        & Q(author=author)
+    )
     if "retracted" in request.POST:
         amendment.state = "retracted"
         amendment.save()
@@ -427,7 +435,7 @@ def amendment_detail(request, amendment_pk):
     return render(
         request,
         "papers/amendment_detail.html",
-        {"amendment": amendment, "form": form, "comments": comments},
+        {"amendment": amendment, "form": form, "comments": comments, "notes": notes},
     )
 
 
