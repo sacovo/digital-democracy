@@ -55,50 +55,38 @@
             <div> {{translation.content_safe}}</div>
           </article>
         </div>
-      <hr>
+
         <div class="my-2" role="group">
           {% if paper.state != 'final' %}
-          {% if create_amendment_allowed %}
-              <a class="btn btn-secondary" href="{% url 'create-amendment' translation.paper.pk translation.language_code %}">
-                {% trans 'Create amendment' %}
-              </a>
-          {% endif %}
-          {% if request.user.is_staff %}
-          <a class="btn btn-secondary" href="{% url 'paper-amendment-list' translation.paper.pk %}">
-            {% trans 'Enter results' %}
-          </a>
-          <a class="btn btn-secondary" href="{% url 'paper-select-amendments' translation.paper.pk translation.language_code %}">
-            {% trans 'Merge amendments' %}
-          </a>
-          {% endif %}
-          {% if perms.papers.change_translation %}
-          <a class="btn btn-secondary" href="{%url 'paper-translation-update' translation.paper.pk translation.language_code%}">
-            {% trans 'Update translation' %}
-          </a>
-          <a class="btn btn-secondary" href="{%url 'translation-delete' translation.pk %}">
-            {% trans 'Delete translation' %}
-          </a>
-          {% endif %}
+              {% if create_amendment_allowed %}
+              <hr>
+                  <a class="btn btn-secondary" href="{% url 'create-amendment' translation.paper.pk translation.language_code %}">
+                    {% trans 'Create amendment' %}
+                  </a>
+              {% endif %}
+
+              {% if perms.papers.change_translation %}
+              <hr>
+              <div>
+                  <a class="btn btn-secondary" href="{%url 'paper-translation-update' translation.paper.pk translation.language_code%}">
+                    {% trans 'Update translation' %}
+                  </a>
+                  <a class="btn btn-secondary" href="{%url 'translation-delete' translation.pk %}">
+                    {% trans 'Delete translation' %}
+                  </a>
+              {% endif %}
           {% endif %}
           {% if update_allowed %}
-          <a class="btn btn-secondary" href="{%url 'paper-update' paper.pk %}">
-            {% trans 'Update paper' %}
-          </a>
-          <a class="btn btn-secondary" href="{%url 'paper-delete' paper.pk %}">
-            {% trans 'Delete paper' %}
-          </a>
+              <a class="btn btn-secondary" href="{%url 'paper-update' paper.pk %}">
+                {% trans 'Update paper' %}
+              </a>
+              <a class="btn btn-secondary" href="{%url 'paper-delete' paper.pk %}">
+                {% trans 'Delete paper' %}
+              </a>
+          </div>
           {% endif %}
+
           {% if paper.state != 'final' %}
-              {% if perms.papers.change_translation %}
-              <a class="btn btn-secondary" href="{%url 'paper-translation-update' translation.paper.pk translation.language_code%}">
-                {% trans 'Update translation' %}
-              </a>
-              {% endif %}
-              {% if create_amendment_allowed %}
-              <a class="btn btn-secondary" href="{% url 'create-amendment' translation.paper.pk translation.language_code %}">
-                {% trans 'Create amendment' %}
-              </a>
-              {% endif %}
               <!-- Administrational -->
               {% if request.user.is_staff %}
               <hr>
@@ -112,7 +100,6 @@
               {% endif %}
           {% endif %}
 
-
         <!-- Downloads -->
         <hr>
         <h2 class="h4">{% trans "Downloads" %}</h2>
@@ -125,7 +112,7 @@
             {% trans 'Download as PDF' %}
           </a>
         </div>
-
+      <!-- Rest -->
       <hr>
         <a class="btn cancelButton" href="{%url 'paper-list' %}">
           {% trans 'Back' %}
