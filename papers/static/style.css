@@ -242,3 +242,10 @@ ins {
 .magnifierIcon{
   margin-left: 8px
 }
+
+.col-1{
+    width: 30%;
+}
+.col-2{
+    width: 10%;
+}
