@@ -28,11 +28,16 @@ def paper_list(request):
     List of all papers
     """
     papers = models.Paper.objects.all()
+    translations = models.PaperTranslation.objects.all()
 
     for paper in papers:
         paper.created_at = paper.created_at.date()
 
-    return render(request, "papers/paper_list.html", {"paper_list": papers})
+    return render(
+        request,
+        "papers/paper_list.html",
+        {"paper_list": papers, "amendment_list": translations},
+    )
 
 
 @login_required
