@@ -668,6 +668,12 @@ def search_result(request):
         searched = request.GET["searched"]
         result_papers = models.Paper.objects.filter(working_title__icontains=searched)
         result_amendments = models.Amendment.objects.filter(title__icontains=searched)
+
+        result_trans_body = models.PaperTranslation.objects.filter(
+            content__icontains=searched
+        )
+        result_privat_notes = models.Note.objects.filter(body__icontains=searched)
+
         return render(
             request,
             "papers/search_result.html",
@@ -675,6 +681,8 @@ def search_result(request):
                 "searched": searched,
                 "result_papers": result_papers,
                 "result_amendments": result_amendments,
+                "result_trans_body": result_trans_body,
+                "result_privat_notes": result_privat_notes,
             },
         )
     else:
