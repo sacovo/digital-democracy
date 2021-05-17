@@ -9,7 +9,8 @@
   <nav class="col">
     <div class="nav nav-tabs" id="nav-tab" role="tablist">
       {% for translation in paper.translation_set.all %}
-      <a class="nav-link {% if language_code == translation.language_code %}active{% endif %}" href="#{{translation.language_code}}" data-toggle="tab">
+      <a class="nav-link {% if language_code == translation.language_code %}active{% endif %}"
+         href="#{{translation.language_code}}" data-toggle="tab">
         {{translation.get_language_code_display}}
       </a>
       {% endfor %}
@@ -26,20 +27,23 @@
 
 <section class="tab-content" id="nav-tab-content">
   {% for translation in paper.translation_set.all %}
-  <div class="tab-pane {% if language_code == translation.language_code %}active show{% endif %}" id="{{translation.language_code}}" role="tabpanel">
+  <div class="tab-pane {% if language_code == translation.language_code %}active show{% endif %}"
+       id="{{translation.language_code}}" role="tabpanel">
     <div class="row mt-4">
       <div class="col-md-8">
         <section class="paper-content">
-            {% if translation.needs_update %}
-                <div class="alert alert-warning" role="alert">
-                    {% trans 'This translation needs an update.' %}
-                </div>
-            {% endif %}
-              {% if not create_amendment_allowed %}
-                <div class="alert alert-info" role="info">
-                    {% trans 'This paper is closed for amendments.' %}
-                </div>
+            <div>
+              {% if translation.needs_update %}
+                  <div class="alert alert-warning" role="alert">
+                      {% trans 'This translation needs an update.' %}
+                  </div>
               {% endif %}
+              {% if not create_amendment_allowed %}
+                  <div class="alert alert-info" role="alert">
+                      {% trans 'This paper is closed for amendments.' %}
+                  </div>
+              {% endif %}
+            </div>
 
             <h2>{{translation.title}}</h2>
             {% trans 'Authors' %}:
@@ -49,7 +53,9 @@
             {% if paper.state != 'final' %}
               <h3 class="h5">{% trans 'Deadline for this paper: ' %}{{paper.amendment_deadline}}</h3>
             {% endif %}
-          <hr>
+
+            <!-- Paper Content -->
+            <hr>
             <div id="paperContent-{{translation.language_code}}" class="content">
               <article>
                 <div> {{translation.content_safe}}</div>
@@ -128,19 +134,19 @@
                 {% trans 'Download as PDF' %}
               </a>
             </div>
+            <hr>
+            <a class="btn cancelButton" href="{%url 'paper-list' %}">
+              {% trans 'Back' %}
+            </a>
           </section>
 
-          <hr>
-          <a class="btn cancelButton" href="{%url 'paper-list' %}">
-            {% trans 'Back' %}
-          </a>
         </div>
       </div>
 
       {% if paper.state != 'final' %}
       <div class="col-md-4">
         <!-- Amendments section -->
-        <h2 id="amendments">{% trans 'Amendments' %}</h2>
+        <h2 id="h3">{% trans 'Amendments' %}</h2>
         <div class="amendments">
           {% for amendment in translation.amendment_list %}
           {% if amendment.state != "retracted" or request.user.username == amendment.author.name %}
@@ -154,31 +160,31 @@
           {% endfor %}
         </div>
 
-      <!-- Comment section-->
-      <h2 class="h3" id="comments">{% trans 'Comments' %}</h2>
-      <div class="comments">
-        {% if not paper.comments.all %}
-        {% blocktrans %}No comments yet...{% endblocktrans %}
-        {% else %}
-        {% for comment in paper.comments.all %}
-        <div class="comment">
-          <h3 class="h6">
-            {{ comment.name }} - {{ comment.created_on }}
-          </h3>
-          <section class="comment-body">
-            {{ comment.body|safe|urlize }}
-          </section>
-          {% if comment.author.user == request.user %}
-          <a href="{% url 'paper-comment-delete' comment.pk %}" class="btn btn-sm cancelButton">
-            {% trans 'Delete' %}
-          </a>
+        <!-- Comment section-->
+        <h2 class="h3">{% trans 'Comments' %}</h2>
+        <div class="comments">
+          {% if not paper.comments.all %}
+          {% blocktrans %}No comments yet...{% endblocktrans %}
+          {% else %}
+          {% for comment in paper.comments.all %}
+            <div class="comment">
+              <h3 class="h6">
+                {{ comment.name }} - {{ comment.created_on }}
+              </h3>
+              <section class="comment-body">
+                {{ comment.body|safe|urlize }}
+              </section>
+              {% if comment.author.user == request.user %}
+              <a href="{% url 'paper-comment-delete' comment.pk %}" class="btn btn-sm cancelButton">
+                {% trans 'Delete' %}
+              </a>
+              {% endif %}
+            </div>
+          {% endfor %}
           {% endif %}
         </div>
-        {% endfor %}
-        {% endif %}
-      </div>
 
-      <h5 class="mt-4">{% trans 'Leave a comment' %}</h5>
+        <h5 class="mt-4">{% trans 'Leave a comment' %}</h5>
         {{form.media}}
         <form action="" method="POST" id="create_comment">
           {% csrf_token %}
@@ -193,8 +199,8 @@
           </div>
           {% endbuttons %}
         </form>
-    </div>
-    {% endif %}
+      </div>
+      {% endif %}
 
     </div>
   </div>
@@ -215,7 +221,8 @@
         }, function(){
             $("#paperContent-{{translation.language_code}} article div").html(paperConent{{translation.language_code}})
           })
-    })
+    });
 </script>
 {% endfor %}
+
 {% endblock %}
