@@ -55,9 +55,8 @@
                 <div> {{translation.content_safe}}</div>
               </article>
             </div>
+            <hr>
         </section>
-
-        <hr>
 
         <div class="my-2" role="group">
         <section class="paper-group">
@@ -68,10 +67,10 @@
                       <a class="btn btn-secondary" href="{% url 'create-amendment' translation.paper.pk translation.language_code %}">
                         {% trans 'Create amendment' %}
                       </a>
+                      <hr>
                   {% endif %}
                   </div>
             </div>
-              <hr>
               {% if perms.papers.change_translation %}
               <div>
                   <!-- Translations -->
@@ -95,7 +94,6 @@
                           </a>
                       </div>
                   {% endif %}
-
           </section>
 
           <!-- Administrational -->
@@ -132,6 +130,7 @@
             </div>
           </section>
 
+          <hr>
           <a class="btn cancelButton" href="{%url 'paper-list' %}">
             {% trans 'Back' %}
           </a>
