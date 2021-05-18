@@ -1,6 +1,7 @@
 """
 Urls
 """
+from django.conf.urls import include
 from django.contrib.auth import views as auth_views
 from django.urls import path
 
@@ -146,4 +147,5 @@ urlpatterns = [
         name="amendment-add-translation",
     ),
     path("search_result", views.search_result, name="search-result"),
+    path("i18n/", include("django.conf.urls.i18n")),
 ]
