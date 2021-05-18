@@ -69,14 +69,24 @@
         {% block content %} 
         {% endblock %}
       </main>
-      <footer class="navbar container">    
-        <small>Impressum | © Copyright 2020 SP Schweiz</small>
-        <span id="languages">
-          <a>DE</a>
-          <a>FR</a>
-          <a>IT</a>
-        </span>
-      </footer>
+        <footer class="navbar container">
+            <small>Impressum | © Copyright 2020 SP Schweiz</small>
+            <form action="{% url 'set_language' %}" method="post">{% csrf_token %}
+                {% trans 'Language:' %} &nbsp;&nbsp;
+                <input type="hidden" name="next" value="{{ redirect_to }}">
+                <select title="Language..." name="language" onChange="form.submit();">
+                    {% get_current_language as LANGUAGE_CODE %}
+                    {% get_available_languages as LANGUAGES %}
+                    {% get_language_info_list for LANGUAGES as languages %}
+                    {% for language in languages %}
+                        <option value="{{ language.code }}" {% if language.code == LANGUAGE_CODE %}
+                                selected {% endif %}>
+                            {{ language.name_local|capfirst }}
+                        </option>
+                    {% endfor %}
+                </select>
+            </form>
+        </footer>
     </div>
     {% bootstrap_javascript jquery="full" %}
     {% block scripts %}
