@@ -594,6 +594,7 @@ def members_profile(request, user_id=None):
         comments = author.comment_set.all()
         papers = author.paper_set.all()
         amendments = author.amendment_set.all()
+        notes = author.note_set.all()
     else:
         comments = models.Comment.objects.none()
         papers = models.Paper.objects.none()
@@ -602,7 +603,12 @@ def members_profile(request, user_id=None):
     return render(
         request,
         "registration/profile.html",
-        {"papers": papers, "comments": comments, "amendments": amendments},
+        {
+            "papers": papers,
+            "comments": comments,
+            "amendments": amendments,
+            "notes": notes,
+        },
     )
 
 

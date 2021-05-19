@@ -116,4 +116,35 @@
     </tr>
   </tbody>
 </table>
+
+<h2>{% trans 'Notes' %}</h2>
+<table class="table">
+  <caption class="sr-only">{% trans 'Notes' %}</caption>
+  <thead>
+    <tr>
+      <th scope="col" class="col-1">
+        {% trans 'Amendment' %}
+      </th>
+      <th scope="col" class="col-3">
+        {% trans 'Comment' %}
+      </th>
+	  
+    </tr>
+  </thead>
+  <tbody>
+	{% for note in notes %}
+	<tr>
+	  <td>
+	    <a href="{% url 'amendment-detail' note.amendment.pk %}">
+		  {{ note.amendment.paper }} #{{ note.amendment.title }}
+	    </a>
+	  </td>
+	  <td>
+		{{ note.body |truncatechars:100 |safe }}
+	  </td>
+	  
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
 {% endblock %}
