@@ -9,7 +9,8 @@
   <nav class="col">
     <div class="nav nav-tabs" id="nav-tab" role="tablist">
       {% for translation in paper.translation_set.all %}
-      <a class="nav-link {% if language_code == translation.language_code %}active{% endif %}" href="#{{translation.language_code}}" data-toggle="tab">
+      <a class="nav-link {% if language_code == translation.language_code %}active{% endif %}"
+         href="#{{translation.language_code}}" data-toggle="tab">
         {{translation.get_language_code_display}}
       </a>
       {% endfor %}
@@ -24,72 +25,88 @@
   </nav>
 </div>
 
-<div class="tab-content" id="nav-tab-content">
+<section class="tab-content" id="nav-tab-content">
   {% for translation in paper.translation_set.all %}
-  <div class="tab-pane {% if language_code == translation.language_code %}active show{% endif %}" id="{{translation.language_code}}" role="tabpanel">
+  <div class="tab-pane {% if language_code == translation.language_code %}active show{% endif %}"
+       id="{{translation.language_code}}" role="tabpanel">
     <div class="row mt-4">
       <div class="col-md-8">
-        {% if translation.needs_update %}
+        <section class="paper-content">
+          <div>
+            {% if translation.needs_update %}
             <div class="alert alert-warning" role="alert">
-                {% trans 'This translation needs an update.' %}
+              {% trans 'This translation needs an update.' %}
             </div>
-        {% endif %}
-          {% if not create_amendment_allowed %}
-            <div class="alert alert-info" role="info">
-                {% trans 'This paper is closed for amendments.' %}
+            {% endif %}
+            {% if not create_amendment_allowed and paper.state != 'final' %}
+            <div class="alert alert-info" role="alert">
+              {% trans 'This paper is closed for amendments.' %}
             </div>
-        {% endif %}
-        <h2>
-          {{translation.title}}
-        </h2>
-        {% trans 'Authors' %}:
-        {% for authors in paper.authors.all %}
-        {{authors.name}}{% if not forloop.last %},{% endif %}
-        {% endfor %}
-        {% if paper.state != 'final' %}
+            {% endif %}
+          </div>
+
+          <h2>{{translation.title}}</h2>
+          {% trans 'Authors' %}:
+          {% for authors in paper.authors.all %}
+          {{authors.name}}{% if not forloop.last %},{% endif %}
+          {% endfor %}
+          {% if paper.state != 'final' %}
           <h3 class="h5">{% trans 'Deadline for this paper: ' %}{{paper.amendment_deadline}}</h3>
-        {% endif %}
-      <hr>
-        <div id="paperContent-{{translation.language_code}}" class="content">
-          <article>
-            <div> {{translation.content_safe}}</div>
-          </article>
-        </div>
+          {% endif %}
+
+          <!-- Paper Content -->
+          <hr>
+          <div id="paperContent-{{translation.language_code}}" class="content">
+            <article>
+              <div> {{translation.content_safe}}</div>
+            </article>
+          </div>
+          <hr>
+        </section>
 
         <div class="my-2" role="group">
-          {% if paper.state != 'final' %}
+          <section class="paper-group">
+            {% if paper.state != 'final' %}
+            <div>
               {% if create_amendment_allowed %}
-              <hr>
-                  <a class="btn btn-secondary" href="{% url 'create-amendment' translation.paper.pk translation.language_code %}">
-                    {% trans 'Create amendment' %}
-                  </a>
-              {% endif %}
-
-              {% if perms.papers.change_translation %}
-              <hr>
               <div>
-                  <a class="btn btn-secondary" href="{%url 'paper-translation-update' translation.paper.pk translation.language_code%}">
-                    {% trans 'Update translation' %}
-                  </a>
-                  <a class="btn btn-secondary" href="{%url 'translation-delete' translation.pk %}">
-                    {% trans 'Delete translation' %}
-                  </a>
+                <a class="btn btn-secondary" href="{% url 'create-amendment' translation.paper.pk translation.language_code %}">
+                  {% trans 'Create amendment' %}
+                </a>
+                <hr/>
+              </div>
               {% endif %}
-          {% endif %}
-          {% if update_allowed %}
+            </div>
+            {% if perms.papers.change_translation %}
+            <div>
+              <!-- Translations -->
+              <a class="btn btn-secondary" href="{%url 'paper-translation-update' translation.paper.pk translation.language_code%}">
+                {% trans 'Update translation' %}
+              </a>
+              <a class="btn btn-secondary" href="{%url 'translation-delete' translation.pk %}">
+                {% trans 'Delete translation' %}
+              </a>
+            </div>
+            {% endif %}
+            {% endif %}
+            {% if update_allowed %}
+            <div>
+              <!-- Paper -->
               <a class="btn btn-secondary" href="{%url 'paper-update' paper.pk %}">
                 {% trans 'Update paper' %}
               </a>
               <a class="btn btn-secondary" href="{%url 'paper-delete' paper.pk %}">
                 {% trans 'Delete paper' %}
               </a>
-          </div>
-          {% endif %}
+            </div>
+            {% endif %}
+          </section>
 
-          {% if paper.state != 'final' %}
-              <!-- Administrational -->
-              {% if request.user.is_staff %}
-              <hr>
+              {% if paper.state != 'final' and request.user.is_staff %}
+          <!-- Administrational -->
+          <section class="paper-group">
+            <div>
+              <hr />
               <h2 class="h4">{% trans "Administrational" %}</h2>
               <a class="btn btn-secondary" href="{% url 'paper-amendment-list' translation.paper.pk %}">
                 {% trans 'Enter results' %}
@@ -97,55 +114,59 @@
               <a class="btn btn-secondary" href="{% url 'paper-select-amendments' translation.paper.pk translation.language_code %}">
                 {% trans 'Merge amendments' %}
               </a>
+            </div>
+          </section>
               {% endif %}
-          {% endif %}
 
-        <!-- Downloads -->
-        <hr>
-        <h2 class="h4">{% trans "Downloads" %}</h2>
-          {% if paper.state == 'public' %}
-          <a class="btn btn-secondary" href="{% url 'paper-presentation' paper.pk %}">
-            {% trans 'Download as PPTX' %}
-          </a>
-          {% endif %}
-          <a class="btn btn-secondary" href="{%url 'paper-detail-language-create-pdf' paper.pk translation.language_code %}">
-            {% trans 'Download as PDF' %}
-          </a>
+          <!-- Downloads -->
+          <section class="paper-group">
+            <div>
+              <hr>
+              <h2 class="h4">{% trans "Downloads" %}</h2>
+              {% if paper.state == 'public' %}
+              <a class="btn btn-secondary" href="{% url 'paper-presentation' paper.pk %}">
+                {% trans 'Download as PPTX' %}
+              </a>
+              {% endif %}
+              <a class="btn btn-secondary" href="{%url 'paper-detail-language-create-pdf' paper.pk translation.language_code %}">
+                {% trans 'Download as PDF' %}
+              </a>
+            </div>
+            <hr>
+            <a class="btn cancelButton" href="{%url 'paper-list' %}">
+              {% trans 'Back' %}
+            </a>
+          </section>
+
         </div>
-      <!-- Rest -->
-      <hr>
-        <a class="btn cancelButton" href="{%url 'paper-list' %}">
-          {% trans 'Back' %}
-        </a>
       </div>
 
+      {% if paper.state != 'final' %}
       <div class="col-md-4">
-	    <!-- Amendments section -->
-        {% if paper.state != 'final' %}
-        <h2 id="amendments">{% trans 'Amendments' %}</h2>
-		<div class="amendments">
+        <!-- Amendments section -->
+        <h2 id="h3">{% trans 'Amendments' %}</h2>
+        <div class="amendments">
           {% for amendment in translation.amendment_list %}
           {% if amendment.state != "retracted" or request.user.username == amendment.author.name %}
-		  <div class="amendment">
-			<a class="link" href="{% url 'amendment-detail' amendment.pk %}" data-content="{{amendment.extract_content|safe}}">
-			  <h3 class="h5">{{amendment.title}}</h3>
-			  {% blocktrans with name=amendment.author.name created_at=amendment.created_at %}{{name}} on {{created_at}}{% endblocktrans %}
-			</a>
-		  </div>
+          <div class="amendment">
+            <a class="link" href="{% url 'amendment-detail' amendment.pk %}" data-content="{{amendment.extract_content|safe}}">
+              <h3 class="h5">{{amendment.title}}</h3>
+              {% blocktrans with name=amendment.author.name created_at=amendment.created_at %}{{name}} on {{created_at}}{% endblocktrans %}
+            </a>
+          </div>
           {% endif %}
           {% endfor %}
-		</div>
+        </div>
 
         <!-- Comment section-->
-        <h2 id="comments">{% trans 'Comments' %}</h2>
+        <h2 class="h3">{% trans 'Comments' %}</h2>
         <div class="comments">
           {% if not paper.comments.all %}
           {% blocktrans %}No comments yet...{% endblocktrans %}
           {% else %}
-
           {% for comment in paper.comments.all %}
           <div class="comment">
-            <h3 class="h5">
+            <h3 class="h6">
               {{ comment.name }} - {{ comment.created_on }}
             </h3>
             <section class="comment-body">
@@ -161,6 +182,7 @@
           {% endif %}
         </div>
 
+        <h5 class="mt-4">{% trans 'Leave a comment' %}</h5>
         {{form.media}}
         <form action="" method="POST" id="create_comment">
           {% csrf_token %}
@@ -168,19 +190,21 @@
           {% buttons %}
           <div class="row">
             <div class="col">
-              <button type="submit" class="btn btn-sm btn-block submitButton">
+              <button type="submit" name="submit-comment" class="btn btn-sm btn-block submitButton">
                 {% trans 'Submit' %}
               </button>
             </div>
           </div>
           {% endbuttons %}
         </form>
-        {% endif %}
       </div>
+      {% endif %}
+
     </div>
   </div>
   {% endfor %}
-</div>
+</section>
+
 {% endblock %}
 
 {% block scripts %}
@@ -195,7 +219,8 @@
         }, function(){
             $("#paperContent-{{translation.language_code}} article div").html(paperConent{{translation.language_code}})
           })
-    })
+    });
 </script>
 {% endfor %}
+
 {% endblock %}
