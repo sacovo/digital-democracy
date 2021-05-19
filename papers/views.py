@@ -603,7 +603,12 @@ def members_profile(request, user_id=None):
     return render(
         request,
         "registration/profile.html",
-        {"papers": papers, "comments": comments, "amendments": amendments, "notes": notes},
+        {
+            "papers": papers,
+            "comments": comments,
+            "amendments": amendments,
+            "notes": notes,
+        },
     )
 
 
