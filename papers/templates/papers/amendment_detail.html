@@ -6,17 +6,15 @@
 {{amendment.translation.title}} - {{amendment.title}}
 {% endblock %}
 
-
 {% block content %}
 
 <div class="row mt-4">
   <div class="col-md-8">
-    <h1 class="h3">
-      {{amendment.translation.title}} - {{amendment.title}}
-    </h1>
+    <h2 class="h5">{% trans 'Paper' %}: {{amendment.translation.title}}</h2>
+    <h1 class="h3">{% trans 'Amendment' %}: {{amendment.title}}</h1>
     <section class="amendment-content">
       <span>
-        {% blocktrans with name=amendment.author.name created=amendment.created_at %}By <strong>{{name}}</strong> at {{created}}{% endblocktrans %}
+        {% blocktrans with name=amendment.author.name created=amendment.created_at %}By <strong>{{name}}</strong> on {{created}}{% endblocktrans %}
       </span>
       <div id="paperContent" class="content">
         <article>
@@ -26,8 +24,33 @@
         </article>
       </div>
     </section>
+
+    <!-- Amendment options -->
+    <section class="amendment-options">
+    <div class="row">
+        {% if request.user.username == amendment.author.name %}
+          {% if amendment.state == 'draft' or amendment.state == 'retracted'%}
+          <form method="POST">
+            {% csrf_token %}
+            <div class="col-auto">
+              <button class="btn btn-sm submitButton" type="submit" value="publish">{% trans 'Publish' %}</button>
+            </div>
+          </form>
+          {% endif %}
+          <div class="col-auto">
+            <a class="btn btn-sm submitButton" href="{% url 'amendment-edit' amendment.pk %}">{% trans 'Edit' %}</a>
+          </div>
+        {% endif %}
+      <div class="col-auto">
+        <a class="btn btn-sm submitButton" href="{% url 'amendment-clone' amendment.pk %}">{% trans 'Clone' %}</a>
+      </div>
+    </div>
+    </section>
+    <hr>
+
+    <!-- Translations -->
     <section class="translation">
-      <h2 class="h4">{% trans 'translations' %}</h2>
+      <h2 class="h4">{% trans 'Translations' %}</h2>
       <div class="btn-group-sm translations">
         {% for translation in amendment.translation_list %}
         <a href="{{translation.get_absolute_url}}" class="btn btn-secondary">{{translation.language_code}}</a>
@@ -41,27 +64,18 @@
       </div>
       {% endif %}
     </section>
+    <hr>
 
+    <!-- Reason -->
     <section class="reason">
       <h2 class="h4">{% trans 'Reason' %}</h2>
       <section class="reason">
         {{amendment.reason|safe}}
       </section>
-    <div class="row">
-      {% if amendment.state == 'draft' or amendment.state == 'retracted'%}
-      <form method="POST">
-        {% csrf_token %}
-        <div class="col">
-          <button class="btn btn-sm submitButton" type="submit" value="publish">{% trans 'publish' %}</button>
-        </div>
-      </form>
-      {% endif %}
-      <a class="btn btn-sm submitButton" href="{% url 'amendment-edit' amendment.pk %}">{% trans 'edit' %}</a>
-      <div class="col">
-        <a class="btn btn-sm submitButton" href="{% url 'amendment-clone' amendment.pk %}">{% trans 'Clone amendment' %}</a>
-      </div>
-    </div>
     </section>
+    <hr>
+
+    <!-- Recommendation -->
     {% if amendment.recommendation %}
     <h2 class="h4">{% trans 'Recommendation' %}</h2>
     <em>
@@ -69,16 +83,16 @@
     </em>
     <section class="recommendation">
       {{amendment.recommendation.reason|safe}}
-    <a class="btn btn-sm submitButton" href="{% url 'recommendation-edit' amendment.recommendation.pk %}">{% trans 'edit recommendation' %}</a>
+    <a class="btn btn-sm submitButton" href="{% url 'recommendation-edit' amendment.recommendation.pk %}">{% trans 'Edit recommendation' %}</a>
     </section>
     {% else %}
     <section class="recommendation">
-    <a class="btn btn-sm submitButton" href="{% url 'recommendation-create' amendment.pk %}">{% trans 'create recommendation' %}</a>
+    <a class="btn btn-sm submitButton" href="{% url 'recommendation-create' amendment.pk %}">{% trans 'Create recommendation' %}</a>
     </section>
     {% endif %}
+    <hr>
 
-
-
+    <!-- Tags -->
     <section class="tags">
       <h2 class="h4">{% trans "Tags" %}</h2>
       <ul>
@@ -89,7 +103,9 @@
         {% endfor %}
       </ul>
     </section>
+    <hr>
 
+    <!-- Sign amendments -->
     <section class="support">
       <h2 class="h4">{% trans "Sign this amendment" %}</h2>
       <form action="{% url 'support-amendment' amendment.pk %}" method="POST">
@@ -102,7 +118,7 @@
           {% trans "I hereby sign this amendment." %}
           {% endif %}
         </label>
-		</br>
+		<br>
         <button type="submit" id="btn-support-amendment" class="btn btn-sm submitButton" disabled>
           {% if request.user in amendment.supporters.all %}
           {% trans "Don't support anymore" %}
@@ -111,7 +127,9 @@
           {% endif %}
         </button>
       </form>
-	  </br>
+	  <br>
+
+      <!-- Sign amendments -->
       <h5 class="h5">{% trans "This amendment is supported by" %} {{amendment.num_supporters}} {% trans "members" %}</h5>
       <ul>
         {% for supporter in amendment.supporters.all %}
@@ -122,7 +140,7 @@
       </ul>
     </section>
 
-    <!-- Implements Retract Button-->
+    <!-- Retract Button-->
     <section class="retract-amendment">
       {% if request.user.username == amendment.author.name %}
       <hr>
@@ -133,45 +151,44 @@
       </form>
       {% endif %}
     </section>
-    <!-- Implements Retract Button-->
 
-    <br><br>
+    <!-- Back -->
     <hr>
-    <a class="btn btn-sm cancelButton" href="{% url 'paper-detail' amendment.paper.pk %}">Back</a>
+    <a class="btn btn-sm cancelButton" href="{% url 'paper-detail' amendment.paper.pk %}">{% trans 'Back' %}</a>
   </div>
 
 
   <div class="col-md-4">
-    <!-- Implements Comment section-->
+    <!-- Comment section-->
     <h2 class="h3">{% trans 'Comments' %}</h2>
-
     <div class="comments">
-
       {% if not comments %}
-      {% blocktrans %}No Comments Yet...{% endblocktrans %}
+      {% blocktrans %}No comments yet...{% endblocktrans %}
       {% else %}
-
       {% for comment in comments %}
       <div class="comment">
         <h3 class="h6">
           {{ comment.name }} - {{ comment.created_on }}
         </h3>
-
         <section class="comment-body">
           {{ comment.body|safe|urlize }}
         </section>
-
         <form action="{% url 'comment_like' comment.pk %}" method="POST">
           {% csrf_token %}
 
           <div class="row justify-content-between px-3">
-            <button type="submit" class="btn btn-sm submitButton col-auto">
+            <div class="col-auto">
+            <button type="submit" class="btn btn-sm submitButton">
               {% if request.user in comment.likes.all %}
-              {% trans 'unlike' %}
+              {% trans 'Unlike' %}
               {% else %}
-              {% trans 'like' %}
+              {% trans 'Like' %}
               {% endif %}
             </button>
+              {% if comment.author.user_id == request.user.pk %}
+              <a class="btn btn-sm cancelButton mx-1" href="{% url 'comment-delete' comment.pk %}">{% trans 'Delete' %}</a>
+              {% endif %}
+            </div>
             <div class="likes col-auto">
               {{ comment.num_likes }} <i class="far fa-thumbs-up"></i>
             </div>
@@ -190,14 +207,53 @@
       {% buttons %}
       <div class="row">
         <div class="col">
-          <button type="submit" class="btn btn-sm btn-block submitButton">
+          <button type="submit" name="submit-comment" class="btn btn-sm btn-block submitButton">
             {% trans 'Submit' %}
           </button>
         </div>
       </div>
       {% endbuttons %}
     </form>
-    <!-- Implements Comment section-->
+
+	<!-- Note section-->
+	<h2 class="h3">{% trans 'Private Notes' %}</h2>
+
+    <div class="comments">
+
+      {% if not notes %}
+      {% blocktrans %}No notes written...{% endblocktrans %}
+      {% else %}
+
+      {% for note in notes %}
+      <div class="comment">
+        <h3 class="h6">
+          {{ note.created_on }}
+        </h3>
+
+        <section class="comment-body">
+          {{ note.body|safe|urlize }}
+        </section>
+      </div>
+      {% endfor %}
+      {% endif %}
+    </div>
+	
+    <h5 class="mt-4">{% trans 'Write a private note' %}</h5>
+    {{form.media}}
+    <form action="" method="POST" id="create_note">
+      {% csrf_token %}
+      {% bootstrap_form form  form_group_class='form-group'%}
+      {% buttons %}
+      <div class="row">
+        <div class="col">
+          <button type="submit" name="submit-note" class="btn btn-sm btn-block submitButton">
+            {% trans 'Submit' %}
+          </button>
+        </div>
+      </div>
+      {% endbuttons %}
+    </form>
+	
   </div>
 </div>
 

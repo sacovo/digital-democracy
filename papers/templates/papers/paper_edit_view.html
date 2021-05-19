@@ -16,9 +16,9 @@
     {% bootstrap_form form  form_group_class='form-group'%}
     {% buttons %}
     <div class="btn-sm">
-        <a class="btn cancelButton" href="{% url 'paper-detail' paper.pk %}#{{translation.language_code}}">
-        back </a>
-        <button type="submit" class="btn submitButton">{% trans 'submit' %}</button>
+        <a class="btn cancelButton"
+           href="{% url 'paper-detail' paper.pk %}#{{translation.language_code}}">{% trans 'Back' %}</a>
+        <button type="submit" class="btn submitButton">{% trans 'Submit' %}</button>
     </div>
     {% endbuttons %}
 

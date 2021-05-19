@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-11-24 12:39+0000\n"
+"POT-Creation-Date: 2021-05-06 07:23+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,174 +17,416 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-#: papers/forms.py:17 papers/models.py:73
-msgid "title"
+
+#: papers/forms.py:20 papers/templates/papers/amendment_list.html:14
+#: papers/templates/papers/paper_list.html:15
+#: papers/templates/papers/search_result.html:16
+#: papers/templates/papers/search_result.html:34
+#: papers/templates/registration/profile.html:15
+#: papers/templates/registration/profile.html:52
+msgid "Title"
 msgstr ""
 
-#: papers/forms.py:21 papers/forms.py:34 papers/models.py:75
-#: papers/models.py:104
-msgid "content"
+#: papers/forms.py:24
+msgid "Content"
 msgstr ""
 
-#: papers/forms.py:25 papers/models.py:46 papers/models.py:108
+#: papers/forms.py:25
+msgid "Deadline"
+msgstr ""
+
+#: papers/forms.py:42 papers/models.py:103 papers/models.py:235
 msgid "state"
 msgstr ""
 
-#: papers/forms.py:35 papers/models.py:109
+#: papers/forms.py:56 papers/forms.py:225 papers/models.py:192
+msgid "title"
+msgstr ""
+
+#: papers/forms.py:58 papers/forms.py:227 papers/models.py:194
+#: papers/models.py:230
+msgid "content"
+msgstr ""
+
+#: papers/forms.py:61 papers/models.py:237
 msgid "reason"
 msgstr ""
 
-#: papers/forms.py:65
-msgid "comment"
+#: papers/forms.py:107
+msgid "Cannot create new amendments past a paper's deadline."
 msgstr ""
 
-#: papers/models.py:14
-msgid "Draft"
+#: papers/forms.py:157 papers/templates/registration/profile.html:92
+msgid "Comment"
 msgstr ""
 
-#: papers/models.py:14
-msgid "Published"
+#: papers/forms.py:204
+msgid "Amendments to merge into final paper"
 msgstr ""
 
-#: papers/models.py:14
-msgid "Finalized"
+#: papers/forms.py:206
+msgid ""
+"Select all amendments that you wish to merge into the final paper. Accepted "
+"amendments have already been selected."
 msgstr ""
 
-#: papers/models.py:24
+#: papers/models.py:71
 msgid "user"
 msgstr ""
 
-#: papers/models.py:40 papers/models.py:106 papers/models.py:141
-msgid "created at"
-msgstr ""
-
-#: papers/models.py:41
-msgid "edited at"
-msgstr ""
-
-#: papers/models.py:42
-msgid "deadline"
-msgstr ""
-
-#: papers/models.py:44
-msgid "working title"
-msgstr ""
-
-#: papers/models.py:48
-msgid "authors"
-msgstr ""
-
-#: papers/models.py:68 papers/models.py:99
-msgid "paper"
-msgstr ""
-
-#: papers/models.py:71 papers/models.py:101
-msgid "language code"
-msgstr ""
-
-#: papers/models.py:105 papers/models.py:138
+#: papers/models.py:85 papers/models.py:231 papers/models.py:340
+#: papers/models.py:380
 msgid "author"
 msgstr ""
 
-#: papers/models.py:133
+#: papers/models.py:86 papers/models.py:107
+msgid "authors"
+msgstr ""
+
+#: papers/models.py:94 papers/models.py:232 papers/models.py:343
+#: papers/models.py:383
+msgid "created at"
+msgstr ""
+
+#: papers/models.py:95
+msgid "edited at"
+msgstr ""
+
+#: papers/models.py:96
+msgid "deadline"
+msgstr ""
+
+#: papers/models.py:98
+msgid "working title"
+msgstr ""
+
+#: papers/models.py:172 papers/models.py:187 papers/models.py:222
+#: papers/models.py:375
+msgid "paper"
+msgstr ""
+
+#: papers/models.py:173
+msgid "papers"
+msgstr ""
+
+#: papers/models.py:183
+msgid "Do the other translations need an update after this edit?"
+msgstr ""
+
+#: papers/models.py:190 papers/models.py:224
+msgid "language code"
+msgstr ""
+
+#: papers/models.py:213
+msgid "paper translation"
+msgstr ""
+
+#: papers/models.py:214
+msgid "paper translations"
+msgstr ""
+
+#: papers/models.py:227
+msgid "start index"
+msgstr ""
+
+#: papers/models.py:228
+msgid "last index"
+msgstr ""
+
+#: papers/models.py:241
+msgid "translations"
+msgstr ""
+
+#: papers/models.py:266
+msgid ""
+"This amendment does not change the content of the paper, see the reason for "
+"more information."
+msgstr ""
+
+#: papers/models.py:323 papers/models.py:335 papers/models.py:424
 msgid "amendment"
 msgstr ""
 
-#: papers/models.py:140
+#: papers/models.py:324 papers/templates/registration/profile.html:11
+#: papers/templates/registration/profile.html:48
+msgid "amendments"
+msgstr ""
+
+#: papers/models.py:342 papers/models.py:382
 msgid "body"
 msgstr ""
 
-#: papers/models.py:142
+#: papers/models.py:344 papers/models.py:384
 msgid "likes"
 msgstr ""
 
-#: papers/templates/papers/amendment_detail.html:18
-#, python-format
-msgid ""
-"\n"
-"      By <strong>%(name)s</strong> at %(created)s\n"
-"      "
+#: papers/models.py:363 papers/models.py:403
+msgid "comment"
 msgstr ""
 
-#: papers/templates/papers/amendment_detail.html:30
+#: papers/models.py:364 papers/models.py:404
+msgid "comments"
+msgstr ""
+
+#: papers/models.py:412
+msgid "reject"
+msgstr ""
+
+#: papers/models.py:413
+msgid "accept"
+msgstr ""
+
+#: papers/models.py:414
+msgid "modified"
+msgstr ""
+
+#: papers/models.py:432
+msgid "alternative"
+msgstr ""
+
+#: papers/templates/members/user_upload.html:5
+msgid ""
+"\n"
+"Upload users\n"
+msgstr ""
+
+#: papers/templates/members/user_upload.html:17
+msgid "Import"
+msgstr ""
+
+#: papers/templates/members/user_upload.html:21
+msgid "there was an error: "
+msgstr ""
+
+#: papers/templates/papers/add_amendment_translation.html:6
+msgid "Add translation"
+msgstr ""
+
+#: papers/templates/papers/add_amendment_translation.html:13
+msgid "Original"
+msgstr ""
+
+#: papers/templates/papers/add_amendment_translation.html:16
+#: papers/templates/papers/amendment_detail.html:18
+#, python-format
+msgid "By <strong>%(name)s</strong> on %(created)s"
+msgstr ""
+
+#: papers/templates/papers/add_amendment_translation.html:26
+#: papers/templates/papers/amendment_detail.html:69
+#: papers/templates/papers/recommendation_form.html:24
+#: papers/templates/pdf/amendment_pdf_template.html:24
 msgid "Reason"
 msgstr ""
 
-#: papers/templates/papers/amendment_detail.html:37
-msgid "publish"
+#: papers/templates/papers/add_amendment_translation.html:34
+msgid "Translation"
 msgstr ""
 
-#: papers/templates/papers/amendment_detail.html:40
-msgid "edit"
+#: papers/templates/papers/add_amendment_translation.html:44
+#: papers/templates/papers/paper_create.html:19
+#: papers/templates/papers/paper_update.html:19
+#: papers/templates/papers/select_amendments.html:21
+#: papers/templates/papers/translation_update.html:50
+msgid "Cancel"
 msgstr ""
 
-#: papers/templates/papers/amendment_detail.html:44
-msgid "Comments"
-msgstr ""
-
-#: papers/templates/papers/amendment_detail.html:49
-msgid ""
-"\n"
-"      No Comments Yet...\n"
-"      "
-msgstr ""
-
-#: papers/templates/papers/amendment_detail.html:71
-msgid "unlike"
-msgstr ""
-
-#: papers/templates/papers/amendment_detail.html:73
-msgid "like"
-msgstr ""
-
-#: papers/templates/papers/amendment_detail.html:86
-msgid "Leave a comment"
-msgstr ""
-
-#: papers/templates/papers/amendment_detail.html:95
+#: papers/templates/papers/add_amendment_translation.html:47
+#: papers/templates/papers/amendment_detail.html:207
+#: papers/templates/papers/amendment_edit.html:20
+#: papers/templates/papers/modified_text.html:13
+#: papers/templates/papers/paper_create.html:22
+#: papers/templates/papers/paper_detail.html:135
+#: papers/templates/papers/paper_edit_view.html:21
+#: papers/templates/papers/paper_update.html:22
+#: papers/templates/papers/recommendation_form.html:32
 #: papers/templates/papers/translation_update.html:53
 msgid "Submit"
 msgstr ""
 
+#: papers/templates/papers/amendment_detail.html:14
+msgid "Paper"
+msgstr ""
+
+#: papers/templates/papers/amendment_detail.html:15
+#: papers/templates/registration/profile.html:89
+msgid "Amendment"
+msgstr ""
+
+#: papers/templates/papers/amendment_detail.html:35
+msgid "Publish"
+msgstr ""
+
+#: papers/templates/papers/amendment_detail.html:40
+msgid "Edit"
+msgstr ""
+
+#: papers/templates/papers/amendment_detail.html:43
+msgid "Clone"
+msgstr ""
+
+#: papers/templates/papers/amendment_detail.html:51
+msgid "Translations"
+msgstr ""
+
+#: papers/templates/papers/amendment_detail.html:78
+#: papers/templates/pdf/amendment_pdf_template.html:29
+msgid "Recommendation"
+msgstr ""
+
+#: papers/templates/papers/amendment_detail.html:84
+msgid "Edit recommendation"
+msgstr ""
+
+#: papers/templates/papers/amendment_detail.html:88
+msgid "Create recommendation"
+msgstr ""
+
+#: papers/templates/papers/amendment_detail.html:95
+msgid "Tags"
+msgstr ""
+
+#: papers/templates/papers/amendment_detail.html:108
+msgid "Sign this amendment"
+msgstr ""
+
+#: papers/templates/papers/amendment_detail.html:114
+msgid "I revoke my signature."
+msgstr ""
+
+#: papers/templates/papers/amendment_detail.html:116
+msgid "I hereby sign this amendment."
+msgstr ""
+
+#: papers/templates/papers/amendment_detail.html:122
+msgid "Don't support anymore"
+msgstr ""
+
+#: papers/templates/papers/amendment_detail.html:124
+msgid "Support this amendment"
+msgstr ""
+
+#: papers/templates/papers/amendment_detail.html:129
+msgid "This amendment is supported by"
+msgstr ""
+
+#: papers/templates/papers/amendment_detail.html:129
+msgid "members"
+msgstr ""
+
+#: papers/templates/papers/amendment_detail.html:143
+#: papers/templates/papers/amendment_detail.html:146
+msgid "Retract amendment"
+msgstr ""
+
+#: papers/templates/papers/amendment_detail.html:153
+#: papers/templates/papers/amendment_list.html:42
+#: papers/templates/papers/amendments_by_tag.html:15
+#: papers/templates/papers/paper_detail.html:88
+#: papers/templates/papers/paper_edit_view.html:20
+#: papers/templates/papers/recommendation_form.html:33
+msgid "Back"
+msgstr ""
+
+#: papers/templates/papers/amendment_detail.html:159
+#: papers/templates/papers/paper_detail.html:108
+#: papers/templates/registration/profile.html:83
+#: papers/templates/registration/profile.html:85
+msgid "Comments"
+msgstr ""
+
+#: papers/templates/papers/amendment_detail.html:164
+#: papers/templates/papers/paper_detail.html:111
+msgid "No comments yet..."
+msgstr ""
+
+#: papers/templates/papers/amendment_detail.html:183
+msgid "Unlike"
+msgstr ""
+
+#: papers/templates/papers/amendment_detail.html:185
+msgid "Like"
+msgstr ""
+
+#: papers/templates/papers/amendment_detail.html:198
+msgid "Leave a comment"
+msgstr ""
+
 #: papers/templates/papers/amendment_edit.html:16
-#: papers/templates/papers/paper_create.html:22
-#: papers/templates/papers/paper_edit_view.html:19
-msgid "submit"
+msgid "This is a cloned amendment."
+msgstr ""
+
+#: papers/templates/papers/amendment_list.html:6
+#: papers/templates/papers/amendments_by_tag.html:4
+#: papers/templates/papers/base.html:29
+#: papers/templates/papers/paper_list.html:4
+#: papers/templates/papers/paper_list.html:8
+#: papers/templates/papers/search_result.html:4
+#: papers/templates/papers/search_result.html:11
+#: papers/templates/registration/profile.html:4
+#: papers/templates/registration/profile.html:9
+msgid "Papers"
+msgstr ""
+
+#: papers/templates/papers/amendment_list.html:10
+#: papers/templates/papers/paper_detail.html:94
+#: papers/templates/papers/paper_list.html:11
+#: papers/templates/papers/search_result.html:13
+#: papers/templates/papers/search_result.html:30
+#: papers/templates/papers/search_result.html:32
+#: papers/templates/registration/profile.html:46
+msgid "Amendments"
+msgstr ""
+
+#: papers/templates/papers/amendment_list.html:17
+msgid "Accepted"
+msgstr ""
+
+#: papers/templates/papers/amendment_list.html:20
+msgid "Rejected"
+msgstr ""
+
+#: papers/templates/papers/amendment_list.html:43
+msgid "Save"
+msgstr ""
+
+#: papers/templates/papers/amendments_by_tag.html:10
+#: papers/templates/papers/paper_detail.html:101
+#, python-format
+msgid "%(name)s on %(created_at)s"
 msgstr ""
 
 #: papers/templates/papers/base.html:25
 msgid "Digital Democracy"
 msgstr ""
 
-#: papers/templates/papers/base.html:29
-msgid "papers"
+#: papers/templates/papers/base.html:36
+msgid "Search..."
 msgstr ""
 
-#: papers/templates/papers/base.html:32
-msgid "newsfeed"
+#: papers/templates/papers/base.html:48
+msgid "Logout"
 msgstr ""
 
-#: papers/templates/papers/base.html:37
-msgid "account"
-msgstr ""
-
-#: papers/templates/papers/base.html:39
-msgid "sign in"
+#: papers/templates/papers/base.html:55
+msgid "Sign in"
 msgstr ""
 
 #: papers/templates/papers/includes/translation_list.html:19
-#: papers/templates/papers/paper_detail.html:42
 msgid "create amendment"
 msgstr ""
 
-#: papers/templates/papers/paper_create.html:5
-#: papers/templates/papers/paper_create.html:12
-#: papers/templates/papers/paper_list.html:44
-msgid "Create new paper"
+#: papers/templates/papers/modified_text.html:5
+#: papers/templates/papers/paper_detail.html:75
+#: papers/templates/papers/paper_update.html:5
+#: papers/templates/papers/paper_update.html:10
+msgid "Update paper"
 msgstr ""
 
-#: papers/templates/papers/paper_create.html:19
-msgid "cancel"
+#: papers/templates/papers/paper_create.html:5
+#: papers/templates/papers/paper_create.html:10
+#: papers/templates/papers/paper_list.html:65
+msgid "Create new paper"
 msgstr ""
 
 #: papers/templates/papers/paper_create_success.html:4
@@ -193,48 +435,100 @@ msgid "%(title)s created! "
 msgstr ""
 
 #: papers/templates/papers/paper_create_success.html:9
-msgid "all papers"
+msgid "All papers"
 msgstr ""
 
-#: papers/templates/papers/paper_detail.html:46
-msgid "update translation"
+#: papers/templates/papers/paper_detail.html:34
+msgid "This translation needs an update."
 msgstr ""
 
-#: papers/templates/papers/paper_detail.html:52
-msgid "amendments"
+#: papers/templates/papers/paper_detail.html:40
+msgid "Authors"
+msgstr ""
+
+#: papers/templates/papers/paper_detail.html:45
+msgid "Deadline for this paper: "
 msgstr ""
 
 #: papers/templates/papers/paper_detail.html:56
-#, python-format
-msgid ""
-"\n"
-"            %(name)s at %(created_at)s\n"
-"            "
+msgid "Create amendment"
 msgstr ""
 
-#: papers/templates/papers/paper_list.html:4
-#: papers/templates/papers/paper_list.html:8
-msgid "Papers"
+#: papers/templates/papers/paper_detail.html:61
+msgid "Enter results"
 msgstr ""
 
-#: papers/templates/papers/paper_list.html:14
-msgid "Title"
+#: papers/templates/papers/paper_detail.html:64
+msgid "Merge amendments"
 msgstr ""
 
-#: papers/templates/papers/paper_list.html:17
-msgid "Created at"
+#: papers/templates/papers/paper_detail.html:69
+msgid "Update translation"
 msgstr ""
 
-#: papers/templates/papers/paper_list.html:20
-msgid "deadline for amendments"
+#: papers/templates/papers/paper_detail.html:80
+msgid "Download as PPTX"
+msgstr ""
+
+#: papers/templates/papers/paper_detail.html:84
+msgid "Download as PDF"
+msgstr ""
+
+#: papers/templates/papers/paper_list.html:18
+#: papers/templates/papers/search_result.html:17
+msgid "Created on"
+msgstr ""
+
+#: papers/templates/papers/paper_list.html:21
+#: papers/templates/papers/search_result.html:18
+msgid "Deadline for amendments"
+msgstr ""
+
+#: papers/templates/papers/paper_list.html:24
+msgid "Latest amendment"
+msgstr ""
+
+#: papers/templates/papers/paper_list.html:27
+msgid "Latest comment"
+msgstr ""
+
+#: papers/templates/papers/recommendation_form.html:14
+msgid "Edit recommendation for"
+msgstr ""
+
+#: papers/templates/papers/recommendation_form.html:16
+msgid "Create recommendation for"
+msgstr ""
+
+#: papers/templates/papers/search_result.html:8
+msgid "Search Results:"
+msgstr ""
+
+#: papers/templates/papers/search_result.html:35
+#: papers/templates/registration/profile.html:55
+msgid "State"
+msgstr ""
+
+#: papers/templates/papers/search_result.html:36
+#: papers/templates/registration/profile.html:58
+msgid "# Supporters"
+msgstr ""
+
+#: papers/templates/papers/search_result.html:48
+msgid "Nothing given to search for."
+msgstr ""
+
+#: papers/templates/papers/select_amendments.html:6
+#: papers/templates/papers/select_amendments.html:13
+msgid "Select amendments"
+msgstr ""
+
+#: papers/templates/papers/select_amendments.html:24
+msgid "Continue"
 msgstr ""
 
 #: papers/templates/papers/translation_update.html:40
-msgid "update"
-msgstr ""
-
-#: papers/templates/papers/translation_update.html:50
-msgid "Cancel"
+msgid "Update"
 msgstr ""
 
 #: papers/templates/registration/login.html:5
@@ -248,14 +542,100 @@ msgid "Incorrect credentials."
 msgstr ""
 
 #: papers/templates/registration/login.html:21
-msgid "login"
+msgid "Login"
 msgstr ""
 
-#: papers/templates/registration/profile.html:10
+#: papers/templates/registration/login.html:24
+#: papers/templates/registration/password_reset_done.html:6
+#: papers/templates/registration/password_reset_form.html:7
+msgid "Passwort vergessen?"
+msgstr ""
+
+#: papers/templates/registration/password_change_done.html:6
+msgid "Passwort geändert"
+msgstr ""
+
+#: papers/templates/registration/password_change_done.html:7
+msgid "Sie haben Ihr Passwort erfolgreich geändert."
+msgstr ""
+
+#: papers/templates/registration/password_change_form.html:7
+msgid "Hier können Sie ihr Passwort ändern."
+msgstr ""
+
+#: papers/templates/registration/password_change_form.html:13
+#: papers/templates/registration/password_reset_confirm.html:13
+msgid "Passwort ändern"
+msgstr ""
+
+#: papers/templates/registration/password_reset_complete.html:6
+msgid "Passwort erfolgreich gesetzt"
+msgstr ""
+
+#: papers/templates/registration/password_reset_complete.html:8
+msgid ""
+"Sie haben Ihr Passwort neu gesetzt, jetzt können Sie sich wieder einloggen."
+msgstr ""
+
+#: papers/templates/registration/password_reset_confirm.html:7
+msgid "Neues Passwort setzen"
+msgstr ""
+
+#: papers/templates/registration/password_reset_confirm.html:8
+msgid "Schreiben Sie Ihr neues Passwort in beide Felder um es zu setzen."
+msgstr ""
+
+#: papers/templates/registration/password_reset_done.html:10
+msgid "E-Mail zum Zurücksenden des Passworts abgeschickt."
+msgstr ""
+
+#: papers/templates/registration/password_reset_done.html:11
+msgid ""
+"Sie sollten eine E-Mail bekommen haben mit der Sie ihr Passwort zurücksetzen "
+"können."
+msgstr ""
+
+#: papers/templates/registration/password_reset_done.html:12
+msgid ""
+"Falls Sie die E-Mail nicht finden, schauen Sie in Ihren Spam-Ordner nach."
+msgstr ""
+
+#: papers/templates/registration/password_reset_form.html:11
+msgid ""
+"Geben Sie ihr Passwort und wir schicken Ihnen eine Email um ihr Passwort "
+"zurückzusetzen"
+msgstr ""
+
+#: papers/templates/registration/password_reset_form.html:17
+msgid "E-mail senden"
+msgstr ""
+
+#: papers/templates/registration/profile.html:8
 #, python-format
-msgid "Logged in as: %(username)s"
+msgid "Contributions by %(username)s"
 msgstr ""
 
-#: papers/templates/registration/profile.html:11
-msgid "click here to logout"
+#: papers/templates/registration/profile.html:18
+msgid "Created at"
+msgstr ""
+
+#: papers/templates/registration/profile.html:21
+msgid "deadline for amendments"
+msgstr ""
+
+#: papers/templates/registration/profile.html:95
+msgid "Likes"
+msgstr ""
+
+#: papers/utils.py:175
+msgid "New digital-democracy account"
+msgstr ""
+
+#: papers/views.py:279
+msgid "You are not allowed to edit this paper."
+msgstr ""
+
+#: papers/views.py:547
+#, python-brace-format
+msgid "{imported_users} were imported!"
 msgstr ""

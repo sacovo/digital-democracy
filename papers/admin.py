@@ -78,3 +78,14 @@ class TagAdmin(admin.ModelAdmin):
     list_display = ["name", "created_at"]
     list_filter = ["created_at"]
     search_fields = ["name"]
+
+
+@admin.register(models.Note)
+class NoteAdmin(admin.ModelAdmin):
+    """
+    Admin for notes
+    """
+
+    list_display = ["amendment", "author", "body", "created_on"]
+    list_filter = ["created_on"]
+    search_fields = ["body"]

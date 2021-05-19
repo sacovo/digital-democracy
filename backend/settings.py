@@ -87,6 +87,8 @@ DATABASES = {
     }
 }
 
+DEFAULT_AUTO_FIELD = "django.db.models.AutoField"
+
 # Password validation
 # https://docs.djangoproject.com/en/3.0/ref/settings/#auth-password-validators
 
@@ -140,10 +142,25 @@ CELERY_BROKER_URL = "redis://redis:6379"
 CELERY_RESULT_BACKEND = "django-db"
 CELERY_CACHE_BACKEND = "django-cache"
 
+CUSTOM_TOOLBAR = [
+    ["Format"],
+    ["Bold", "Italic", "Underline", "Subscript", "Superscript"],
+    ["NumberedList", "BulletedList", "-", "Outdent", "Indent", "-", "Blockquote"],
+    ["Link", "Unlink"],
+    ["RemoveFormat", "Source"],
+    ["Paste", "Cut", "Copy"],
+    ["Redo", "Undo"],
+]
+
 CKEDITOR_CONFIGS = {
-    "default": {"width": "100%"},
-    "basic": {"toolbar": "Basic", "width": "100%"},
-    "track-changes": {"extraPlugins": ",".join(["lite"]), "width": "100%"},
+    "default": {"width": "100%", "toolbar": "Custom", "toolbar_Custom": CUSTOM_TOOLBAR},
+    "basic": {"toolbar": "Custom", "width": "100%", "toolbar_Custom": CUSTOM_TOOLBAR},
+    "track-changes": {
+        "extraPlugins": ",".join(["lite"]),
+        "width": "100%",
+        "toolbar": "Custom",
+        "toolbar_Custom": CUSTOM_TOOLBAR,
+    },
 }
 
 BLEACH_ALLOWED_TAGS = [
@@ -167,9 +184,16 @@ BLEACH_ALLOWED_TAGS = [
     "del",
     "ins",
     "strong",
+    "pre",
+    "address",
+    "div",
+    "u",
+    "sub",
+    "sup",
 ]
 
 BLEACH_ALLOWED_ATTRIBUTES = {"a": ["href", "title"]}
+
 
 LOGIN_URL = "/members/login"
 LOGIN_REDIRECT_URL = "/members/profile"
