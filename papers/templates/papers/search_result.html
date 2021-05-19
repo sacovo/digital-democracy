@@ -14,16 +14,19 @@
           <thead>
             <tr>
               <th scope="col">{% trans 'Title' %}</th>
+              <th scope="col">{% trans 'State' %}</th>
               <th scope="col">{% trans 'Created on' %}</th>
-              <th scope="col">{% trans 'Deadline for amendments' %}</th>
+              <th scope="col">{% trans 'Deadline' %}</th>
             </tr>
           </thead>
           <tbody>
-            <tr>{% for result_paper in result_papers %}<tr>
-                <td><a href="{% url 'paper-detail' result_paper.pk %}">{{ result_paper }}</a></td>
-                <td>{{ result_paper.created_at }}</td>
-                <td>{{ result_paper.amendment_deadline }}</td>
+            <tr>{% for paper in result_papers %}<tr>
+                <td><a href="{% url 'paper-detail' paper.pk %}">{{ paper }}</a></td>
+                <td>{{ paper.state }}</td>
+                <td>{{ paper.created_at }}</td>
+                <td>{{ paper.amendment_deadline }}</td>
               </tr>{% endfor %} </tr>
+
           </tbody>
         </table>
 
@@ -33,14 +36,18 @@
           <thead>
             <tr><th scope="col">{% trans 'Title' %}</th>
               <th scope="col">{% trans 'State' %}</th>
+              <th scope="col">{% trans 'Author' %}</th>
               <th scope="col">{% trans '# Supporters' %}</th>
             </tr>
           </thead>
           <tbody>
             <tr>{% for amendment in result_amendments %}<tr>
+              {% if amendment.state == 'public' and request.user.username != amendment.author.name or request.user.username == amendment.author.name %}
                 <td><a href="{% url 'amendment-detail' amendment.pk %}">{{ amendment.paper }}, {{ amendment.title }}</a></td>
                 <td>{{ amendment.state }}</td>
+                <td>{{ amendment.author }}</td>
                 <td>{{ amendment.supporters.count }}</td>
+              {% endif %}
             </tr>{% endfor %} </tr>
           </tbody>
         </table>
