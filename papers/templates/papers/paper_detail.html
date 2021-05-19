@@ -38,7 +38,7 @@
               {% trans 'This translation needs an update.' %}
             </div>
             {% endif %}
-            {% if not create_amendment_allowed %}
+            {% if not create_amendment_allowed and paper.state != 'final' %}
             <div class="alert alert-info" role="alert">
               {% trans 'This paper is closed for amendments.' %}
             </div>
