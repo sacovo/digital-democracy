@@ -637,7 +637,7 @@ def amendment_list(request, paper_pk, tag, language_code):
     """
     paper = models.Paper.objects.get(pk=paper_pk)
     amendments = models.Amendment.objects.filter(
-        tags__name=tag, language_code=language_code, paper=paper
+        language_code=language_code, paper=paper
     )
 
     return render(
