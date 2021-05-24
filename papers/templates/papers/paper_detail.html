@@ -61,9 +61,10 @@
               <div> {{translation.content_safe}}</div>
             </article>
           </div>
-          <hr>
+        <hr>
         </section>
 
+        <!-- Paper Options-->
         <div class="my-2" role="group">
           <section class="paper-group">
             {% if paper.state != 'final' %}
@@ -73,10 +74,11 @@
                 <a class="btn btn-secondary" href="{% url 'create-amendment' translation.paper.pk translation.language_code %}">
                   {% trans 'Create amendment' %}
                 </a>
-                <hr/>
               </div>
+              <hr>
               {% endif %}
             </div>
+
             {% if perms.papers.change_translation %}
             <div>
               <!-- Translations -->
@@ -98,15 +100,18 @@
               <a class="btn btn-secondary" href="{%url 'paper-delete' paper.pk %}">
                 {% trans 'Delete paper' %}
               </a>
+              {% if paper.state == 'final' and request.user.is_staff %}
+                  <hr>
+              {% endif %}
             </div>
             {% endif %}
           </section>
 
-              {% if paper.state != 'final' and request.user.is_staff %}
+          {% if paper.state != 'final' and request.user.is_staff %}
           <!-- Administrational -->
           <section class="paper-group">
             <div>
-              <hr />
+              <hr>
               <h2 class="h4">{% trans "Administrational" %}</h2>
               <a class="btn btn-secondary" href="{% url 'paper-amendment-list' translation.paper.pk %}">
                 {% trans 'Enter results' %}
@@ -114,14 +119,14 @@
               <a class="btn btn-secondary" href="{% url 'paper-select-amendments' translation.paper.pk translation.language_code %}">
                 {% trans 'Merge amendments' %}
               </a>
+             <hr>
             </div>
           </section>
-              {% endif %}
+          {% endif %}
 
           <!-- Downloads -->
           <section class="paper-group">
             <div>
-              <hr>
               <h2 class="h4">{% trans "Downloads" %}</h2>
               {% if paper.state == 'public' %}
               <a class="btn btn-secondary" href="{% url 'paper-presentation' paper.pk %}">
@@ -132,6 +137,7 @@
                 {% trans 'Download as PDF' %}
               </a>
             </div>
+
             <hr>
             <a class="btn cancelButton" href="{%url 'paper-list' %}">
               {% trans 'Back' %}
@@ -147,7 +153,7 @@
         <h2 id="h3">{% trans 'Amendments' %}</h2>
         <div class="amendments">
           {% for amendment in translation.amendment_list %}
-          {% if amendment.state != "retracted" or request.user.username == amendment.author.name %}
+          {% if amendment.state == "public" or request.user.username == amendment.author.name %}
           <div class="amendment">
             <a class="link" href="{% url 'amendment-detail' amendment.pk %}" data-content="{{amendment.extract_content|safe}}">
               <h3 class="h5">{{amendment.title}}</h3>
@@ -156,6 +162,7 @@
           </div>
           {% endif %}
           {% endfor %}
+          <br/>
         </div>
 
         <!-- Comment section-->
