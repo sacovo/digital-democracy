@@ -32,19 +32,25 @@
 
       <div class="my-2 my-lg-0">
           {% if request.user.is_authenticated %}
-          <form method="GET" action="{% url 'search-result' %}">
-            <input type="text" placeholder="{% trans 'Search...' %}" name="searched">
-            <button class="btn searchButton" type="submit">
-                <i class="fa fa-search"></i>
-              </button>
+          <form class="form-inline" method="GET" action="{% url 'search-result' %}">
+              <div class="form-group">
+                  <input type="text" class="form-control" placeholder="{% trans 'Search...' %}" name="searched">
+              </div>
+              <div class="px-1">
+                  <button class="btn searchButton" type="submit">
+                      <i class="fa fa-search"></i>
+                  </button>
+              </div>
+              <div class="px-1">
+                  <button class="btn btn-secondary " type="button" class="btn btn-primary">
+                      <a class="my-2 my-sm-0" id="navBarAccount" href="{% url 'profile' %}">
+                          {{ user }}
+                          <i class="fas fa-user-alt magnifierIcon"></i>
+                      </a>
+                  </button>
+              </div>
               <button class="btn btn-secondary " type="button" class="btn btn-primary">
-                <a class="my-2 my-sm-0" id="navBarAccount" href="{% url 'profile' %}">
-                  {{ user }}
-                  <i class="fas fa-user-alt magnifierIcon"></i>
-                </a>
-              </button>
-              <button class="btn btn-secondary " type="button" class="btn btn-primary">
-                <a class="my-2 my-sm-0" id="navBarAccount" href="{% url 'logout' %}">
+                  <a class="my-2 my-sm-0" id="navBarAccount" href="{% url 'logout' %}">
                   {% trans 'Logout' %}
                 </a>
               </button>
