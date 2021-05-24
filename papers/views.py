@@ -594,6 +594,7 @@ def members_profile(request, user_id=None):
         comments = author.comment_set.all()
         papers = author.paper_set.all()
         amendments = author.amendment_set.all()
+        notes = author.note_set.all()
     else:
         comments = models.Comment.objects.none()
         papers = models.Paper.objects.none()
@@ -602,7 +603,12 @@ def members_profile(request, user_id=None):
     return render(
         request,
         "registration/profile.html",
-        {"papers": papers, "comments": comments, "amendments": amendments},
+        {
+            "papers": papers,
+            "comments": comments,
+            "amendments": amendments,
+            "notes": notes,
+        },
     )
 
 
@@ -631,7 +637,7 @@ def amendment_list(request, paper_pk, tag, language_code):
     """
     paper = models.Paper.objects.get(pk=paper_pk)
     amendments = models.Amendment.objects.filter(
-        tags__name=tag, language_code=language_code, paper=paper
+        language_code=language_code, paper=paper
     )
 
     return render(
@@ -668,6 +674,12 @@ def search_result(request):
         searched = request.GET["searched"]
         result_papers = models.Paper.objects.filter(working_title__icontains=searched)
         result_amendments = models.Amendment.objects.filter(title__icontains=searched)
+
+        result_trans_body = models.PaperTranslation.objects.filter(
+            content__icontains=searched
+        )
+        result_privat_notes = models.Note.objects.filter(body__icontains=searched)
+
         return render(
             request,
             "papers/search_result.html",
@@ -675,6 +687,8 @@ def search_result(request):
                 "searched": searched,
                 "result_papers": result_papers,
                 "result_amendments": result_amendments,
+                "result_trans_body": result_trans_body,
+                "result_privat_notes": result_privat_notes,
             },
         )
     else:

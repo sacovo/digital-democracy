@@ -92,19 +92,6 @@
     {% endif %}
     <hr>
 
-    <!-- Tags -->
-    <section class="tags">
-      <h2 class="h4">{% trans "Tags" %}</h2>
-      <ul>
-        {% for tag in amendment.tags.all %}
-        <li>
-          <a class="tag-link" href="{% url 'amendment_list' amendment.paper.pk tag.name amendment.language_code %}">{{ tag.name }}</a>
-        </li>
-        {% endfor %}
-      </ul>
-    </section>
-    <hr>
-
     <!-- Sign amendments -->
     <section class="support">
       <h2 class="h4">{% trans "Sign this amendment" %}</h2>
