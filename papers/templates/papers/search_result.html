@@ -8,6 +8,7 @@
     <h1>{% trans 'Search Results:' %}</h1>
     {% if searched %}
         You have searched for: {{ searched }}<b></b><br><br>
+
         <h2>{% trans 'Papers' %}</h2>
         <table class="table">
           <caption class="sr-only">{% trans 'Amendments' %}</caption>
@@ -19,13 +20,13 @@
             </tr>
           </thead>
           <tbody>
-            <tr>{% for result_paper in result_papers %}<tr>
-                <td><a href="{% url 'paper-detail' result_paper.pk %}">{{ result_paper }}</a></td>
-                <td>{{ result_paper.created_at }}</td>
-                <td>{{ result_paper.amendment_deadline }}</td>
-              </tr>{% endfor %} </tr>
+            <tr>{% for result_t_body in result_trans_body %}<tr>
+                <td><a href="{% url 'paper-detail' result_t_body.paper.pk %}">{{ result_t_body.paper }}</a></td>
+                <td>{{ result_t_body.paper.created_at }}</td>
+                <td>{{ result_t_body.paper.amendment_deadline }}</td>
+            </tr>{% endfor %} </tr>
           </tbody>
-        </table>
+        </table><br><br>
 
         <h2>{% trans 'Amendments' %}</h2>
         <table class="table">
@@ -43,7 +44,29 @@
                 <td>{{ amendment.supporters.count }}</td>
             </tr>{% endfor %} </tr>
           </tbody>
+        </table><br><br>
+
+        <h2>{% trans 'Your Notes' %}</h2>
+        <table class="table">
+          <caption class="sr-only">{% trans 'Note' %}</caption>
+            <thead>
+                <tr>
+                    <th scope="col">{% trans 'Amendment' %}</th>
+                    <th scope="col">{% trans 'Body' %}</th>
+                    <th scope="col">{% trans 'Created on' %}</th>
+                </tr>
+            </thead>
+          <tbody>
+            <tr>{% for note in result_privat_notes %}<tr>
+                    {% if note.author.name == user.username %}
+                        <td><a href="{% url 'amendment-detail' note.amendment.pk %}">{{ note.amendment.paper }}, {{ note.amendment.title }}</a></td>
+                        <td>{{ note.body }}</td>
+                        <td>{{ note.created_on }}</td>
+                    {% endif %}
+            </tr>{% endfor %} </tr>
+          </tbody>
         </table>
+
         {% else %}
         {% trans 'Nothing given to search for.' %}
     {% endif %}
