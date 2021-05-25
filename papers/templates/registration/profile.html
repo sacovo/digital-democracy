@@ -5,7 +5,7 @@
 
 {% block content %}
 
-<h1>{% blocktrans with username=user %}Contributions by {{ username }}{% endblocktrans %}</h1>
+<h1>{% blocktrans with username=member %}Contributions by {{ username }}{% endblocktrans %}</h1>
 <h2>{% trans 'Papers' %}</h2>
 <table class="table">
   <caption class="sr-only">{% trans 'amendments' %}</caption>
@@ -117,6 +117,7 @@
   </tbody>
 </table>
 
+{% if member.id == user.id %}
 <h2>{% trans 'Notes' %}</h2>
 <table class="table">
   <caption class="sr-only">{% trans 'Notes' %}</caption>
@@ -146,5 +147,6 @@
     </tr>
     {% endfor %}
   </tbody>
-</table>
+</table
+{% endif %}
 {% endblock %}
