@@ -29,6 +29,8 @@ def paper_list(request):
     List of all papers
     """
     papers = models.Paper.objects.all()
+    if not request.user.is_staff:
+        papers = papers.exclude(state="draft")
 
     for paper in papers:
         paper.created_at = paper.created_at.date()
@@ -679,12 +681,25 @@ def search_result(request):
     if request.method == "GET":
         searched = request.GET["searched"]
         result_papers = models.Paper.objects.filter(working_title__icontains=searched)
-        result_amendments = models.Amendment.objects.filter(title__icontains=searched)
 
+        filter_amendments = Q(state="public") | Q(author__user_id=request.user.id)
+        result_amendments = models.Amendment.objects.filter(
+            title__icontains=searched
+        ).filter(filter_amendments)
+
+        filter_paper = (
+            Q(paper__state="public")
+            | Q(paper__state="final")
+            | Q(paper__authors__user=request.user)
+        )
         result_trans_body = models.PaperTranslation.objects.filter(
             content__icontains=searched
-        )
-        result_privat_notes = models.Note.objects.filter(body__icontains=searched)
+        ).filter(filter_paper)
+
+        filter_private_notes = Q(author__user_id=request.user.id)
+        result_private_notes = models.Note.objects.filter(
+            body__icontains=searched
+        ).filter(filter_private_notes)
 
         return render(
             request,
@@ -694,7 +709,7 @@ def search_result(request):
                 "result_papers": result_papers,
                 "result_amendments": result_amendments,
                 "result_trans_body": result_trans_body,
-                "result_privat_notes": result_privat_notes,
+                "result_private_notes": result_private_notes,
             },
         )
     else:

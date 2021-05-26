@@ -4,28 +4,27 @@
 {% block title %}{% trans 'Papers' %}{% endblock %}
 
 {% block content %}
-
     <h1>{% trans 'Search Results:' %}</h1>
     {% if searched %}
-        You have searched for: {{ searched }}<b></b><br><br>
-
+        <b>You have searched for: {{ searched }}</b><br><br>
         <h2>{% trans 'Papers' %}</h2>
         <table class="table">
-          <caption class="sr-only">{% trans 'Amendments' %}</caption>
+          <caption class="sr-only">{% trans 'Papers' %}</caption>
           <thead>
             <tr>
               <th scope="col">{% trans 'Title' %}</th>
               <th scope="col">{% trans 'State' %}</th>
-              <th scope="col">{% trans 'Created on' %}</th>
-              <th scope="col">{% trans 'Deadline' %}</th>
+              <th scope="col" class="col-0">{% trans 'Created on' %}</th>
+              <th scope="col" class="col-3">{% trans 'Deadline for amendments' %}</th>
             </tr>
           </thead>
           <tbody>
-            {% for result_t_body in result_trans_body %}
+            {% for paper_t in result_trans_body %}
             <tr>
-                <td><a href="{% url 'paper-detail' result_t_body.paper.pk %}">{{ result_t_body.paper }}</a></td>
-                <td>{{ result_t_body.paper.created_at }}</td>
-                <td>{{ result_t_body.paper.amendment_deadline }}</td>
+                <td><a href="{% url 'paper-detail' paper_t.paper.pk %}">{{ paper_t.paper }}</a></td>
+                <td>{{ paper_t.paper.state }}</td>
+                <td>{{ paper_t.paper.created_at }}</td>
+                <td>{{ paper_t.paper.amendment_deadline }}</td>
             </tr>
             {% endfor %}
           </tbody>
@@ -38,24 +37,24 @@
             <tr><th scope="col">{% trans 'Title' %}</th>
               <th scope="col">{% trans 'State' %}</th>
               <th scope="col">{% trans 'Author' %}</th>
-              <th scope="col">{% trans '# Supporters' %}</th>
+              <th scope="col" class="col-4">{% trans 'Supporters' %}</th>
             </tr>
           </thead>
           <tbody>
-            <tr>{% for amendment in result_amendments %}<tr>
-              {% if amendment.state == 'public' and request.user.username != amendment.author.name or request.user.username == amendment.author.name %}
+            {% for amendment in result_amendments %}
+            <tr>
                 <td><a href="{% url 'amendment-detail' amendment.pk %}">{{ amendment.paper }}, {{ amendment.title }}</a></td>
                 <td>{{ amendment.state }}</td>
                 <td>{{ amendment.author }}</td>
                 <td>{{ amendment.supporters.count }}</td>
-              {% endif %}
-            </tr>{% endfor %} </tr>
+            </tr>
+            {% endfor %}
           </tbody>
         </table><br><br>
 
         <h2>{% trans 'Your Notes' %}</h2>
         <table class="table">
-          <caption class="sr-only">{% trans 'Note' %}</caption>
+          <caption class="sr-only">{% trans 'Notes' %}</caption>
             <thead>
                 <tr>
                     <th scope="col">{% trans 'Amendment' %}</th>
@@ -64,13 +63,13 @@
                 </tr>
             </thead>
           <tbody>
-            <tr>{% for note in result_privat_notes %}<tr>
-                    {% if note.author.name == user.username %}
-                        <td><a href="{% url 'amendment-detail' note.amendment.pk %}">{{ note.amendment.paper }}, {{ note.amendment.title }}</a></td>
-                        <td>{{ note.body }}</td>
-                        <td>{{ note.created_on }}</td>
-                    {% endif %}
-            </tr>{% endfor %} </tr>
+            {% for note in result_private_notes %}
+                <tr>
+                  <td><a href="{% url 'amendment-detail' note.amendment.pk %}">{{ note.amendment.paper }}, {{ note.amendment.title }}</a></td>
+                  <td>{{ note.body }}</td>
+                  <td>{{ note.created_on }}</td>
+                </tr>
+            {% endfor %}
           </tbody>
         </table>
 
