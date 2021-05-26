@@ -1,6 +1,6 @@
 # Erste Schritte mit Digital Democracy
 
-Willkommen bei Digital Democracy! 
+**Willkommen bei Digital Democracy!**
 
 Das Ziel dieser Plattform ist die Digitalisierung des Prozesses zum Einreichen von Papieren und deren Anträgen. Kein Papierkrieg und Ausdrucken mehr - als Benutzer&#42;in kannst du deine Änderungsanträge jetzt online erfassen und einreichen. Unterschreibe andere Änderungsanträge oder erstelle private Notizen. Digital Democracy macht es möglich, schon vor der Generalversammlung mit anderen Mitgliedern der Partei über die Anträge zu diskutieren, indem du Kommentare erstellst und andere Kommentare likest.
 
@@ -43,8 +43,6 @@ Auf der rechten Seite siehst du alle erstellten Anträge. Weiterhin kannst du de
 
 | Buttons        | Actions       | 
 |:-------------- |:--------------| 
-| Übersetzung aktualisieren       | Übersetzung kann bearbeitet und aktualisiert werden. |
-| Übersetzung löschen      | Übersetzung kann gelöscht werden. |
 | Papier aktualisieren    | Frist, Status und AutorIn kann angepasst werden.|
 | Papier löschen   | Text wird gelöscht. |
 | Als pptx herunterladen   | PowerPoint Präsentation mit allen Änderungsvorschlägen wird erstellt. |
@@ -59,15 +57,37 @@ Wenn du einen Änderungsvorschlag am Text vornehmen möchtest, klicke auf "Antra
 | Antrag erstellen    | Erstellt einen neuen Antrag zum jeweiligen Text. |
 
 ## Antrag einsehen
-Dein Änderungsvorschlag wurde nun erstellt und du kannst ihn nun in der Liste mit allen Änderungen sehen. Wenn du über den Listeneintrag deines Änderungsvorschlages hoverst, werden dir die Änderungen im Text angezeigt. 
+Dein Änderungsvorschlag wurde nun erstellt und du kannst ihn nun in der Liste mit allen Änderungen sehen. Wenn du über den Listeneintrag deines Änderungsvorschlages mit deiner Maus fährst, werden dir die Änderungen im Text angezeigt. 
 Klickst du auf einen Vorschlag, gelangst du auf eine Detailsseite. Dort kannst du deinen eigenen Vorschlag bearbeiten oder löschen. Änderungsvorschläge von anderen Mitgliedern kannst du unterstützen, eine Empfehlung abgeben oder diese kommentieren. 
 Über die Kommentierfunktion kannst du schon vor der Generalversammlung mit anderen Mitgliedern über den Antrag diskutieren.
 
 Weiterhin kannst du dir private Notizen erstellen, die nur für dich ersichtlich sind.
 
+| Buttons        | Actions       | 
+|:-------------- |:--------------| 
+| Publizieren    | Änderungen werden publiziert. |
+| Bearbeiten   | Änderungsvorschlag kann bearbeitet werden. |
+| Duplizieren   | Änderungsvorschlag wird dupliziert. |
+| de+ fr+ it+    | Änderungsvorschlag kann übersetzt werden. |
+| Empfehlung machen  | Es kann eine Empfehlung für eine Änderung gemacht werden. |
+| Antrag unterstützen  | Antrag von einem anderen Mitglied unterstützen. |
+
 ## Für ÜbersetzerInnen
 ÜbersetzerInnen können die Texte in die drei Landessprachen Deutsch, Französisch und Italienisch übersetzen. Oberhalb eines Textes ist jeweils die
-Registerkarte mit der gewählten Sprache ausgewählt. 
+Registerkarte mit der aktuellen Sprache ausgewählt. In einem seperaten Editor können Übersetzungen hinzugefügt oder aktualisiert werden. 
+
+| Buttons        | Actions       | 
+|:-------------- |:--------------| 
+| Übersetzung aktualisieren       | Übersetzung kann bearbeitet und aktualisiert werden. |
+| Übersetzung löschen      | Übersetzung kann gelöscht werden. |
 
 
 ## Für AdministratorInnen
+Als AdministratorIn kannst du die Resultate der Abstimmungen für einzelne Änderungsvorschläge festhalten. Dafür klickst du auf den Button "Resultate eingeben". Dort kannst du für jeden Änderungsvorschlag entweder "Angenommen" oder "Abgelehnt" wählen und diese Resultate dann speichern. 
+Weiter kannst du auch Änderungsvorschläge in einen finalen Text integrieren - dies kann dann allerdings nicht mehr rückgängig gemacht werden. Wählen Sie alle Änderungen aus, die Sie in das endgültige Papier einfügen möchten. Angenommene Änderungen sind bereits ausgewählt.
+Wähle alle Änderungen aus, die du in den endgültigen Text einfügen möchtest. Angenommene Änderungen sind bereits ausgewählt.
+
+| Buttons        | Actions       | 
+|:-------------- |:--------------| 
+| Resultate eingeben    | Anträge konnen angenommen oder abgelehnt werden.|
+| Anträge zusammenführen  | Anträge werden in einem finalen Text zusammengeführt. |
