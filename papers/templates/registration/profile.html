@@ -5,7 +5,7 @@
 
 {% block content %}
 
-<h1>{% trans 'Your contributions' %}</h1>
+<h1>{% blocktrans with username=member %}Contributions by {{ username }}{% endblocktrans %}</h1>
 <br>
 <h2>{% trans 'Papers' %}</h2>
 <table class="table">
