@@ -6,30 +6,18 @@
 {% block content %}
 
 <h1>{% trans 'Papers' %}</h1>
-
 <table class="table">
-  <caption class="sr-only">{% trans 'Amendments' %}</caption>
+  <caption class="sr-only">{% trans 'Papers' %}</caption>
   <thead>
     <tr>
-      <th scope="col">
-        {% trans 'Title' %}
-      </th>
-      <th scope="col">
-        {% trans 'State' %}
-      </th>
-      <th scope="col">
-        {% trans 'Created on' %}
-      </th>
-      <th scope="col">
-        {% trans 'Deadline for amendments' %}
-      </th>
-      <th scope="col">
-        {% trans "Last Change" %}
-      </th>
+      <th scope="col">{% trans 'Title' %}</th>
+      <th scope="col">{% trans 'State' %}</th>
+      <th scope="col" class="col-0">{% trans 'Created on' %}</th>
+      <th scope="col" class="col-3">{% trans 'Deadline for amendments' %}</th>
+      <th scope="col" class="col-3">{% trans "Last Change" %}</th>
     </tr>
   </thead>
   <tbody>
-    <tr>
       {% for paper in paper_list %}
       <tr>
         <td>
@@ -65,7 +53,6 @@
         </td>
       </tr>
       {% endfor %}
-    </tr>
   </tbody>
 </table>
 <a href="{% url 'paper-create' %}" class="btn btn-secondary ">{% trans 'Create new paper' %}</a>

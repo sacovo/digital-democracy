@@ -249,7 +249,12 @@ ins {
 .col-2{
     width: 10%;
 }
-
 .col-3{
     width: 20%;
+}
+.col-0{
+    width: 15%;
+}
+.col-4{
+    width: 5%;
 }
