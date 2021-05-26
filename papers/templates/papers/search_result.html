@@ -4,7 +4,7 @@
 {% block title %}{% trans 'Papers' %}{% endblock %}
 
 {% block content %}
-    <h1>{% trans 'Search Results:' %}</h1>
+    <h1>{% trans 'Search Results' %}</h1>
     {% if searched %}
         <b>You have searched for: {{ searched }}</b><br><br>
         <h2>{% trans 'Papers' %}</h2>
@@ -21,7 +21,7 @@
           <tbody>
             {% for paper_t in result_trans_body %}
             <tr>
-                <td><a href="{% url 'paper-detail' paper_t.paper.pk %}">{{ paper_t.paper }}</a></td>
+                <td><a href="{% url 'paper-detail' paper_t.paper.pk %}">{{ paper_t.title }}</a></td>
                 <td>{{ paper_t.paper.state }}</td>
                 <td>{{ paper_t.paper.created_at }}</td>
                 <td>{{ paper_t.paper.amendment_deadline }}</td>
