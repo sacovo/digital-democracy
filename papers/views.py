@@ -5,6 +5,7 @@ import io
 
 from django.conf import settings
 from django.contrib import messages
+from django.contrib.auth import get_user_model
 from django.contrib.auth.decorators import login_required, permission_required
 from django.core.exceptions import PermissionDenied
 from django.db.models import Q
@@ -586,24 +587,29 @@ def members_profile(request, user_id=None):
     If no user id is specified, default to showing the logged in user's profile
     """
     if user_id is not None:
-        member = models.User.objects.get(id=user_id)
+        member = get_user_model().objects.get(id=user_id)
     else:
         member = request.user
+
+    # Get the objects to be displayed in the profile page, by default None
+    comments = models.Comment.objects.none()
+    papers = models.Paper.objects.none()
+    amendments = models.Amendment.objects.none()
+    notes = models.Note.objects.none()
     if hasattr(member, "author"):
         author = member.author
         comments = author.comment_set.all()
         papers = author.paper_set.all()
         amendments = author.amendment_set.all()
-        notes = author.note_set.all()
-    else:
-        comments = models.Comment.objects.none()
-        papers = models.Paper.objects.none()
-        amendments = models.Amendment.objects.none()
+        # Only display notes if the currently logged in user is viewing their own profile
+        if user_id is None or user_id == request.user.id:
+            notes = author.note_set.all()
 
     return render(
         request,
         "registration/profile.html",
         {
+            "member": member,
             "papers": papers,
             "comments": comments,
             "amendments": amendments,
