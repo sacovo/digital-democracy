@@ -693,7 +693,7 @@ def search_result(request):
             | Q(paper__authors__user=request.user)
         )
         result_trans_body = models.PaperTranslation.objects.filter(
-            content__icontains=searched
+            title__icontains=searched
         ).filter(filter_paper)
 
         filter_private_notes = Q(author__user_id=request.user.id)
