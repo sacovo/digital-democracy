@@ -1,5 +1,19 @@
 """
 Admin views
+
+These classes provide an interface in the backend to
+create, update and delete objects. These interfaces are
+primarly aimed at administrative people.
+
+Every subclass of ModelAdmin provides the interface to one
+object type / database table. If you want to add or remove
+fields that are displayed and that are editable you can change
+either fields or list_display.
+
+Inlines are used to directly edit related objects.
+
+To learn more about how to change the admin you can look here:
+https://docs.djangoproject.com/en/3.2/ref/contrib/admin/#modeladmin-objects
 """
 from django.contrib import admin
 

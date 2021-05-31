@@ -1,5 +1,13 @@
 """
-Urls
+This module links the different views with a url.
+
+Each entry in urlpatterns is a url of the app and served by a view function.
+With the <int:paper_pk> syntax we can capture parts of the url and provide them
+to the function that is served under the url.
+
+To add new urls you can just add a new entry to the list.
+
+Learn more here: https://docs.djangoproject.com/en/3.2/topics/http/urls/
 """
 from django.conf.urls import include
 from django.contrib.auth import views as auth_views

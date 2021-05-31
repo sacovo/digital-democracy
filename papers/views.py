@@ -1,5 +1,23 @@
 """
-Paper views
+This module has all the views that are served by the application.
+
+Each view returns a http response that then will be displayed in the
+browser of the user. A view always gets the request object, that has
+information about the request and the user that made it.
+
+Additional arguments are captured by the url routing mechanism and can
+be used to get objects from the database through an id.
+
+Usually a view returns a response with html content. This content is rendered
+from a file that lies in the templates subfolder. To render the template additional
+context can be provided. The render method does this, it need the request as the first
+argument, the path to the template (relative to the templates folder) as second and
+a dict with the context as third.
+
+To learn more about views you can start here:
+    https://docs.djangoproject.com/en/3.2/topics/http/views/
+To learn more about templates start here:
+    https://docs.djangoproject.com/en/3.2/topics/templates/
 """
 import io
 
@@ -7,6 +25,7 @@ from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth import get_user_model
 from django.contrib.auth.decorators import login_required, permission_required
+from django.contrib.admin.views.decorators import staff_member_required
 from django.core.exceptions import PermissionDenied
 from django.db.models import Q
 from django.http import Http404
@@ -72,10 +91,15 @@ def paper_detail(request, paper_pk, language_code=None):
     )
 
 
+@staff_member_required
 def paper_amendmentlist(request, paper_pk):
-    amendment_list = models.Amendment.objects.filter(paper_id=paper_pk)
+    """
+    List of all amendments of a paper with checkboxes to accept/reject every amendment.
+    If called with post the amendments are modified in the database.
+    """
+    amendments = models.Amendment.objects.filter(paper_id=paper_pk)
     if request.method == "POST":
-        for amendment in amendment_list:
+        for amendment in amendments:
             value = request.POST.get(str(amendment.pk), "")
             if value:
                 amendment.state = value
@@ -84,11 +108,14 @@ def paper_amendmentlist(request, paper_pk):
     return render(
         request,
         "papers/amendment_list.html",
-        {"amendment_list": amendment_list, "paper_pk": paper_pk},
+        {"amendment_list": amendments, "paper_pk": paper_pk},
     )
 
 
 def selected_amendments_view(request, paper_pk, language_code):
+    """
+    Render a form to select amendments that should be merged into the final paper.
+    """
     translation = models.PaperTranslation.objects.get(
         paper_id=paper_pk, language_code=language_code
     )
@@ -101,7 +128,11 @@ def selected_amendments_view(request, paper_pk, language_code):
     )
 
 
+@staff_member_required
 def translation_delete(request, translation_pk):
+    """
+    Delete view for a translation.
+    """
     translation = models.PaperTranslation.objects.get(pk=translation_pk)
 
     if translation.paper.translation_set.count() == 1:
@@ -132,6 +163,7 @@ def translation_delete(request, translation_pk):
 
 
 def comment_delete(request, comment_pk):
+    """Deltes the comment, if the user is allowed to do so."""
     comment = models.Comment.objects.get(pk=comment_pk)
     if comment.author.user != request.user:
         messages.warning(request, _("You are not allowed to delete this comment."))
@@ -156,6 +188,7 @@ def comment_delete(request, comment_pk):
 
 
 def paper_comment_delete(request, comment_pk):
+    """Deletes a comment if the users is allowed to do so."""
     comment = models.PaperComment.objects.get(pk=comment_pk)
     if comment.author.user != request.user:
         messages.warning(request, _("You are not allowed to delete this comment."))
@@ -177,7 +210,9 @@ def paper_comment_delete(request, comment_pk):
     )
 
 
+@staff_member_required
 def paper_delete(request, paper_pk):
+    """View to delete the whole paper."""
     paper = models.Paper.objects.get(pk=paper_pk)
     if request.method == "POST":
         paper.delete()
@@ -195,7 +230,12 @@ def paper_delete(request, paper_pk):
     )
 
 
+@staff_member_required
 def finalize_view(request, paper_pk, language_code):
+    """
+    View to see all accepted amendments in a text editor, so that users can
+    accept each amendment and make modifications to the text if necessary.
+    """
     translation = models.PaperTranslation.objects.get(
         paper_id=paper_pk, language_code=language_code
     )
@@ -230,6 +270,10 @@ def finalize_view(request, paper_pk, language_code):
 
 @login_required
 def paper_detail_create_pdf(request, paper_pk, language_code):
+    """
+    Create and download a pdf of the paper, if not yet finalized this will also include
+    the amendments.
+    """
     paper = models.Paper.objects.get(pk=paper_pk).translation_for(language_code)
     amendments = models.Amendment.objects.filter(
         paper_id=paper_pk, language_code=language_code
@@ -263,6 +307,7 @@ def paper_detail_create_pdf(request, paper_pk, language_code):
 
 @login_required
 def paper_presentation(request, paper_pk):
+    """Download presentation for the paper, with a slide for each amendment"""
     response = HttpResponse(
         content_type="application/vnd.openxmlformats-officedocument.presentationml.presentation"
     )
@@ -304,6 +349,10 @@ def amendment_create(request, paper_pk, language_code):
 
 @login_required
 def recommendation_create(request, amendment_pk):
+    """
+    Create a recommendation for an amendment.
+    Also updates the recommendation for all translations.
+    """
     amendment = models.Amendment.objects.get(pk=amendment_pk)
     if hasattr(amendment, "recommendation"):
         return redirect("recommendation-edit", amendment.recommendation.pk)
@@ -324,8 +373,9 @@ def recommendation_create(request, amendment_pk):
 
 
 @login_required
-def recommendation_update(request, pk):
-    recommendation = models.Recommendation.objects.get(pk=pk)
+def recommendation_update(request, recommendation_pk):
+    """Update the recommendation of the amendment and of all translations."""
+    recommendation = models.Recommendation.objects.get(pk=recommendation_pk)
     form = forms.RecommendationForm(instance=recommendation)
 
     if request.method == "POST":
@@ -373,6 +423,7 @@ def paper_create(request):
 
 @login_required
 def paper_update(request, paper_pk):
+    """Update the details of the paper."""
     paper = models.Paper.objects.get(pk=paper_pk)
 
     # Check if user may edit paper
@@ -639,7 +690,7 @@ def support_amendment(request, amendment_pk):
 
 
 @login_required
-def amendment_list(request, paper_pk, tag, language_code):
+def amendment_list(request, paper_pk, language_code):
     """
     List of all papers
     """
@@ -655,6 +706,9 @@ def amendment_list(request, paper_pk, tag, language_code):
 
 @permission_required("auth.add_user")
 def upload_users(request):
+    """
+    Upload a csv with email adresses to create new users.
+    """
     upload_form = forms.UserUploadForm()
 
     if request.method == "POST":
@@ -662,22 +716,18 @@ def upload_users(request):
 
         if upload_form.is_valid():
             csv_file = upload_form.cleaned_data["csv_file"].file
-            try:
-                imported_users = utils.import_users_from_csv(csv_file)
-                messages.success(request, _(f"{imported_users} were imported!"))
+            imported_users = utils.import_users_from_csv(csv_file)
+            messages.success(request, _(f"{imported_users} were imported!"))
 
-                return redirect("admin:auth_user_changelist")
-            except Exception as e:
-                return render(
-                    request,
-                    "members/user_upload.html",
-                    {"form": upload_form, "error": e},
-                )
+            return redirect("admin:auth_user_changelist")
 
     return render(request, "members/user_upload.html", {"form": upload_form})
 
 
 def search_result(request):
+    """
+    Display all amendments that match the search
+    """
     if request.method == "GET":
         searched = request.GET["searched"]
         result_papers = models.Paper.objects.filter(working_title__icontains=searched)
@@ -712,5 +762,4 @@ def search_result(request):
                 "result_private_notes": result_private_notes,
             },
         )
-    else:
-        return render(request, "papers/search_result.html")
+    return render(request, "papers/search_result.html")
