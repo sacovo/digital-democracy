@@ -1,6 +1,10 @@
 """
 Misc. functions that are used by the project
+
+These functions provide functionallity for the application but are not directly linked
+to either models or views.
 """
+from dataclasses import dataclass
 import csv
 import io
 import re
@@ -21,18 +25,23 @@ from pptx.enum.text import MSO_VERTICAL_ANCHOR, PP_PARAGRAPH_ALIGNMENT
 from pptx.util import Cm, Pt
 
 
+@dataclass
 class Change:
+    """
+    This class represents a single change to a paper. It is a simple data store class
+    that is used by the methods below to apply changes to a paper.
+    """
+
     start: int
     end: int
     content: str  # eg: <ins>...</ins> or <del>...</del>
 
-    def __init__(self, start, end, content):
-        self.start = start
-        self.end = end
-        self.content = content
-
 
 def add_classes_to_tags(tag_name, class_list, html) -> str:
+    """
+    Adds the classes in class_list to every element in the html with the given tag_name.
+    Returns the html with the modifications as a new string.
+    """
     soup = BeautifulSoup(html, "html.parser")
     for tag in soup.find_all(tag_name):
         tag["class"] = tag.get("class", []) + class_list
@@ -40,18 +49,29 @@ def add_classes_to_tags(tag_name, class_list, html) -> str:
 
 
 def add_lite_classes(text) -> str:
+    """
+    Add the ice-del/ice-ins and ice-cts classes to the del and ins tags in the
+    given html. This needs to be used in order to render the changes with colors
+    and get the functionallity of ice.
+    """
     text = add_classes_to_tags("del", ["ice-del", "ice-cts"], text)
     text = add_classes_to_tags("ins", ["ice-ins", "ice-cts"], text)
     return text
 
 
 def apply_change(original_text: str, change: Change) -> str:
+    """
+    Apply the given change to the original text and return the result.
+    """
     return "".join(
         (original_text[: change.start], change.content, original_text[change.end :])
     )
 
 
 def update_change(change: Change, applied: Change):
+    """
+    Update the text positions in the first change after the second change has been applied.
+    """
     if change.start < applied.start:
         return
     delta = len(applied.content) - (applied.end - applied.start)
@@ -64,9 +84,9 @@ def create_changes_of_amendment(text: str) -> List[Change]:
     Subtraction of 11, because <del></del> is 11 characters.
     """
     changes = []
-    p = re.compile(r"(\<del>(.*?)\<\/del>)|(\<ins>(.*?)\<\/ins>)")
+    parser = re.compile(r"(\<del>(.*?)\<\/del>)|(\<ins>(.*?)\<\/ins>)")
 
-    matches = p.finditer(text)
+    matches = parser.finditer(text)
     counter = 0
     for match in matches:
         content = match.group()
@@ -85,6 +105,9 @@ def create_changes_of_amendment(text: str) -> List[Change]:
 
 
 def create_modified_text(original_text: str, amendments) -> str:
+    """
+    Generate an html with del and ins tags for every amendment in amendments.
+    """
     changes = []
     for amendment in amendments:
         changes += create_changes_of_amendment(amendment.content)
@@ -174,6 +197,7 @@ def import_users_from_csv(csv_file):
         new_user.email_user(
             _("New digital-democracy account"),
             settings.NEW_USER_MAIL.format(user=new_user, password=password),
+            fail_silently=True,
         )
 
     return imported_users
@@ -181,8 +205,9 @@ def import_users_from_csv(csv_file):
 
 def generate_powerpoint(paper):
     """
-    Generates a pp-presentation based on all current papers.
+    Generates a pp-presentation with all amendments of the given paper.
     """
+    # pylint: disable=R0914, R0915, E1101
 
     # Create new presentation
     prs = Presentation()
@@ -224,11 +249,11 @@ def generate_powerpoint(paper):
     # Set title slide
     title_txtbx = title_slide.shapes.add_textbox(Cm(2), Cm(6.5), Cm(21), Cm(3))
     subtitle_tf = title_txtbx.text_frame
-    p2 = subtitle_tf.paragraphs[0]
-    p2.text = "PAPER TITLE:"
-    p2.font.size = Pt(60)
-    p2.font.bold = True
-    p2.font.color.rgb = RGBColor(0xFF, 0xFF, 0xFF)
+    subtitle = subtitle_tf.paragraphs[0]
+    subtitle.text = "PAPER TITLE:"
+    subtitle.font.size = Pt(60)
+    subtitle.font.bold = True
+    subtitle.font.color.rgb = RGBColor(0xFF, 0xFF, 0xFF)
 
     # Generating amendment slides
     for i, amendment in enumerate(
@@ -275,8 +300,7 @@ def generate_powerpoint(paper):
 
         # Removing unused placeholder
         txtbx = amendment_slide.shapes[0]
-        sp = txtbx.element
-        sp.getparent().remove(sp)
+        txtbx.element.getparent().remove(txtbx.element)
 
         # Adding body bullet points
         body = amendment_slide.shapes.placeholders[1]

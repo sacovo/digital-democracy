@@ -1,5 +1,14 @@
 """
 Database models for app papers
+
+This module defines all objects that are used to store data for this application.
+
+The django orm maps these models to tables in the database. If you change these models
+you need to create migrations to alter these tables. You can use the makemigrations command
+for that. While creating these migrations you might need to provide default values for new fields
+that are not nullable.
+
+To learn more visit: https://docs.djangoproject.com/en/3.2/topics/db/models/
 """
 from ckeditor.fields import RichTextField
 from django.conf import settings
@@ -107,6 +116,7 @@ class Paper(models.Model):
     authors = models.ManyToManyField(Author, blank=True, verbose_name=_("authors"))
 
     def is_author(self, user):
+        """Return true if the given user is author of this paper."""
         return self.authors.filter(user=user).exists()
 
     def __str__(self):
@@ -161,12 +171,6 @@ class Paper(models.Model):
             .order_by("-created_on")
             .first()
         )
-
-    def get_all_papers(self):
-        """
-        Return all papers for further use
-        """
-        return Paper.objects.all()
 
     class Meta:
         verbose_name = _("paper")
@@ -464,7 +468,7 @@ class Recommendation(models.Model):
         related_name="recommended_by",
     )
 
-    def save(self, *args, **kwargs):
+    def save(self, *args, **kwargs):  # pylint: disable=W0222
         if kwargs.pop("update_translations", False):
             for translation in self.amendment.translations.all():
                 translated_recomendation = Recommendation.objects.filter(

@@ -1,5 +1,16 @@
 """
 Forms
+
+These are the different forms that are used throughout the application.
+
+Every form has fields, that are directly translated into fields displayed
+in the form to the user. Forms can provide default values and perform validations.
+
+ModelForm is a subclass of a form, that works directly on the models in the database.
+
+To learn more about forms start here:
+https://docs.djangoproject.com/en/3.2/topics/forms/
+
 """
 import bleach
 from ckeditor.widgets import CKEditorWidget
@@ -36,6 +47,8 @@ class PaperCreateForm(forms.Form):
 
 
 class PaperUpdateForm(forms.ModelForm):
+    """Form to update a paper"""
+
     state = forms.ChoiceField(
         widget=forms.RadioSelect(attrs={"class": "radioSelection"}),
         choices=models.PAPER_STATES,
@@ -177,6 +190,10 @@ class UserUploadForm(forms.Form):
 
 
 class RecommendationForm(forms.ModelForm):
+    """
+    Form to create or update a recommendation
+    """
+
     class Meta:
         model = models.Recommendation
         fields = ["recommendation", "reason"]
@@ -193,11 +210,19 @@ class RecommendationForm(forms.ModelForm):
 
 
 class AmendmentChoiceField(forms.ModelMultipleChoiceField):
-    def label_from_instance(self, amendment):
-        return amendment.title
+    """
+    Field to select an amendment, overrides the label function.
+    """
+
+    def label_from_instance(self, obj):
+        return obj.title
 
 
 class AmendmentSelect(forms.Form):
+    """
+    Displays a list of all amendments that should be merged into a paper.
+    """
+
     merge = AmendmentChoiceField(
         queryset=models.Amendment.objects.all(),
         widget=forms.CheckboxSelectMultiple,
@@ -222,6 +247,10 @@ class AmendmentSelect(forms.Form):
 
 
 class FinalizePaperForm(forms.Form):
+    """
+    Form to finalize one translation of a paper.
+    """
+
     title = forms.CharField(label=_("title"))
     content = forms.CharField(
         widget=CKEditorWidget(config_name="track-changes"), label=_("content")
