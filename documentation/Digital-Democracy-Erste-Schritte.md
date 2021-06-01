@@ -13,18 +13,18 @@ Nachdem du in deinem Browser die Webseite [digital-democracy.sp-ps.ch/](https://
 
 
 ## Profil
-**Menupunkt: Profil**
+**Menüpunkt: Profil**
 
 Nach dem Login gelangst du auf deine Profilseite. Hier findest du alle Papiere, Anträge, Kommentare sowie private Notizen, die du erstellt hast.
 
 
 ## Papiere
-**Menupunkt: Papiere**
+**Menüpunkt: Papiere**
 
-Klickst du auf "Papiere", siehst du alle Papiere mit ihrem Status, dem Erstelldatum, der Antragsfrist sowie dem Datum mit den letzten Änderungen. Unter den letzten Änderungen sind Anträge und neue Kommentare. Wenn du ein neues Papier erstellen möchstest, kannst du unterhalb der bereits erstellten Papiere auf den Button "Neues Papier erstellen" klicken. 
+Klickst du auf "Papiere", siehst du alle Papiere mit ihrem Status, dem Erstelldatum, der Antragsfrist sowie dem Datum mit den letzten Änderungen. Unter den letzten Änderungen sind Anträge und neue Kommentare. Wenn du ein neues Papier erstellen möchtest, kannst du unterhalb der bereits erstellten Papiere auf den Button "Neues Papier erstellen" klicken. 
 Von dort aus gelangst du auf einen Editor, wo du Text einfügen und den Status und die Sprache definieren kannst.
 
-| Buttons         | Actions       | 
+| Button         | Aktion       | 
 |:-------------- |:--------------| 
 | Neues Papier erstellen     | Erstellt ein neues Papier. |
 
@@ -36,58 +36,94 @@ Papiere werden mit dem "draft"-Status erstellt. Diese Papiere sind noch in Bearb
 
 
 ## Papier einsehen
-Klickst du auf ein Papier mit Status "public", welches noch in der Antragsfrist ist, gelangst du zu einer Detailansicht des Textes. Hier kannst du Anträge erstellen, eine PowerPoint-Präsentation erzeugen oder das Papier als PDF herunterladen. Dabei werden alle Anträge mitgeladen.
+Klickst du auf ein Papier mit Status "public", welches noch in der Antragsfrist ist, gelangst du dessen Detailansicht. Hier kannst du Anträge erstellen, eine PowerPoint-Präsentation erzeugen oder das Papier als PDF herunterladen. Dabei werden alle Anträge mitgeladen.
 
-Auf der rechten Seite siehst du alle erstellten Anträge. Weiterhin kannst du den Text kommentieren oder die Kommentare von anderen Mitgliedern "liken".
+Auf der rechten Seite siehst du alle erstellten Anträge. Wenn du mit deiner Maus über einen Listeneintrag eines Antrags fährst, werden dir die vorgeschlagenen Änderungen im Text auf der linken Seite angezeigt. Klickst du auf den Antrag, gelangst du auf dessen Detailseite.
+
+Unter den Anträgen siehst du alle Kommentare. Du kannst dort das Papier kommentieren oder die Kommentare von anderen Mitgliedern "liken".
 
 
-| Buttons        | Actions       | 
+| Button        | Aktion       | 
 |:-------------- |:--------------| 
 | Papier aktualisieren    | Frist, Status und AutorIn kann angepasst werden.|
-| Papier löschen   | Text wird gelöscht. |
+| Papier löschen   | Papier wird gelöscht. |
 | Als pptx herunterladen   | PowerPoint Präsentation mit allen Änderungsvorschlägen wird erstellt. |
 | Als PDF herunterladen   | Erstellt ein PDF mit allen Änderungsvorschlägen und Begründungen. |
 
 ## Antrag erstellen
 
-Wenn du einen Änderungsvorschlag am Text vornehmen möchtest, klicke auf "Antrag erstellen" unterhalb vom Text. Gib deinem Änderungsantrag einen Titel, lösche oder ergänze Text und gib im letzten Feld eine Begründung für deine Änderung an. Danach kannst du auf "Absenden" klicken.
+Wenn du einen Änderungsvorschlag am Papier einreichen möchtest, klicke auf "Antrag erstellen" unterhalb vom Papiertext. Gib deinem Änderungsantrag einen Titel, lösche oder ergänze Text und gib im letzten Feld eine Begründung für deine Änderung an. Beachte: es sind keine Kommentare nötig. Passe einfach das an, was du geändert haben möchtest. Danach kannst du auf "Absenden" klicken.
 
-| Buttons        | Actions       | 
+| Button        | Aktion       | 
 |:-------------- |:--------------| 
-| Antrag erstellen    | Erstellt einen neuen Antrag zum jeweiligen Text. |
+| Antrag erstellen    | Erstellt einen neuen Antrag zum jeweiligen Papier. |
 
 ## Antrag einsehen
-Dein Änderungsvorschlag wurde nun erstellt und du kannst ihn nun in der Liste mit allen Änderungen sehen. Wenn du über den Listeneintrag deines Änderungsvorschlages mit deiner Maus fährst, werden dir die Änderungen im Text angezeigt. 
-Klickst du auf einen Vorschlag, gelangst du auf eine Detailsseite. Dort kannst du deinen eigenen Vorschlag bearbeiten oder löschen. Änderungsvorschläge von anderen Mitgliedern kannst du unterstützen, eine Empfehlung abgeben oder diese kommentieren. 
-Über die Kommentierfunktion kannst du schon vor der Generalversammlung mit anderen Mitgliedern über den Antrag diskutieren.
+Dein Änderungsvorschlag wurde nun erstellt und du gelangst direkt auf dessen Detailseite. 
 
-Weiterhin kannst du dir private Notizen erstellen, die nur für dich ersichtlich sind.
+[!NOTE] 
 
-| Buttons        | Actions       | 
+Beachte: dein Antrag ist jetzt für andere noch nicht sichtbar. Um den Antrag zu publizieren, klicke auf den Button "Publizieren".
+
+
+Auf dieser Detailseite kannst du deinen Antrag weiter bearbeiten oder wieder zurückziehen. 
+
+Hast du einen fremden Antrag offen, hast du noch folgende Möglichkeiten:
+Du kannst Anträge von anderen Mitgliedern unterstützen oder kommentieren. Über die Kommentierfunktion kannst du schon vor der Generalversammlung mit anderen Mitgliedern über den Antrag diskutieren.
+Falls du dir private Notizen zu diesem Antrag machen möchtest, kannst du das auch auf der rechten Seite unten tun. Sie nur für dich ersichtlich sind.
+
+| Buttons        | Aktion       | 
 |:-------------- |:--------------| 
-| Publizieren    | Änderungen werden publiziert. |
-| Bearbeiten   | Änderungsvorschlag kann bearbeitet werden. |
-| Duplizieren   | Änderungsvorschlag wird dupliziert. |
-| de+ fr+ it+    | Änderungsvorschlag kann übersetzt werden. |
-| Empfehlung machen  | Es kann eine Empfehlung für eine Änderung gemacht werden. |
-| Antrag unterstützen  | Antrag von einem anderen Mitglied unterstützen. |
+| Publizieren    | Antrag wird publiziert: andere Mitglieder sehen deinen Antrag jetzt. |
+| Bearbeiten   | Du gelangst wieder zur Bearbeitungsseite deines Antrags. |
+| Duplizieren   | Antrag wird dupliziert: du erstellst damit einen neuen Antrag für dieses Papier, der alle Änderungen übernommen hat. |
+| Empfehlung erstellen  | Erstelle eine Empfehlung für diesen Antrag. |
+| Antrag unterstützen  | Antrag von einem anderen Mitglied unterstützen und offiziell unterschreiben |
+| Antrag zurückziehen    | Wenn dieser Antrag von dir ist, kannst du ihn hier wieder zurückziehen. |
 
-## Für ÜbersetzerInnen
-ÜbersetzerInnen können die Texte in die drei Landessprachen Deutsch, Französisch und Italienisch übersetzen. Oberhalb eines Textes ist jeweils die
-Registerkarte mit der aktuellen Sprache ausgewählt. In einem seperaten Editor können Übersetzungen hinzugefügt oder aktualisiert werden. 
+## Für Übersetzer*innen
 
-| Buttons        | Actions       | 
+### Papiere
+Übersetzer*innen können die Papiere sowie die Anträge in die drei Sprachen Deutsch, Französisch und Italienisch übersetzen. Oberhalb eines Papiers ist jeweils die
+Registerkarte mit der aktuellen Sprache ausgewählt. Über die folgenden Buttons kann die ausgewählte Übersetzung bearbeitet werden:
+
+| Buttons        | Aktion       | 
 |:-------------- |:--------------| 
 | Übersetzung aktualisieren       | Übersetzung kann bearbeitet und aktualisiert werden. |
 | Übersetzung löschen      | Übersetzung kann gelöscht werden. |
 
+Um einem Papier eine neue Übersetzung zu machen, klickst du auf eine Sprache (z.B. + Französisch). Auf der rechten Seite ergänzst du dann alle Informationen, wobei du auf der linken Seite die schon vorhandenen Übersetzungen jederzeit öffnen kannst.
+Falls andere Übersetzungen nach dieser Bearbeitung ebenfalls aktualisiert werden müssen, setze den Haken bei der Checkbox "Benötigt Aktualisierung".
 
-## Für AdministratorInnen
-Als AdministratorIn kannst du die Resultate der Abstimmungen für einzelne Änderungsvorschläge festhalten. Dafür klickst du auf den Button "Resultate eingeben". Dort kannst du für jeden Änderungsvorschlag entweder "Angenommen" oder "Abgelehnt" wählen und diese Resultate dann speichern. 
-Weiter kannst du auch Änderungsvorschläge in einen finalen Text integrieren - dies kann dann allerdings nicht mehr rückgängig gemacht werden. Wählen Sie alle Änderungen aus, die Sie in das endgültige Papier einfügen möchten. Angenommene Änderungen sind bereits ausgewählt.
-Wähle alle Änderungen aus, die du in den endgültigen Text einfügen möchtest. Angenommene Änderungen sind bereits ausgewählt.
+Nach einem Klick auf "Absenden" gelangst du auf deine neue Übersetzung in diesem Papier. Du kannst diese wiederum bearbeiten oder löschen über die obengenannten Buttons.
 
-| Buttons        | Actions       | 
+
+### Anträge
+
+Bist du auf einem Papier, siehst du auf der rechten Seite alle Anträge. 
+
+[!TIP] 
+
+Anträge können nur übersetzt werden, wenn es schon ein Papier in der jeweiligen Sprache gibt. 
+
+
+Im Antrag kannst du über die verfügbaren Buttons anschliessend die gleiche Änderung in der jeweiligen Übersetzung erstellen. Dabei wird ein neuer Antrag erstellt, der jedoch mit seinem ursprünglich Antrag verknüpft ist. 
+
+
+## Für Administrator*innen
+Als Administrator*in kannst du die Resultate der Abstimmungen für einzelne Anträge festhalten, dies mittels Button "Resultate eingeben". Dort kannst du für jeden Antrag entweder "Angenommen" oder "Abgelehnt" wählen und die Resultate dann speichern. 
+
+Weiter kannst du auch Anträge in das finale Papier integrieren.
+
+[!CAUTION] 
+
+Sind Anträge einmal integriert, kann dies nicht mehr rückgängig gemacht werden!
+
+
+Wählen alle Änderungen aus, die du in das endgültige Papier einfügen möchtest. Angenommene Änderungen sind bereits ausgewählt.
+
+| Button     | Aktion       | 
 |:-------------- |:--------------| 
-| Resultate eingeben    | Anträge konnen angenommen oder abgelehnt werden.|
-| Anträge zusammenführen  | Anträge werden in einem finalen Text zusammengeführt. |
+| Resultate eingeben    | Anträge werden hier angenommen oder abgelehnt.|
+| Anträge zusammenführen  | Ausgewählte Anträge werden in das finale Papier zusammengeführt. |
+
