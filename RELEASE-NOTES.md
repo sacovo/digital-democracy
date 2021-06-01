@@ -149,21 +149,28 @@
 - [<a href='https://www.cs.technik.fhnw.ch/jira20/browse/VT342006-236'>VT342006-236</a>] - Ensure button words' first letter is capital
 
 
-
 ## Release 6
 
 ###Features
 
 - [<a href='https://www.cs.technik.fhnw.ch/jira20/browse/VT342006-168'>VT342006-168</a>] - Translation for Italian and French
 
-
 ###Bugs
-
 - [<a href='https://www.cs.technik.fhnw.ch/jira20/browse/VT342006-233'>VT342006-233</a>] - Footer: make language switch available
 - [<a href='https://www.cs.technik.fhnw.ch/jira20/browse/VT342006-237'>VT342006-237</a>] - Set search text field height like buttons
-- [<a href='https://www.cs.technik.fhnw.ch/jira20/browse/VT342006-240'>VT342006-240</a>] - Paper overview: title not updated when updating translation
-- [<a href='https://www.cs.technik.fhnw.ch/jira20/browse/VT342006-242'>VT342006-242</a>] - Private user notes: add notes to profile
+- [<a href='https://www.cs.technik.fhnw.ch/jira20/browse/VT342006-240'>VT342006-240</a>] - Paper overview: title not updating when updating translation
+- [<a href='https://www.cs.technik.fhnw.ch/jira20/browse/VT342006-242'>VT342006-242</a>] - Profile page: add private user notes to profile
 - [<a href='https://www.cs.technik.fhnw.ch/jira20/browse/VT342006-243'>VT342006-243</a>] - Search through content and private notes too
 - [<a href='https://www.cs.technik.fhnw.ch/jira20/browse/VT342006-245'>VT342006-245</a>] - Amendment pane: Hovering effect: all of the text should be shown, not only parts
-
+- [<a href='https://www.cs.technik.fhnw.ch/jira20/browse/VT342006-252'>VT342006-252</a>] - Paper Detail: Elements are not where they&#39;re supposed to be
+- [<a href='https://www.cs.technik.fhnw.ch/jira20/browse/VT342006-253'>VT342006-253</a>] - Paper overview: Column &quot;letzte Änderungen&quot; doesn&#39;t update
+- [<a href='https://www.cs.technik.fhnw.ch/jira20/browse/VT342006-254'>VT342006-254</a>] - States are not translated (German) (papers and amendments)
+- [<a href='https://www.cs.technik.fhnw.ch/jira20/browse/VT342006-256'>VT342006-256</a>] - Amendment detail: Publish-Button doesn&#39;t work
+- [<a href='https://www.cs.technik.fhnw.ch/jira20/browse/VT342006-257'>VT342006-257</a>] - Users should not be able to edit other user&#39;s amendments
+- [<a href='https://www.cs.technik.fhnw.ch/jira20/browse/VT342006-259'>VT342006-259</a>] - Tags: remove tags everywhere
+- [<a href='https://www.cs.technik.fhnw.ch/jira20/browse/VT342006-260'>VT342006-260</a>] - Paper detail: Comment field doesn&#39;t have options in translated paper tab
+- [<a href='https://www.cs.technik.fhnw.ch/jira20/browse/VT342006-262'>VT342006-262</a>] - Draft papers should not be shown for users (search and Paper overview)
+- [<a href='https://www.cs.technik.fhnw.ch/jira20/browse/VT342006-264'>VT342006-264</a>] - Paper list: Create paper button should be below title line
+- [<a href='https://www.cs.technik.fhnw.ch/jira20/browse/VT342006-265'>VT342006-265</a>] - Usernames to user-id in each HTML
+- [<a href='https://www.cs.technik.fhnw.ch/jira20/browse/VT342006-266'>VT342006-266</a>] - Paper search: papers with several translations are shown multiple times
 
