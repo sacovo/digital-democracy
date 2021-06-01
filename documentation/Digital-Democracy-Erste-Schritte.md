@@ -107,17 +107,26 @@ Im Antrag kannst du über die verfügbaren Buttons anschliessend die gleiche Än
 
 
 ## Für Administrator*innen
-Als Administrator*in kannst du die Resultate der Abstimmungen für einzelne Anträge festhalten, dies mittels Button "Resultate eingeben". Dort kannst du für jeden Antrag entweder "Angenommen" oder "Abgelehnt" wählen und die Resultate dann speichern. 
 
-Weiter kannst du Anträge in das finale Papier integrieren.
-
->**Beachte:** Sind Anträge einmal integriert, kann dies nicht mehr rückgängig gemacht werden!
-
-Wähle alle Anträge aus, die du in das endgültige Papier einfügen möchtest. Als "angenommen" markierte Anträge sind bereits ausgewählt.
+Hier die zwei Buttons, die für dich relevant sind:
 
 | Button     | Aktion       | 
 |:-------------- |:--------------| 
 | Resultate eingeben    | Anträge werden hier angenommen oder abgelehnt.|
 | Anträge zusammenführen  | Ausgewählte Anträge werden in das finale Papier zusammengeführt. |
 
-Ist das Papier endgültig abgeschlossen, macht es Sinn es auf "finalized" zu setzen. Es kann dann nicht mehr bearbeitet werden und die Anträge werden nicht mehr angezeigt. Das finalisierte Papier kann dann als PDF heruntergeladen werden.
+### Resultate eingeben
+Als Administrator*in kannst du die Resultate der Abstimmungen für einzelne Anträge festhalten, dies mittels Button "Resultate eingeben". Dort kannst du für jeden Antrag entweder "Angenommen" oder "Abgelehnt" wählen und die Resultate dann speichern. 
+
+### Anträge zusammenführen
+Danach integrierst du die Anträge in das finale Papier. Als "angenommen" markierte Anträge sind bereits ausgewählt.
+
+Wähle alle Anträge aus, die du in das endgültige Papier einfügen möchtest und klicke auf "Weiter".
+
+Anschliessend erscheint der Texteditor mit jedem ausgewählten Antrag. Mittels Rechtsklick auf einen grün oder rot hinterlegten Text, akzeptierst du den Antrag und fügst ihn ein.
+
+>**Beachte:** Sind Anträge einmal akzeptiert, kann dies nicht mehr rückgängig gemacht werden!
+
+So gehst du durch jeden Antrag und passt den Text gegebenenfalls noch an. Mit Klick auf "Absenden" gelangst du zurück zum Papier.
+
+Ist das Papier endgültig abgeschlossen und sind alle Übersetzungen erstellt, macht es Sinn das Papier auf "finalized" zu setzen. Es kann dann nicht mehr bearbeitet werden und die Anträge werden auf der rechten Seite nicht mehr angezeigt. Das finalisierte Papier kann dann je Übersetzung als PDF heruntergeladen werden.
