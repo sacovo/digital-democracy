@@ -81,3 +81,10 @@ services:
 ```
 
 Fonts for the title and body of the generated pdf are controlled through environment variables `PDF_TITLE` and `PDF_BODY_FONT`, set them in your environment file or directly in the docker-compose.yml file.
+
+## Translating
+
+To create a translation for a new language you can run `docker-compose exec web python manage.py makemessages -l de` with the language code instead of `de`. This will put the translation files into a subfolder
+in `papers/locale`, where you can translate the messages. You can just use a text editor or also a special editor for translation files, like https://poedit.net/ . After adding the changes you can run `docker-compose exec web python manage.py compilemessages`.
+
+To change an existing translation you just need to find the subfolder in `papers/locale` and change what you want to change and then run `compilemessages` to generate the compiled translation files.

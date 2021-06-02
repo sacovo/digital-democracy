@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-05-06 07:23+0000\n"
+"POT-Creation-Date: 2021-06-02 08:22+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,14 +18,14 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: backend/settings.py:107
+#: backend/settings.py:109
 msgid "German"
 msgstr "Deutsch"
 
-#: backend/settings.py:107
+#: backend/settings.py:109
 msgid "French"
 msgstr "Französisch"
 
-#: backend/settings.py:107
+#: backend/settings.py:109
 msgid "Italian"
 msgstr "Italienisch"
