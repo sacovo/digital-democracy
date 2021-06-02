@@ -11,21 +11,21 @@ In dieser Anleitung zeigen wir dir die wichtigsten Informationen, damit du dich 
 
 Nachdem du in deinem Browser die Webseite [digital-democracy.sp-ps.ch](https://digital-democracy.sp-ps.ch/)  aufgerufen hast, gelangst du als erstes auf die Login-Seite. Der Benutzername und das Passwort, die du vom Sekretariat oder der AdministratorIn erhältst, gibst du hier ein.
 
-![Login](user-guide-login.png "Login")
+<img src="user-guide-login.png" alt="Login" width="395" />
 
 ## Profil
 **Menüpunkt: Kontoname**
 
 Nach dem Login gelangst du auf deine Profilseite. Hier findest du alle Papiere, Anträge, Kommentare sowie private Notizen, die du erstellt hast.
 
-![Profilseite](user-guide-profile.png "Profilseite")
+<img src="user-guide-profile.png" alt="Profilseite" width="747" />
 
 ## Papiere
 **Menüpunkt: Papiere**
 
 Klickst du auf "Papiere", siehst du alle Papiere mit ihrem Status, dem Erstelldatum, der Antragsfrist sowie dem Datum mit den letzten Änderungen.
 
-![Papier erstellen](user-guide-paper-overview.png "Papier erstellen")
+<img src="user-guide-paper-overview.png" alt="Papier erstellen" width="765" />
 
 Um ein neues Papier zu erstellen, klickst du unterhalb der bereits erstellten Papiere auf den Button "Neues Papier erstellen". Von dort aus gelangst du auf einen Editor, wo du einen Titel und die Sprache definierst und den Inhalt des Papiers schreibst.
 
@@ -43,7 +43,7 @@ Bedeutungen der Papierstatus:
 ## Papier einsehen
 Klickst du auf ein Papier mit Status "public", welches noch in der Antragsfrist ist, gelangst du auf dessen Detailansicht.
 
-![Detailansicht Papier](user-guide-paper-detail.png "Detailansicht Papier")
+<img src="user-guide-paper-detail.png" alt="Detailansicht Papier" width="504" />
 
 Hier kannst du Anträge erstellen, eine PowerPoint-Präsentation erzeugen oder das Papier als PDF herunterladen. Dabei werden alle Anträge mitgeladen.
 
@@ -71,16 +71,15 @@ Gib deinem Änderungsantrag einen Titel, lösche oder ergänze Text und gib im l
 
 >**Beachte:** Es sind keine Kommentare nötig. Passe einfach das an, was du geändert haben möchtest.
 
-![Antrag erstellen](user-guide-create-amendment.png "Antrag erstellen")
+<img src="user-guide-create-amendment.png" alt="Antrag erstellen" width="747" />
 
 Danach kannst du auf "Absenden" klicken.
-
 
 ## Antrag einsehen
 
 Dein Änderungsvorschlag wurde nun erstellt und du gelangst direkt auf dessen Detailansicht. 
 
-![Detailansicht Antrag](user-guide-amendment-detail.png "Detailansicht Antrag")
+<img src="user-guide-amendment-detail.png" alt="Detailansicht Antrag" width="514" />
 
 >**Beachte:** Dein Antrag ist jetzt für andere noch nicht sichtbar. Um den Antrag zu publizieren, klicke auf den Button "Veröffentlichen".
 
@@ -111,12 +110,12 @@ Hast du einen fremden Antrag offen, hast du noch folgende Möglichkeiten:
 
 Dass eine Übersetzung fehlt, siehst du am Plus (+) vor der Sprache. Um für ein Papier eine neue Übersetzung zu erstellen, klickst du auf eine entsprechende Registerkarte. 
 
-![Übersetzung hinzufügen](user-guide-add-language.png "Übersetzung hinzufügen")
+<img src="user-guide-add-language.png" alt="Übersetzung hinzufügen" width="310" />
 
 <br>
 Auf der rechten Seite ergänzst du dann alle Informationen, wobei dir auf der linken Seite die schon vorhandenen Übersetzungen angezeigt werden.
 
-![Papier übersetzen](user-guide-translate-paper.png "Papier übersetzen")
+<img src="user-guide-translate-paper.png" alt="Papier übersetzen" width="757" />
 
 Falls andere Übersetzungen nach dieser Bearbeitung ebenfalls aktualisiert werden müssen, setze den Haken bei der Checkbox "Benötigt Aktualisierung".
 
@@ -138,8 +137,7 @@ Im Antrag kannst du im Abschnitt "Übersetzungen" über die verfügbaren Buttons
 
 Auch wird dir auf der rechten Seite das übersetzte Papier angezeigt, in dem du den Änderungsvorschlag in der Übersetzung machen kannst.
 
-![Antrag übersetzen](user-guide-translate-amendment.png "Antrag übersetzen")
-
+<img src="user-guide-translate-amendment.png" alt="Antrag übersetzen" width="780" />
 
 ## Für Administrator*innen
 
@@ -155,25 +153,26 @@ Auch wird dir auf der rechten Seite das übersetzte Papier angezeigt, in dem du 
 ### Resultate eingeben
 Als Administrator*in kannst du die Resultate der Abstimmungen für einzelne Anträge festhalten, dies mittels Button "Resultate eingeben". Dort kannst du für jeden Antrag entweder "Angenommen" oder "Abgelehnt" wählen und die Resultate dann speichern. Wurde über alle Anträge abgestimmt, klickst du auf "Zurück". 
 
-![Resultate eingeben](user-guide-enter-results.png "Resultate eingeben")
+<img src="user-guide-enter-results.png" alt="Resultate eingeben" width="764" />
 
 ### Anträge zusammenführen
 Danach integrierst du die Anträge in das Papier. Als "angenommen" markierte Anträge sind bereits ausgewählt.
 
 Wähle alle Anträge aus, die du in das endgültige Papier einfügen möchtest und klicke auf "Weiter".
 
-![Anträge zusammenführen](user-guide-merge-amendments-1.png "Anträge zusammenführen")
+<img src="user-guide-merge-amendments-1.png" alt="Anträge zusammenführen" width="382" />
+
 
 Anschliessend erscheint der Texteditor mit jedem ausgewählten Antrag. Mittels Rechtsklick auf einen grün oder rot hinterlegten Text, öffnet sich das Kontextmenü. Hier wählst du "Änderung annehmen". So akzeptierst du den Antrag und fügst ihn ein.
 
 >**Beachte:** Sind Anträge einmal akzeptiert, kann dies nicht mehr rückgängig gemacht werden!
 
-![Anträge akzeptieren](user-guide-merge-amendments-2.png "Anträge akzeptieren")
+<img src="user-guide-merge-amendments-2.png" alt="Anträge akzeptieren" width="334" />
 
 So gehst du durch jeden Antrag. Das Papier sollte am Schluss keine farbigen Textteile mehr haben. Mit Klick auf "Absenden" gelangst du zurück zum Papier.
 
 Ist das Papier endgültig abgeschlossen und sind alle Übersetzungen erstellt, empfehlen wir, das Papier auf "Finalized" zu setzen. Dies machst du über den Button "Papier aktualisieren". 
 
-![Status ändern](user-guide-paper-state.png "Status ändern")
+<img src="user-guide-paper-state.png" alt="Status ändern" width="866" />
 
 Das Papier kann dann nicht mehr bearbeitet werden und die Anträge werden auf der rechten Seite nicht mehr angezeigt. Das finalisierte Papier kann dann je Übersetzung als PDF heruntergeladen werden.
