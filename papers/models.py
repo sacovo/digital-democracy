@@ -15,7 +15,7 @@ from django.conf import settings
 from django.db import models
 from django.shortcuts import reverse
 from django.utils.html import mark_safe
-from django.utils.translation import gettext as _
+from django.utils.translation import get_language, gettext as _
 
 from papers import utils
 from papers.utils import index_of_first_change, index_of_last_change
@@ -141,6 +141,19 @@ class Paper(models.Model):
         Returns the according translation
         """
         return self.translation_set.get(language_code=language_code)
+
+    def translated_title(self, language_code=None):
+        """
+        Returns the title of the paper in the given language or if
+        None given the currently active language.
+        """
+        if language_code is None:
+            language_code = get_language()
+
+        translation = self.translation_set.filter(language_code=language_code).first()
+        if translation is None:
+            return self.translation_set.all().first().title
+        return translation.title
 
     def count_amendments(self):
         """

@@ -22,11 +22,7 @@
       <tr>
         <td>
             <a href="{% url 'paper-detail' paper.pk %}">
-                {% get_current_language as LANGUAGE_CODE %}
-                {% for translation in paper.translation_set.all %}
-                    {% if translation.language_code == LANGUAGE_CODE %} {{ translation.title }}
-                    {% endif %}
-                {% endfor %}
+              {{paper.translated_title}}
             </a>
         </td>
         <td>
