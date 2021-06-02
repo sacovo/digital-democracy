@@ -16,6 +16,7 @@ from io import BytesIO
 
 from django.conf import settings
 from django.contrib.auth import get_user_model
+from django.core.exceptions import ValidationError
 from django.test import Client, TestCase
 from django.utils import timezone
 
@@ -366,15 +367,10 @@ class BulkUserImportTestCase(TestCase):
         """
         Test that invalid users are not created.
         """
-        response = self.client.post(
-            BulkUserImportTestCase.path_var, {"csv_file": self.invalid_csv}
-        )
-
-        self.assertTrue(response.context["error"])
-        self.assertFalse(
-            get_user_model().objects.filter(username="valid_user").exists()
-        )
-        self.assertFalse(get_user_model().objects.filter(username="username").exists())
+        with self.assertRaises(ValidationError):
+            response = self.client.post(
+                BulkUserImportTestCase.path_var, {"csv_file": self.invalid_csv}
+            )
 
     def test_login_required(self):
         """
