@@ -116,10 +116,10 @@ Hier die zwei Buttons, die für dich relevant sind:
 | Anträge zusammenführen  | Ausgewählte Anträge werden in das finale Papier zusammengeführt. |
 
 ### Resultate eingeben
-Als Administrator*in kannst du die Resultate der Abstimmungen für einzelne Anträge festhalten, dies mittels Button "Resultate eingeben". Dort kannst du für jeden Antrag entweder "Angenommen" oder "Abgelehnt" wählen und die Resultate dann speichern. 
+Als Administrator*in kannst du die Resultate der Abstimmungen für einzelne Anträge festhalten, dies mittels Button "Resultate eingeben". Dort kannst du für jeden Antrag entweder "annehmen" oder "ablehnen" wählen und die Resultate dann speichern. 
 
 ### Anträge zusammenführen
-Danach integrierst du die Anträge in das finale Papier. Als "angenommen" markierte Anträge sind bereits ausgewählt.
+Danach integrierst du die Anträge in das finale Papier. Als "annehmen" markierte Anträge sind bereits ausgewählt.
 
 Wähle alle Anträge aus, die du in das endgültige Papier einfügen möchtest und klicke auf "Weiter".
 
