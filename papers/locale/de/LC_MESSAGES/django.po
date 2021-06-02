@@ -277,15 +277,11 @@ msgid "Clone"
 msgstr "Duplizieren"
 
 #: papers/templates/papers/amendment_detail.html:53
-#, fuzzy
-#| msgid "translations"
 msgid "Translations"
 msgstr "Übersetzungen"
 
 #: papers/templates/papers/amendment_detail.html:80
 #: papers/templates/pdf/amendment_pdf_template.html:29
-#, fuzzy
-#| msgid "comment"
 msgid "Recommendation"
 msgstr "Kommentar"
 
@@ -294,8 +290,6 @@ msgid "Edit recommendation"
 msgstr "Empfehlung bearbeiten"
 
 #: papers/templates/papers/amendment_detail.html:90
-#, fuzzy
-#| msgid "Latest comment"
 msgid "Create recommendation"
 msgstr "Letzter Kommentar"
 
