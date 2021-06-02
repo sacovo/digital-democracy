@@ -54,7 +54,7 @@ msgstr "Begründung"
 
 #: papers/forms.py:120
 msgid "Cannot create new amendments past a paper's deadline."
-msgstr ""
+msgstr "Ein Papier kann nicht erstellt werden"
 
 #: papers/forms.py:170 papers/templates/registration/profile.html:93
 #: papers/templates/registration/profile.html:131
@@ -100,7 +100,7 @@ msgstr "Antragsfrist"
 
 #: papers/models.py:107
 msgid "working title"
-msgstr "Working title"
+msgstr "Arbeitstitel"
 
 #: papers/models.py:176 papers/models.py:191 papers/models.py:226
 #: papers/models.py:408
@@ -210,7 +210,7 @@ msgstr "Übersetzung hinzufügen"
 
 #: papers/templates/papers/add_amendment_translation.html:13
 msgid "Original"
-msgstr "Orginal"
+msgstr "Original"
 
 #: papers/templates/papers/add_amendment_translation.html:16
 #: papers/templates/papers/amendment_detail.html:17
@@ -288,7 +288,7 @@ msgstr "Kommentar"
 
 #: papers/templates/papers/amendment_detail.html:86
 msgid "Edit recommendation"
-msgstr ""
+msgstr "Empfehlung bearbeiten"
 
 #: papers/templates/papers/amendment_detail.html:90
 #, fuzzy
@@ -329,7 +329,7 @@ msgstr "Mitgliedern"
 #, fuzzy
 #| msgid "create amendment"
 msgid "Retract amendment"
-msgstr "Antrag verfassen"
+msgstr "Antrag zurückziehen"
 
 #: papers/templates/papers/amendment_detail.html:144
 #: papers/templates/papers/amendment_list.html:42
@@ -353,7 +353,7 @@ msgstr "Kommentare"
 #, fuzzy
 #| msgid "No Comments Yet..."
 msgid "No comments yet..."
-msgstr "Keine Kommentare bis jetzt"
+msgstr "Keine Kommentare bis jetzt..."
 
 #: papers/templates/papers/amendment_detail.html:170
 #, fuzzy
@@ -458,7 +458,7 @@ msgstr "Anmelden"
 #, fuzzy
 #| msgid "language code"
 msgid "Language:"
-msgstr "Sprachcode"
+msgstr "Sprache"
 
 #: papers/templates/papers/confirm_deletion.html:4
 #, python-format
@@ -486,7 +486,7 @@ msgstr "Antrag verfassen"
 #, fuzzy
 #| msgid "Create new paper"
 msgid "Update paper"
-msgstr "Neues Papier erstellen"
+msgstr "Papier aktualisieren"
 
 #: papers/templates/papers/paper_create.html:5
 #: papers/templates/papers/paper_create.html:10
@@ -513,7 +513,7 @@ msgstr "Diese Übersetzung muss aktualisiert werden."
 #, fuzzy
 #| msgid "Sign this amendment"
 msgid "This paper is closed for amendments."
-msgstr "Das ist ein duplizierter Antrag."
+msgstr "Für dieses Papier können keine Anträge mehr eingereicht werden."
 
 #: papers/templates/papers/paper_detail.html:49
 msgid "Authors"
@@ -539,17 +539,17 @@ msgstr "Übersetzung aktualisieren"
 #, fuzzy
 #| msgid "update translation"
 msgid "Delete translation"
-msgstr "Übersetzung aktualisieren"
+msgstr "Übersetzung löschen"
 
 #: papers/templates/papers/paper_detail.html:101
 #, fuzzy
 #| msgid "Create new paper"
 msgid "Delete paper"
-msgstr "Neues Papier erstellen"
+msgstr "Papier löschen"
 
 #: papers/templates/papers/paper_detail.html:115
 msgid "Administrational"
-msgstr ""
+msgstr "Administratives"
 
 #: papers/templates/papers/paper_detail.html:117
 msgid "Enter results"
@@ -559,13 +559,13 @@ msgstr "Resultate eingeben"
 #, fuzzy
 #| msgid "amendments"
 msgid "Merge amendments"
-msgstr "Anträge"
+msgstr "Anträge zusammenführen"
 
 #: papers/templates/papers/paper_detail.html:130
 #, fuzzy
 #| msgid "Download as PDF"
 msgid "Downloads"
-msgstr "Als PDF herunterladen"
+msgstr "Downloads"
 
 #: papers/templates/papers/paper_detail.html:133
 msgid "Download as PPTX"
@@ -608,13 +608,13 @@ msgstr "Empfehlung bearbeiten für"
 
 #: papers/templates/papers/recommendation_form.html:16
 msgid "Create recommendation for"
-msgstr "Empfehlung für"
+msgstr "Empfehlung erstellen für"
 
 #: papers/templates/papers/search_result.html:7
 #, fuzzy
 #| msgid "Search Results:"
 msgid "Search Results"
-msgstr "Suchresultate:"
+msgstr "Suchresultate"
 
 #: papers/templates/papers/search_result.html:39
 #, fuzzy
@@ -626,7 +626,7 @@ msgstr "Autor*innen"
 #, fuzzy
 #| msgid "# Supporters"
 msgid "Supporters"
-msgstr "# Unterstützer*innen"
+msgstr "Unterstützer*innen"
 
 #: papers/templates/papers/search_result.html:55
 msgid "Your Notes"
@@ -640,7 +640,7 @@ msgstr "Notizen"
 
 #: papers/templates/papers/search_result.html:61
 msgid "Body"
-msgstr "Body"
+msgstr "Inhalt"
 
 #: papers/templates/papers/search_result.html:77
 msgid "Nothing given to search for."
@@ -651,7 +651,7 @@ msgstr "Es wurde im Suchfeld nichts eingegeben."
 #, fuzzy
 #| msgid "create amendment"
 msgid "Select amendments"
-msgstr "Antrag verfassen"
+msgstr "Anträge auswählen"
 
 #: papers/templates/papers/select_amendments.html:24
 msgid "Continue"
@@ -700,7 +700,7 @@ msgid "Sie haben Ihr Passwort erfolgreich geändert."
 msgstr ""
 
 #: papers/templates/registration/password_change_form.html:7
-msgid "Hier können Sie ihr Passwort ändern."
+msgid "Hier können Sie Ihr Passwort ändern."
 msgstr ""
 
 #: papers/templates/registration/password_change_form.html:13
@@ -722,7 +722,7 @@ msgid "Neues Passwort setzen"
 msgstr ""
 
 #: papers/templates/registration/password_reset_confirm.html:8
-msgid "Schreiben Sie Ihr neues Passwort in beide Felder um es zu setzen."
+msgid "Schreiben Sie Ihr neues Passwort in beide Felder, um es zu setzen."
 msgstr ""
 
 #: papers/templates/registration/password_reset_done.html:10
@@ -742,12 +742,12 @@ msgstr ""
 
 #: papers/templates/registration/password_reset_form.html:11
 msgid ""
-"Geben Sie ihr Passwort und wir schicken Ihnen eine Email um ihr Passwort "
+"Geben Sie ihr Passwort und wir schicken Ihnen eine E-Mail um ihr Passwort "
 "zurückzusetzen"
 msgstr ""
 
 #: papers/templates/registration/password_reset_form.html:17
-msgid "E-mail senden"
+msgid "E-Mail senden"
 msgstr ""
 
 #: papers/templates/registration/profile.html:8
@@ -761,7 +761,7 @@ msgstr "Erstellt am"
 
 #: papers/templates/registration/profile.html:59
 msgid "# Supporters"
-msgstr "# Unterstützer*innen"
+msgstr "Unterstützer*innen"
 
 #: papers/templates/registration/profile.html:96
 msgid "Likes"
@@ -769,11 +769,11 @@ msgstr "Likes"
 
 #: papers/templates/registration/profile.html:128
 msgid "Note"
-msgstr ""
+msgstr "Notiz"
 
 #: papers/utils.py:198
 msgid "New digital-democracy account"
-msgstr "Neuer Account für Digital Democracy"
+msgstr "Neues Konto für Digital Democracy"
 
 #: papers/views.py:139
 msgid "Cannot delete only translation of this paper"
