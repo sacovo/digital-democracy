@@ -90,8 +90,8 @@ Hast du einen fremden Antrag offen, hast du noch folgende Möglichkeiten:
 * Über die Kommentarfunktion kannst du schon vor der Generalversammlung mit anderen Mitgliedern über den Antrag diskutieren. Erstelle dazu Kommentare oder like Kommentare von anderen.
 * Falls du dir private Notizen zu diesem Antrag machen möchtest, kannst du das auch auf der rechten Seite unten tun. Diese sind nur für dich ersichtlich.
 
-<img src="user-guide-create-comment.png" alt="Kommentar erstellen" width="374" />
-<img src="user-guide-create-note.png" alt="Private Notiz erstellen" width="369" />
+<img src="user-guide-create-comment.png" alt="Kommentar erstellen" width="187" />
+<img src="user-guide-create-note.png" alt="Private Notiz erstellen" width="184" />
 
 | Buttons        | Aktion       | 
 |:-------------- |:--------------| 
