@@ -86,10 +86,11 @@ Dein Änderungsvorschlag wurde nun erstellt und du gelangst direkt auf dessen De
 Auf dieser Detailansicht kannst du deinen Antrag weiter bearbeiten oder wieder zurückziehen. 
 
 Hast du einen fremden Antrag offen, hast du noch folgende Möglichkeiten:
-* Du kannst Anträge von anderen Mitgliedern offiziell unterstützen. 
+* Du kannst Anträge von anderen Mitgliedern offiziell unterschreiben. 
 * Über die Kommentarfunktion kannst du schon vor der Generalversammlung mit anderen Mitgliedern über den Antrag diskutieren. Erstelle dazu Kommentare oder like Kommentare von anderen.
 * Falls du dir private Notizen zu diesem Antrag machen möchtest, kannst du das auch auf der rechten Seite unten tun. Diese sind nur für dich ersichtlich.
 
+<img src="user-guide-sign-amendment.jpg" alt="Antrag unterstützen und unterschreiben" width="243" />
 <img src="user-guide-create-comment.png" alt="Kommentar erstellen" width="187" />
 <img src="user-guide-create-note.png" alt="Private Notiz erstellen" width="184" />
 
@@ -98,7 +99,7 @@ Hast du einen fremden Antrag offen, hast du noch folgende Möglichkeiten:
 | Veröffentlichen    | Publiziert den Antrag: andere Mitglieder sehen deinen Antrag jetzt. |
 | Bearbeiten   | Du gelangst zur Bearbeitungsseite deines Antrags. |
 | Duplizieren   | Dupliziert den Antrag A: du erstellst damit einen neuen Antrag B für dieses Papier mit der Änderung von Antrag A. |
-| Empfehlung erstellen  | Öffnet die Seite zur Erstellung einer Empfehlung. Wähle aus zwischen: "ablehnen", "akzeptieren" oder "bearbeitet" und begründe deine Empfehlung. |
+| Empfehlung erstellen  | Öffnet die Seite zur Erstellung einer Empfehlung. Wähle aus zwischen: "ablehnen", "annehmen" oder "modifiziert annehmen" und begründe deine Empfehlung. |
 | Antrag unterstützen  | Antrag von einem anderen Mitglied unterstützen und offiziell unterschreiben |
 | Antrag zurückziehen  | Ist der geöffnete Antrag von dir, wird der Antrag hier wieder zurückgezogen. |
 
@@ -110,9 +111,8 @@ Hast du einen fremden Antrag offen, hast du noch folgende Möglichkeiten:
 
 Dass eine Übersetzung fehlt, siehst du am Plus (+) vor der Sprache. Um für ein Papier eine neue Übersetzung zu erstellen, klickst du auf eine entsprechende Registerkarte. 
 
-<img src="user-guide-add-language.png" alt="Übersetzung hinzufügen" width="310" />
+<img src="user-guide-add-language.png" alt="Übersetzung hinzufügen" width="410" /></br></br>
 
-<br>
 Auf der rechten Seite ergänzst du dann alle Informationen, wobei dir auf der linken Seite die schon vorhandenen Übersetzungen angezeigt werden.
 
 <img src="user-guide-translate-paper.png" alt="Papier übersetzen" width="757" />
@@ -173,6 +173,6 @@ So gehst du durch jeden Antrag. Das Papier sollte am Schluss keine farbigen Text
 
 Ist das Papier endgültig abgeschlossen und sind alle Übersetzungen erstellt, empfehlen wir, das Papier auf "Finalized" zu setzen. Dies machst du über den Button "Papier aktualisieren". 
 
-<img src="user-guide-paper-state.png" alt="Status ändern" width="866" />
+<img src="user-guide-paper-state.png" alt="Status ändern" width="434" />
 
 Das Papier kann dann nicht mehr bearbeitet werden und die Anträge werden auf der rechten Seite nicht mehr angezeigt. Das finalisierte Papier kann dann je Übersetzung als PDF heruntergeladen werden.
