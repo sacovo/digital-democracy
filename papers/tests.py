@@ -368,7 +368,7 @@ class BulkUserImportTestCase(TestCase):
         Test that invalid users are not created.
         """
         with self.assertRaises(ValidationError):
-            response = self.client.post(
+            self.client.post(
                 BulkUserImportTestCase.path_var, {"csv_file": self.invalid_csv}
             )
 
