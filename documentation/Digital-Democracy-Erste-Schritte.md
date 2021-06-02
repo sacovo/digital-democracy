@@ -173,6 +173,6 @@ So gehst du durch jeden Antrag. Das Papier sollte am Schluss keine farbigen Text
 
 Ist das Papier endgültig abgeschlossen und sind alle Übersetzungen erstellt, empfehlen wir, das Papier auf "Finalized" zu setzen. Dies machst du über den Button "Papier aktualisieren". 
 
-<img src="user-guide-paper-state.png" alt="Status ändern" width="434" />
+<img src="user-guide-paper-state.png" alt="Status ändern" width="380" />
 
 Das Papier kann dann nicht mehr bearbeitet werden und die Anträge werden auf der rechten Seite nicht mehr angezeigt. Das finalisierte Papier kann dann je Übersetzung als PDF heruntergeladen werden.
