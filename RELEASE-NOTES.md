@@ -1,9 +1,8 @@
-
 # Release Notes
 
 ## Release 1
 
-###Features
+### Features
 
 - [<a href='https://www.cs.technik.fhnw.ch/jira20/browse/VT342006-18'>VT342006-18</a>] - Write paper
 - [<a href='https://www.cs.technik.fhnw.ch/jira20/browse/VT342006-19'>VT342006-19</a>] - Save as draft or paper
@@ -18,7 +17,7 @@
 
 ## Release 2
 
-###Features
+### Features
 
 - [<a href='https://www.cs.technik.fhnw.ch/jira20/browse/VT342006-15'>VT342006-15</a>] - Create new user
 - [<a href='https://www.cs.technik.fhnw.ch/jira20/browse/VT342006-16'>VT342006-16</a>] - Identify user (Login)
@@ -41,7 +40,7 @@
 - [<a href='https://www.cs.technik.fhnw.ch/jira20/browse/VT342006-97'>VT342006-97</a>] - Translation of the interface
 - [<a href='https://www.cs.technik.fhnw.ch/jira20/browse/VT342006-98'>VT342006-98</a>] - Only show relevant part of an amendment
 
-###Bugs
+### Bugs
 
 - [<a href='https://www.cs.technik.fhnw.ch/jira20/browse/VT342006-128'>VT342006-128</a>] - Prevent JS injection
 - [<a href='https://www.cs.technik.fhnw.ch/jira20/browse/VT342006-129'>VT342006-129</a>] - Wrong user names in supporter list (should set supporter&#39;s user name instead of author)
@@ -49,7 +48,7 @@
 
 ## Release 3
 
-###Features
+### Features
 
 - [<a href='https://www.cs.technik.fhnw.ch/jira20/browse/VT342006-40'>VT342006-40</a>] - Change state of paper
 - [<a href='https://www.cs.technik.fhnw.ch/jira20/browse/VT342006-65'>VT342006-65</a>] - See final version of amendment
@@ -80,14 +79,14 @@
 - [<a href='https://www.cs.technik.fhnw.ch/jira20/browse/VT342006-171'>VT342006-171</a>] - Separate buttons
 
 
-###Bugs
+### Bugs
 - [<a href='https://www.cs.technik.fhnw.ch/jira20/browse/VT342006-174'>VT342006-174</a>] - Linking of translated amendments doesn&#39;t always work
 - [<a href='https://www.cs.technik.fhnw.ch/jira20/browse/VT342006-178'>VT342006-178</a>] - Retracted state in create paper form
 
 
 ## Release 4
 
-###Features
+### Features
 
 - [<a href='https://www.cs.technik.fhnw.ch/jira20/browse/VT342006-57'>VT342006-57</a>] - Recommend acception/rejection or modified acception
 - [<a href='https://www.cs.technik.fhnw.ch/jira20/browse/VT342006-59'>VT342006-59</a>] - Basic pdf generation
@@ -102,7 +101,7 @@
 - [<a href='https://www.cs.technik.fhnw.ch/jira20/browse/VT342006-201'>VT342006-201</a>] - Update amendments in order to merge next amendment
 
 
-###Bugs
+### Bugs
 
 - [<a href='https://www.cs.technik.fhnw.ch/jira20/browse/VT342006-192'>VT342006-192</a>] - Title in pptx file not rendered correctly
 - [<a href='https://www.cs.technik.fhnw.ch/jira20/browse/VT342006-193'>VT342006-193</a>] - &quot;edit recommendation&quot; button should be red
@@ -110,7 +109,7 @@
 
 ## Release 5
 
-###Features
+### Features
 
 - [<a href='https://www.cs.technik.fhnw.ch/jira20/browse/VT342006-29'>VT342006-29</a>] - User can write private note for one amendment
 - [<a href='https://www.cs.technik.fhnw.ch/jira20/browse/VT342006-58'>VT342006-58</a>] - Clone an existing amendment and modify it
@@ -119,7 +118,7 @@
 - [<a href='https://www.cs.technik.fhnw.ch/jira20/browse/VT342006-222'>VT342006-222</a>] - Make bullet points available in editor
 
 
-###Bugs
+### Bugs
 
 - [<a href='https://www.cs.technik.fhnw.ch/jira20/browse/VT342006-202'>VT342006-202</a>] - Fix button padding
 - [<a href='https://www.cs.technik.fhnw.ch/jira20/browse/VT342006-205'>VT342006-205</a>] - Fix text alignment (Comments)
@@ -151,11 +150,11 @@
 
 ## Release 6
 
-###Features
+### Features
 
 - [<a href='https://www.cs.technik.fhnw.ch/jira20/browse/VT342006-168'>VT342006-168</a>] - Translation for Italian and French
 
-###Bugs
+### Bugs
 - [<a href='https://www.cs.technik.fhnw.ch/jira20/browse/VT342006-233'>VT342006-233</a>] - Footer: make language switch available
 - [<a href='https://www.cs.technik.fhnw.ch/jira20/browse/VT342006-237'>VT342006-237</a>] - Set search text field height like buttons
 - [<a href='https://www.cs.technik.fhnw.ch/jira20/browse/VT342006-240'>VT342006-240</a>] - Paper overview: title not updating when updating translation
@@ -173,4 +172,6 @@
 - [<a href='https://www.cs.technik.fhnw.ch/jira20/browse/VT342006-264'>VT342006-264</a>] - Paper list: Create paper button should be below title line
 - [<a href='https://www.cs.technik.fhnw.ch/jira20/browse/VT342006-265'>VT342006-265</a>] - Usernames to user-id in each HTML
 - [<a href='https://www.cs.technik.fhnw.ch/jira20/browse/VT342006-266'>VT342006-266</a>] - Paper search: papers with several translations are shown multiple times
+- [<a href='https://www.cs.technik.fhnw.ch/jira20/browse/VT342006-268'>VT342006-268</a>] - Profile page: updated paper title isn&#39;t updated here
+- [<a href='https://www.cs.technik.fhnw.ch/jira20/browse/VT342006-270'>VT342006-270</a>] - Paper-list should fallback to existing paper title if there&#39;s no translation in chosen language
 
