@@ -34,19 +34,25 @@
         <td>
           {{paper.amendment_deadline}}
         </td>
-        <td>
-            {% if paper.latest_comment %}
-                {% if paper.latest_amendment.created_at < paper.latest_comment.created_on %}
-                    <a href="{% url 'amendment-detail' paper.latest_amendment.pk %}">
-                        {{ paper.latest_amendment.created_at }}
-                    </a>
-                {% else %}
-                    <a href="{% url 'amendment-detail' paper.latest_comment.amendment_id %}">
-                        {{ paper.latest_comment.created_on }}
-                    </a>
-                {% endif %}
-            {% endif %}
-        </td>
+          <td>
+              {% if paper.comments.last.created_on > paper.latest_comment.created_on %}
+                  <a href="{% url 'paper-detail' paper.pk %}">
+                      {{ paper.comments.last.created_on }}
+                  </a>
+              {% elif paper.comments.last.created_on < paper.latest_comment.created_on %}
+                  <a href="{% url 'amendment-detail' paper.latest_comment.amendment_id %}">
+                      {{ paper.latest_comment.created_on }}
+                  </a>
+              {% elif paper.latest_comment %}
+                  <a href="{% url 'amendment-detail' paper.latest_comment.amendment_id %}">
+                      {{ paper.latest_comment.created_on }}
+                  </a>
+              {% else %}
+                  <a href="{% url 'paper-detail' paper.pk %}">
+                      {{ paper.comments.last.created_on }}
+                  </a>
+              {% endif %}
+          </td>
       </tr>
       {% endfor %}
   </tbody>
