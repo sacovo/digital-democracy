@@ -28,7 +28,7 @@
     <!-- Amendment options -->
     <section class="amendment-options">
     <div class="row">
-        {% if request.user.username == amendment.author.name %}
+        {% if request.user.author = amendment.author %}
           {% if amendment.state == 'draft' or amendment.state == 'retracted'%}
           <form method="POST">
             {% csrf_token %}
@@ -129,7 +129,7 @@
 
     <!-- Retract Button-->
     <section class="retract-amendment">
-      {% if request.user.username == amendment.author.name %}
+      {% if request.user.author == amendment.author %}
       <hr>
       <h2 class="h4">{% trans "Retract amendment" %}</h2>
       <form method="POST">
@@ -172,7 +172,7 @@
               {% trans 'Like' %}
               {% endif %}
             </button>
-              {% if comment.author.user_id == request.user.pk %}
+              {% if comment.author == request.user.author %}
               <a class="btn btn-sm cancelButton mx-1" href="{% url 'comment-delete' comment.pk %}">{% trans 'Delete' %}</a>
               {% endif %}
             </div>
