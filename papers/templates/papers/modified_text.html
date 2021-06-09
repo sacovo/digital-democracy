@@ -1,0 +1,16 @@
+{% extends 'papers/base.html' %}
+{% load static i18n %}
+{% load bootstrap4 %}
+
+{% block title %}{% trans 'Update paper' %}{% endblock %}
+
+{% block head %}{{form.media}}{% endblock %}
+{% block content %}
+
+<form method="POST">
+    {% csrf_token %}
+    {% bootstrap_form form  form_group_class='form-group'%}
+    <button type="submit" class="btn btn-sm btn-block submitButton">{% trans 'Submit' %}</button>
+</form>
+
+{% endblock %}

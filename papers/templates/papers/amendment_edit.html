@@ -2,7 +2,6 @@
 {% load static i18n %}
 {% load bootstrap4 %}
 
-
 {% block head %}
 {{form.media}}
 <script src="{% static "jquery-3.5.1.min.js" %}">
@@ -12,8 +11,13 @@
 
 <form method="POST">
     {% csrf_token %}
+    {% if clone %}
+    <div class="alert alert-warning" role="alert">
+        {% trans 'This is a cloned amendment.' %}
+    </div>
+    {% endif %}
     {% bootstrap_form form  form_group_class='form-group'%}
-    <button type="submit" class="btn btn-sm btn-block submitButton">{% trans 'submit' %}</button>
+    <button type="submit" class="btn btn-sm btn-block submitButton">{% trans 'Submit' %}</button>
 </form>
 
 {% endblock %}

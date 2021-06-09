@@ -5,20 +5,21 @@
 
 {% block content %}
 
-<h1>{% blocktrans with username=user %}Contributions by {{ username }}{% endblocktrans %}</h1>
+<h1>{% blocktrans with username=member %}Contributions by {{ username }}{% endblocktrans %}</h1>
+<br>
 <h2>{% trans 'Papers' %}</h2>
 <table class="table">
   <caption class="sr-only">{% trans 'amendments' %}</caption>
   <thead>
     <tr>
-      <th scope="col">
+      <th scope="col" class="col-1">
         {% trans 'Title' %}
       </th>
-      <th scope="col">
+      <th scope="col" class="col-2">
         {% trans 'Created at' %}
       </th>
-      <th scope="col">
-        {% trans 'deadline for amendments' %}
+      <th scope="col" class="col-2">
+        {% trans 'Deadline for amendments' %}
       </th>
     </tr>
   </thead>
@@ -28,7 +29,7 @@
       <tr>
         <td>
           <a href="{% url 'paper-detail' paper.pk %}">
-            {{ paper }}
+            {{ paper.translated_title }}
           </a>
         </td>
         <td>
@@ -48,13 +49,13 @@
   <caption class="sr-only">{% trans 'amendments' %}</caption>
   <thead>
     <tr>
-      <th scope="col">
+      <th scope="col" class="col-1">
         {% trans 'Title' %}
       </th>
-      <th scope="col">
+      <th scope="col" class="col-2">
         {% trans 'State' %}
       </th>
-      <th scope="col">
+      <th scope="col" class="col-2">
         {% trans '# Supporters' %}
       </th>
     </tr>
@@ -65,7 +66,7 @@
       <tr>
         <td>
           <a href="{% url 'amendment-detail' amendment.pk %}">
-            {{ amendment.paper }}, {{ amendment.title }}
+            {{ amendment.paper }}: {{ amendment.title }}
           </a>
         </td>
         <td>
@@ -85,13 +86,13 @@
   <caption class="sr-only">{% trans 'Comments' %}</caption>
   <thead>
     <tr>
-      <th scope="col">
+      <th scope="col" class="col-1">
         {% trans 'Amendment' %}
       </th>
-      <th scope="col">
+      <th scope="col" class="col-2">
         {% trans 'Comment' %}
       </th>
-	  <th scope="col">
+	  <th scope="col" class="col-2">
         {% trans 'Likes' %}
       </th>
     </tr>
@@ -102,7 +103,7 @@
       <tr>
         <td>
           <a href="{% url 'amendment-detail' comment.amendment.pk %}">
-            {{ comment.amendment.paper }} #{{ comment.amendment.title }}
+            {{ comment.amendment.paper }}: {{ comment.amendment.title }}
           </a>
         </td>
         <td>
@@ -116,4 +117,36 @@
     </tr>
   </tbody>
 </table>
+
+{% if member.id == user.id %}
+<h2>{% trans 'Notes' %}</h2>
+<table class="table">
+  <caption class="sr-only">{% trans 'Notes' %}</caption>
+  <thead>
+    <tr>
+      <th scope="col" class="col-1">
+        {% trans 'Note' %}
+      </th>
+      <th scope="col" class="col-3">
+        {% trans 'Comment' %}
+      </th>
+	  
+    </tr>
+  </thead>
+  <tbody>
+	{% for note in notes %}
+	<tr>
+	  <td>
+	    <a href="{% url 'amendment-detail' note.amendment.pk %}">
+		  {{ note.amendment.paper }}: {{ note.amendment.title }}
+	    </a>
+	  </td>
+	  <td>
+		{{ note.body |truncatechars:100 |safe }}
+	  </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endif %}
 {% endblock %}

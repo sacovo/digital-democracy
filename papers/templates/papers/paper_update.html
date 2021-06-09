@@ -1,0 +1,27 @@
+{% extends 'papers/base.html' %}
+{% load bootstrap4 %}
+{% load i18n %}
+
+{% block title %}{% trans 'Update paper' %}{% endblock %}
+
+{% block head %}{{form.media}}{% endblock %}
+
+{% block content %}
+<h1 class="h3">{% trans 'Update paper' %}</h1>
+<hr>
+<form action="" method="POST" id="createPaperForm">
+  {% csrf_token %}
+  {% bootstrap_form form  form_group_class='form-group'%}
+  {% buttons %}
+  <br>
+  <div class="row">
+    <div class="col">
+      <a class="btn btn-sm btn-block btn-secondary cancelButton" href="{% url 'paper-detail' paper.pk %}">{% trans 'Cancel' %}</a>
+    </div>
+    <div class="col">
+      <button type="submit" class="btn btn-sm btn-block submitButton">{% trans 'Submit' %}</button>
+    </div>
+  </div>
+  {% endbuttons %}
+</form>
+{% endblock %}

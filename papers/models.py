@@ -1,19 +1,58 @@
 """
 Database models for app papers
+
+This module defines all objects that are used to store data for this application.
+
+The django orm maps these models to tables in the database. If you change these models
+you need to create migrations to alter these tables. You can use the makemigrations command
+for that. While creating these migrations you might need to provide default values for new fields
+that are not nullable.
+
+To learn more visit: https://docs.djangoproject.com/en/3.2/topics/db/models/
 """
 from ckeditor.fields import RichTextField
 from django.conf import settings
 from django.db import models
 from django.shortcuts import reverse
 from django.utils.html import mark_safe
-from django.utils.translation import gettext as _
+from django.utils.translation import get_language, gettext as _
 
 from papers import utils
 from papers.utils import index_of_first_change, index_of_last_change
 
 # Create your models here.
 
-STATES = (("draft", _("Draft")), ("public", _("Published")), ("final", _("Finalized")))
+PAPER_STATES = (
+    (
+        "draft",
+        mark_safe(
+            u'<u title="ⓘ This paper is a private draft and not ready for amendments.">Draft</u>'
+        ),
+    ),
+    (
+        "public",
+        mark_safe(
+            u'<u title="ⓘ This paper is public and ready for amendments.">Published</u>'
+        ),
+    ),
+    (
+        "final",
+        mark_safe(
+            u'<u title="ⓘ This paper is final no more changes can be made.">Finalized</u>'
+        ),
+    ),
+)
+
+AMENDMENT_STATES = (
+    ("draft", mark_safe(u'<u title="ⓘ This amendment is a draft.">Draft</u>')),
+    ("public", mark_safe(u'<u title="ⓘ This amendment is public.">Published</u>')),
+    (
+        "retracted",
+        mark_safe(u'<u title="ⓘ This amendment is retracted.">Retracted</u>'),
+    ),
+    ("accepted", mark_safe(u'<u title="ⓘ This amendment is accepted.">Accepted</u>')),
+    ("rejected", mark_safe(u'<u title="ⓘ This amendment is rejected.">Rejected</u>')),
+)
 
 
 class Tag(models.Model):
@@ -67,9 +106,18 @@ class Paper(models.Model):
 
     working_title = models.CharField(max_length=255, verbose_name=_("working title"))
 
-    state = models.CharField(choices=STATES, max_length=20, verbose_name=_("state"))
+    state = models.CharField(
+        choices=PAPER_STATES,
+        max_length=20,
+        verbose_name=_("state"),
+        default=PAPER_STATES[0][0],
+    )
 
     authors = models.ManyToManyField(Author, blank=True, verbose_name=_("authors"))
+
+    def is_author(self, user):
+        """Return true if the given user is author of this paper."""
+        return self.authors.filter(user=user).exists()
 
     def __str__(self):
         return self.working_title
@@ -93,6 +141,19 @@ class Paper(models.Model):
         Returns the according translation
         """
         return self.translation_set.get(language_code=language_code)
+
+    def translated_title(self, language_code=None):
+        """
+        Returns the title of the paper in the given language or if
+        None given the currently active language.
+        """
+        if language_code is None:
+            language_code = get_language()
+
+        translation = self.translation_set.filter(language_code=language_code).first()
+        if translation is None:
+            return self.translation_set.all().first().title
+        return translation.title
 
     def count_amendments(self):
         """
@@ -133,6 +194,11 @@ class PaperTranslation(models.Model):
     """
     The content of a paper in a specific language.
     """
+
+    needs_update = models.BooleanField(
+        default=False,
+        help_text=_("Do the other translations need an update after this edit?"),
+    )
 
     paper = models.ForeignKey(
         Paper, models.CASCADE, verbose_name=_("paper"), related_name="translation_set"
@@ -182,7 +248,9 @@ class Amendment(models.Model):
     author = models.ForeignKey(Author, models.CASCADE, verbose_name=_("author"))
     created_at = models.DateTimeField(auto_now_add=True, verbose_name=_("created at"))
 
-    state = models.CharField(max_length=7, verbose_name=_("state"), choices=STATES)
+    state = models.CharField(
+        max_length=12, verbose_name=_("state"), choices=AMENDMENT_STATES
+    )
     reason = RichTextField(config_name="basic", verbose_name=_("reason"))
     supporters = models.ManyToManyField(settings.AUTH_USER_MODEL)
     tags = models.ManyToManyField(Tag, related_name="tag")
@@ -210,6 +278,11 @@ class Amendment(models.Model):
         """
         Returns only the part of the paper that is changed through this amendment
         """
+        if self.start_index == self.end_index:
+            return _(
+                "This amendment does not change the content of the paper, "
+                "see the reason for more information."
+            )
 
         return utils.extract_content(self.content)
 
@@ -268,6 +341,35 @@ class Amendment(models.Model):
         verbose_name_plural = _("amendments")
 
 
+class Note(models.Model):
+    """
+    Note for an amendment
+    """
+
+    amendment = models.ForeignKey(
+        Amendment,
+        models.CASCADE,
+        verbose_name=_("amendment"),
+        related_name="notes",
+        null=True,
+    )
+    author = models.ForeignKey(
+        Author, models.CASCADE, verbose_name=_("author"), blank=True, null=True
+    )
+    body = models.TextField(verbose_name=_("body"))
+    created_on = models.DateTimeField(auto_now_add=True, verbose_name=_("created at"))
+
+    @property
+    def name(self):
+        """
+        The name of the author of this note
+        """
+        return self.author.name
+
+    def __str__(self):
+        return "Note by {}: {}".format(self.name, self.body)
+
+
 class Comment(models.Model):
     """
     A comment to an amendment
@@ -306,3 +408,92 @@ class Comment(models.Model):
     class Meta:
         verbose_name = _("comment")
         verbose_name_plural = _("comments")
+
+
+class PaperComment(models.Model):
+    """
+    A comment to an amendment
+    """
+
+    paper = models.ForeignKey(
+        Paper,
+        models.CASCADE,
+        verbose_name=_("paper"),
+        related_name="comments",
+        null=True,
+    )
+    author = models.ForeignKey(
+        Author, models.CASCADE, verbose_name=_("author"), blank=True, null=True
+    )
+    body = models.TextField(verbose_name=_("body"))
+    created_on = models.DateTimeField(auto_now_add=True, verbose_name=_("created at"))
+    likes = models.ManyToManyField(settings.AUTH_USER_MODEL, verbose_name=_("likes"))
+
+    @property
+    def name(self):
+        """
+        The name of the author of this comment
+        """
+        return self.author.name
+
+    def __str__(self):
+        return "Comment {} by {}".format(self.body, self.name)
+
+    def num_likes(self):
+        """
+        Number of likes for this comment
+        """
+        return self.likes.all().count()
+
+    class Meta:
+        verbose_name = _("comment")
+        verbose_name_plural = _("comments")
+
+
+REJECT = "reject"
+ACCEPT = "accept"
+MODIFIED = "modified"
+
+RECOMMENDATIONS = (
+    (REJECT, _("reject")),
+    (ACCEPT, _("accept")),
+    (MODIFIED, _("modified")),
+)
+
+
+class Recommendation(models.Model):
+    """
+    A recommendation for an amendent, either: accept, reject or a modification
+    """
+
+    amendment = models.OneToOneField(
+        Amendment, models.CASCADE, verbose_name=_("amendment")
+    )
+
+    recommendation = models.CharField(max_length=80, choices=RECOMMENDATIONS)
+    reason = RichTextField(blank=True)
+    alternative = models.ForeignKey(
+        Amendment,
+        models.SET_NULL,
+        verbose_name=_("alternative"),
+        null=True,
+        blank=True,
+        related_name="recommended_by",
+    )
+
+    def save(self, *args, **kwargs):  # pylint: disable=W0222
+        if kwargs.pop("update_translations", False):
+            for translation in self.amendment.translations.all():
+                translated_recomendation = Recommendation.objects.filter(
+                    amendment=translation
+                ).first()
+                if translated_recomendation:
+                    translated_recomendation.recommendation = self.recommendation
+                    translated_recomendation.save(update_translations=False)
+                else:
+                    translated_recomendation = Recommendation(
+                        amendment=translation, recommendation=self.recommendation
+                    )
+                    translated_recomendation.save(update_translations=False)
+
+        return super().save(*args, **kwargs)

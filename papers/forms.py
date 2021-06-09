@@ -1,13 +1,26 @@
 """
 Forms
+
+These are the different forms that are used throughout the application.
+
+Every form has fields, that are directly translated into fields displayed
+in the form to the user. Forms can provide default values and perform validations.
+
+ModelForm is a subclass of a form, that works directly on the models in the database.
+
+To learn more about forms start here:
+https://docs.djangoproject.com/en/3.2/topics/forms/
+
 """
 import bleach
 from ckeditor.widgets import CKEditorWidget
 from django import forms
 from django.conf import settings
+from django.core.exceptions import ValidationError
+from django.utils import timezone
 from django.utils.translation import gettext as _
 
-from papers import models
+from papers import models, utils
 
 
 class PaperCreateForm(forms.Form):
@@ -15,16 +28,12 @@ class PaperCreateForm(forms.Form):
     Form to create a new paper
     """
 
-    title = forms.CharField(label=_("title"))
+    title = forms.CharField(label=_("Title"))
     language_code = forms.ChoiceField(
         label=" ", widget=forms.RadioSelect, choices=settings.LANGUAGES
     )
-    content = forms.CharField(widget=CKEditorWidget, label=_("content"))
-    state = forms.ChoiceField(
-        widget=forms.RadioSelect(attrs={"class": "radioSelection"}),
-        choices=models.STATES,
-        label=_("state"),
-    )
+    content = forms.CharField(widget=CKEditorWidget, label=_("Content"))
+    deadline = forms.DateTimeField(initial=timezone.now(), label=_("Deadline"))
 
     def clean_content(self):
         """
@@ -35,6 +44,21 @@ class PaperCreateForm(forms.Form):
             tags=settings.BLEACH_ALLOWED_TAGS,
             attributes=settings.BLEACH_ALLOWED_ATTRIBUTES,
         )
+
+
+class PaperUpdateForm(forms.ModelForm):
+    """Form to update a paper"""
+
+    state = forms.ChoiceField(
+        widget=forms.RadioSelect(attrs={"class": "radioSelection"}),
+        choices=models.PAPER_STATES,
+        label=_("state"),
+        help_text="ⓘ Hover over the states for more information.",
+    )
+
+    class Meta:
+        model = models.Paper
+        fields = ["amendment_deadline", "state", "authors"]
 
 
 class AmendmentForm(forms.Form):
@@ -60,7 +84,9 @@ class AmendmentForm(forms.Form):
 
         elif self.amendment:
             self.fields["title"].initial = self.amendment.title
-            self.fields["content"].initial = self.amendment.content
+            self.fields["content"].initial = utils.add_lite_classes(
+                self.amendment.content
+            )
             self.fields["reason"].initial = self.amendment.reason
 
     def create_amendment(self, translation, author):
@@ -81,6 +107,18 @@ class AmendmentForm(forms.Form):
             state="draft",
             reason=reason,
         )
+
+    def clean(self):
+        # prevent the creation of new amendments if the server time is past the paper's deadline
+        deadline = None
+        if self.translation:
+            deadline = self.translation.paper.amendment_deadline
+        if self.amendment:
+            deadline = self.amendment.paper.amendment_deadline
+        if deadline and timezone.now() > deadline:
+            raise ValidationError(
+                _("Cannot create new amendments past a paper's deadline.")
+            )
 
     def clean_content(self):
         """
@@ -110,16 +148,26 @@ class TranslationForm(forms.ModelForm):
 
     class Meta:
         model = models.PaperTranslation
-        fields = ["title", "content"]
+        fields = ["title", "content", "needs_update"]
+
+    def clean_content(self):
+        """
+        Clean content
+        """
+        return bleach.clean(
+            self.cleaned_data["content"],
+            tags=settings.BLEACH_ALLOWED_TAGS,
+            attributes=settings.BLEACH_ALLOWED_ATTRIBUTES,
+        )
 
 
 class CommentForm(forms.Form):
     """
-    Form for comments
+    Form for comments and private notes
     """
 
     comment = forms.CharField(
-        widget=CKEditorWidget(config_name="basic"), label=_("comment")
+        widget=CKEditorWidget(config_name="basic"), label=_("Comment")
     )
 
     def clean_comment(self):
@@ -139,3 +187,71 @@ class UserUploadForm(forms.Form):
     """
 
     csv_file = forms.FileField()
+
+
+class RecommendationForm(forms.ModelForm):
+    """
+    Form to create or update a recommendation
+    """
+
+    class Meta:
+        model = models.Recommendation
+        fields = ["recommendation", "reason"]
+
+    def clean_reason(self):
+        """
+        Clean comments from script tasks
+        """
+        return bleach.clean(
+            self.cleaned_data["reason"],
+            tags=settings.BLEACH_ALLOWED_TAGS,
+            attributes=settings.BLEACH_ALLOWED_ATTRIBUTES,
+        )
+
+
+class AmendmentChoiceField(forms.ModelMultipleChoiceField):
+    """
+    Field to select an amendment, overrides the label function.
+    """
+
+    def label_from_instance(self, obj):
+        return obj.title
+
+
+class AmendmentSelect(forms.Form):
+    """
+    Displays a list of all amendments that should be merged into a paper.
+    """
+
+    merge = AmendmentChoiceField(
+        queryset=models.Amendment.objects.all(),
+        widget=forms.CheckboxSelectMultiple,
+        label=_("Amendments to merge into final paper"),
+        help_text=_(
+            "Select all amendments that you wish to merge into the final paper. "
+            "Accepted amendments have already been selected."
+        ),
+    )
+
+    def __init__(self, *args, **kwargs):
+        translation = kwargs.pop("translation")
+        super().__init__(*args, **kwargs)
+        self.fields["merge"].queryset = models.Amendment.objects.filter(
+            paper_id=translation.paper_id, language_code=translation.language_code
+        )
+        self.fields["merge"].initial = models.Amendment.objects.filter(
+            paper_id=translation.paper_id,
+            language_code=translation.language_code,
+            state="accepted",
+        )
+
+
+class FinalizePaperForm(forms.Form):
+    """
+    Form to finalize one translation of a paper.
+    """
+
+    title = forms.CharField(label=_("title"))
+    content = forms.CharField(
+        widget=CKEditorWidget(config_name="track-changes"), label=_("content")
+    )

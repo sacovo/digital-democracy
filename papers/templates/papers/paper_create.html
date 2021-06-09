@@ -4,22 +4,22 @@
 
 {% block title %}{% trans 'Create new paper' %}{% endblock %}
 
-{% block head %}
-{{form.media}}
-{% endblock %}
+{% block head %}{{form.media}}{% endblock %}
 
 {% block content %}
 <h1 class="h3">{% trans 'Create new paper' %}</h1>
-<form action="" method="POST" id="createPapperForm">
+<hr>
+<form action="" method="POST" id="createPaperForm">
   {% csrf_token %}
-  {% bootstrap_form form  form_group_class='form-group'%}
+  {% bootstrap_form form form_group_class='form-group'%}
   {% buttons %}
+  <br>
   <div class="row">
-    <div class="col">
-      <button type="cancel" class="btn btn-sm btn-block cancelButton">{% trans 'cancel' %}</button>
+      <div class="col">
+      <button type="cancel" class="btn btn-sm btn-block cancelButton" name="cancel" onclick="location.href = '/'">{% trans 'Cancel' %}</button>
     </div>
     <div class="col">
-      <button type="submit" class="btn btn-sm btn-block submitButton">{% trans 'submit' %}</button>
+      <button type="submit" class="btn btn-sm btn-block submitButton">{% trans 'Submit' %}</button>
     </div>
   </div>
   {% endbuttons %}

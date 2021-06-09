@@ -1,18 +1,29 @@
 """
 Tests for app papers
+
+These module provides the tests. These can be executed witht the test command.
+
+They automatically create the necessary tables in the database and also remove them afterwards.
+
+You can add new tests by adding them to the existing classes or you can create a new subclass of
+TesCase and add your test there.
+
+Start here to learn more about testing in django:
+https://docs.djangoproject.com/en/3.2/topics/testing/
 """
 from datetime import timedelta
 from io import BytesIO
 
 from django.conf import settings
 from django.contrib.auth import get_user_model
-from django.core import mail
+from django.core.exceptions import ValidationError
 from django.test import Client, TestCase
 from django.utils import timezone
 
-from papers import models, utils, views
+from papers import models, utils
 
 # Create your tests here.
+WORKING_TITLE = "Test missing translations"
 
 
 class PaperTestCase(TestCase):
@@ -36,7 +47,7 @@ class PaperTestCase(TestCase):
         """
         paper = models.Paper.objects.create(
             amendment_deadline=timezone.now() + timedelta(days=10),
-            working_title="Test missing translations",
+            working_title=WORKING_TITLE,
             state="public",
         )
 
@@ -277,7 +288,7 @@ class AmendmentSupporterTestCase(TestCase):
 
         paper = models.Paper.objects.create(
             amendment_deadline=timezone.now() + timedelta(days=10),
-            working_title="Test missing translations",
+            working_title="Test Amendment Supporter",
             state="public",
         )
 
@@ -303,7 +314,7 @@ class LikeCommentTestCase(TestCase):
 
         paper = models.Paper.objects.create(
             amendment_deadline=timezone.now() + timedelta(days=10),
-            working_title="Test missing translations",
+            working_title="Test Amount of Likes",
             state="public",
         )
 
@@ -325,37 +336,49 @@ class BulkUserImportTestCase(TestCase):
     Tests for the feature for importing users
     """
 
+    path_var = "/members/upload-users/"
+
     def setUp(self):
         user = get_user_model().objects.create_superuser(username="csv-admin")
         self.client = Client()
         self.client.force_login(user=user)
 
         self.csv_file = BytesIO(
-            b"first_name,last_name,email,username\ntest,test,test@test.ch,test-user\ntest1,test1,test2@test.ch,test2"
+            b"first_name,last_name,email,username"
+            b"\ntest,test,test@test.ch,test-user"
+            b"\ntest1,test1,test2@test.ch,test2"
         )
         self.invalid_csv = BytesIO(
-            b"first_name,last_name,email,username\nvalid,valid,valid@email.com,valid_user\ntest,test,not-an-email-address,username"
+            b"first_name,last_name,email,username"
+            b"\nvalid,valid,valid@email.com,valid_user\n"
+            b"test,test,not-an-email-address,username"
         )
 
     def test_import_single_user_csv(self):
-        self.client.post("/members/upload-users/", {"csv_file": self.csv_file})
+        """
+        Test if importing a single user from a csv file works.
+        """
+        self.client.post(BulkUserImportTestCase.path_var, {"csv_file": self.csv_file})
 
         self.assertTrue(get_user_model().objects.filter(username="test-user").exists())
         self.assertTrue(get_user_model().objects.filter(username="test2").exists())
 
     def test_import_wrong_csv(self):
-        response = self.client.post(
-            "/members/upload-users/", {"csv_file": self.invalid_csv}
-        )
-
-        self.assertTrue(response.context["error"])
-        self.assertFalse(
-            get_user_model().objects.filter(username="valid_user").exists()
-        )
-        self.assertFalse(get_user_model().objects.filter(username="username").exists())
+        """
+        Test that invalid users are not created.
+        """
+        with self.assertRaises(ValidationError):
+            self.client.post(
+                BulkUserImportTestCase.path_var, {"csv_file": self.invalid_csv}
+            )
 
     def test_login_required(self):
+        """
+        Test that the view is only accessible for a logged in super user.
+        """
         client = Client()
-        response = client.post("/members/upload-users/", {"csv_file": self.csv_file})
+        response = client.post(
+            BulkUserImportTestCase.path_var, {"csv_file": self.csv_file}
+        )
 
         self.assertNotEqual(response.status_code, 200)

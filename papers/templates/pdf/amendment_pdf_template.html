@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+        <title>Amendment PDF-Template</title>
+		<style>
+		</style>
+	</head>
+	<body>
+		<div id="title">
+			<h1>{{ title }}</h1>
+		</div>
+		<div class="content">
+			{{ content | safe}}
+		</div>
+		{% if paper.state != 'final' %}
+		{% load i18n %}
+		<section id="amendments">
+			{% for amendment in amendments %}
+			<article>
+				<h2>{{amendment.title}}</h2>
+				<div class="content">
+					{{amendment.extract_content|safe}}
+				</div>
+				<h3>{% trans 'Reason' %}</h3>
+				<div class="reason">
+					{{amendment.reason|safe}}
+				</div>
+				{% if amendment.recommendation %}
+				<h3>{% trans 'Recommendation' %}</h3>
+				<div class="recommendation">
+					<em>{{amendment.recommendation.get_recommendation_display}}</em>
+					{{amendment.recommendation.reason|safe}}
+				</div>
+				{% endif %}
+			</article>
+			{% endfor %}
+			{% endif %}
+		</section>
+	</body>
+</html>

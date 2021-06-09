@@ -1,0 +1,21 @@
+{% extends 'papers/base.html'  %}
+{% load i18n %}
+
+{% block title %}{% blocktrans %}Do you want to delete {{name}}?{% endblocktrans %}{% endblock %}
+
+{% block content %}
+<div class="row">
+  <div class="col-auto">
+    <h1>{% blocktrans %}Confirm deletion of {{name}}{% endblocktrans %}</h1>
+    <div class="alert alert-danger" role="alert">
+      {% blocktrans %}This action cannot be undone!{% endblocktrans %}
+    </div>
+    <form action="" method="POST">
+      {% csrf_token %}
+      <a href="{{back}}" class="btn cancelButton">{% trans 'Back' %}</a>
+      <button type="submit" class="btn submitButton">{% trans 'Submit' %}</button>
+    </form>
+  </div>
+</div>
+
+{% endblock %}

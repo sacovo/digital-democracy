@@ -1,0 +1,36 @@
+{% extends 'papers/base.html' %}
+{% load static i18n %}
+{% load bootstrap4 %}
+
+
+{% block head %}
+{{form.media}}
+<script src="{% static "jquery-3.5.1.min.js" %}">
+</script>
+{% endblock %}
+{% block content %}
+<h2>
+    {% if form.instance.pk %}
+    {% trans 'Edit recommendation for' %}
+    {% else %}
+    {% trans 'Create recommendation for' %}
+    {% endif %} "{{amendment.title}}"
+</h2>
+
+<div class="amendment-content">
+    {{amendment.extract_content|safe}}
+</div>
+<div class="reason">
+    <h2 class="h4">{% trans 'Reason' %}</h2>
+    <section class="reason">
+        {{amendment.reason|safe}}
+    </section>
+</div>
+<form method="POST">
+    {% csrf_token %}
+    {% bootstrap_form form  form_group_class='form-group'%}
+    <button type="submit" class="btn btn-sm btn-block submitButton">{% trans 'Submit' %}</button>
+    <a class="btn btn-sm btn-block cancelButton" href="{% url 'amendment-detail' amendment.pk %}">{% trans 'Back' %}</a>
+</form>
+
+{% endblock %}
