@@ -28,7 +28,7 @@
     <!-- Amendment options -->
     <section class="amendment-options">
     <div class="row">
-        {% if request.user.author = amendment.author %}
+        {% if request.user.author == amendment.author %}
           {% if amendment.state == 'draft' or amendment.state == 'retracted'%}
           <form method="POST">
             {% csrf_token %}

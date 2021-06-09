@@ -291,7 +291,7 @@ msgstr "Empfehlung bearbeiten"
 
 #: papers/templates/papers/amendment_detail.html:90
 msgid "Create recommendation"
-msgstr "Letzter Kommentar"
+msgstr "Empfehlung erstellen"
 
 #: papers/templates/papers/amendment_detail.html:97
 msgid "Sign this amendment"
