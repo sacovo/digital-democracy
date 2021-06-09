@@ -153,7 +153,7 @@
         <h2 id="h3">{% trans 'Amendments' %}</h2>
         <div class="amendments">
           {% for amendment in translation.amendment_list %}
-          {% if amendment.state == "public" or request.user.username == amendment.author.name %}
+          {% if amendment.state == "public" or request.user.author == amendment.author %}
           <div class="amendment">
             <a class="link" href="{% url 'amendment-detail' amendment.pk %}" data-content="{{amendment.extract_content|safe}}">
               <h3 class="h5">{{amendment.title}}</h3>
@@ -179,7 +179,7 @@
             <section class="comment-body">
               {{ comment.body|safe|urlize }}
             </section>
-            {% if comment.author.user == request.user %}
+            {% if comment.author == request.user.author %}
             <a href="{% url 'paper-comment-delete' comment.pk %}" class="btn btn-sm cancelButton">
               {% trans 'Delete' %}
             </a>
