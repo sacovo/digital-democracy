@@ -211,7 +211,7 @@ Have fun!
 PDF_TITLE_FONT = os.environ.get("PDF_TITLE_FONT", "Nimbus")
 PDF_BODY_FONT = os.environ.get("PDF_BODY_FONT", "Nimbus")
 
-DISABLE_COMMENTS = False
+DISABLE_COMMENTS = os.environ.get("DISABLE_COMMENTS", False)
 
 if DEBUG:
     EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
