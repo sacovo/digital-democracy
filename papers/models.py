@@ -14,6 +14,8 @@ from ckeditor.fields import RichTextField
 from django.conf import settings
 from django.db import models
 from django.shortcuts import reverse
+
+from django.utils import timezone
 from django.utils.html import mark_safe
 from django.utils.translation import get_language, gettext as _
 
@@ -185,6 +187,9 @@ class Paper(models.Model):
             .first()
         )
 
+    def is_open(self):
+        return self.amendment_deadline > timezone.now()
+
     class Meta:
         verbose_name = _("paper")
         verbose_name_plural = _("papers")
@@ -334,6 +339,7 @@ class Amendment(models.Model):
         The name of the author of this
         """
         return self.author.name
+
 
     class Meta:
         ordering = ["start_index"]

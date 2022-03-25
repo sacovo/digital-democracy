@@ -481,10 +481,10 @@ def amendment_detail(request, amendment_pk):
         (Q(amendment=amendment) | Q(amendment__in=amendment.translations.all()))
         & Q(author=author)
     )
-    if "retracted" in request.POST:
+    if "retracted" in request.POST and amendment.paper.is_open():
         amendment.state = "retracted"
         amendment.save()
-        form = forms.CommentForm(request.POST)  # needed?
+    form = forms.CommentForm(request.POST)  # needed?
 
     return render(
         request,
@@ -662,6 +662,7 @@ def members_profile(request, user_id=None):
         request,
         "registration/profile.html",
         {
+
             "member": member,
             "papers": papers,
             "comments": comments,
@@ -676,8 +677,10 @@ def support_amendment(request, amendment_pk):
     """
     Adds the requesting user to the list of supporters
     """
-    if request.method == "POST":
-        amendment = models.Amendment.objects.get(pk=amendment_pk)
+
+    amendment = models.Amendment.objects.get(pk=amendment_pk)
+
+    if request.method == "POST" and amendment.paper.is_open():
         user = request.user
 
         if amendment.supporters.filter(pk=user.pk):

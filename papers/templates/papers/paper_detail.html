@@ -55,13 +55,17 @@
           {% endif %}
 
           <!-- Paper Content -->
+          <div class="toc">
+            <h2 class="h5">Inhalt</h2>
+          </div>
+
           <hr>
           <div id="paperContent-{{translation.language_code}}" class="content">
             <article>
               <div> {{translation.content_safe}}</div>
             </article>
           </div>
-        <hr>
+          <hr>
         </section>
 
         <!-- Paper Options-->
@@ -101,7 +105,7 @@
                 {% trans 'Delete paper' %}
               </a>
               {% if paper.state == 'final' and request.user.is_staff %}
-                  <hr>
+              <hr>
               {% endif %}
             </div>
             {% endif %}
@@ -119,7 +123,7 @@
               <a class="btn btn-secondary" href="{% url 'paper-select-amendments' translation.paper.pk translation.language_code %}">
                 {% trans 'Merge amendments' %}
               </a>
-             <hr>
+              <hr>
             </div>
           </section>
           {% endif %}
@@ -165,6 +169,7 @@
           <br/>
         </div>
 
+        {% if not DISABLE_COMMENTS %}
         <!-- Comment section-->
         <h2 class="h3">{% trans 'Comments' %}</h2>
         <div class="comments">
@@ -204,6 +209,7 @@
           </div>
           {% endbuttons %}
         </form>
+      {% endif %}
       </div>
       {% endif %}
 
@@ -219,15 +225,34 @@
 {% for translation in paper.translation_set.all %}
 <script>
   $(document).ready(function(){
-      var paperConent{{translation.language_code}} = $("#paperContent-{{translation.language_code}} article div").html()
-      $("#{{translation.language_code}} .link").hover(function(){
-          var content = $(this).data("content")
-          $("#paperContent-{{translation.language_code}} article div").html(content);
-        }, function(){
-            $("#paperContent-{{translation.language_code}} article div").html(paperConent{{translation.language_code}})
-          })
-    });
+    var paperConent{{translation.language_code}} = $("#paperContent-{{translation.language_code}} article div").html()
+    $("#{{translation.language_code}} .link").hover(function(){
+      var content = $(this).data("content")
+      $("#paperContent-{{translation.language_code}} article div").html(content);
+    }, function(){
+      $("#paperContent-{{translation.language_code}} article div").html(paperConent{{translation.language_code}})
+    })
+  });
+
 </script>
 {% endfor %}
+  <script>
+
+  $(document).ready(function(){
+    $('.tab-pane').each((id, element) => {
+      $('.content h2, .content h3, .content h4', element).each(((x, heading) =>{
+        let toc = $('.toc', element)[0];
+
+        let h = document.createElement('a');
+        heading.id = `title_${id}_${x}`;
+        h.href= "#" + heading.id;
+        h.textContent = heading.textContent;
+        h.classList.add(heading.tagName);
+
+        toc.appendChild(h);
+      }));
+    })
+  });
+  </script>
 
 {% endblock %}

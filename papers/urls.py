@@ -82,7 +82,7 @@ urlpatterns = [
         name="amendment-clone",
     ),
     path(
-        "amendments/<int:pk>/recommendation/update/",
+        "amendments/<int:recommendation_pk>/recommendation/update/",
         views.recommendation_update,
         name="recommendation-edit",
     ),

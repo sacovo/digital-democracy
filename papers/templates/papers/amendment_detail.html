@@ -14,7 +14,7 @@
     <h1 class="h3">{% trans 'Amendment' %}: {{amendment.title}}</h1>
     <section class="amendment-content">
       <span>
-        {% blocktrans with name=amendment.author.name created=amendment.created_at %}By <strong>{{name}}</strong> on {{created}}{% endblocktrans %}
+        {% blocktrans with name=amendment.author.name created=amendment.created_at group=amendment.author.user.groups.first %}By <strong>{{name}}</strong> on {{created}}, for <b>{{group}}</b>{% endblocktrans %}
       </span>
       <div id="paperContent" class="content">
         <article>
@@ -92,6 +92,7 @@
     {% endif %}
     <hr>
 
+    {% if amendment.paper.is_open %}
     <!-- Sign amendments -->
     <section class="support">
       <h2 class="h4">{% trans "Sign this amendment" %}</h2>
@@ -121,7 +122,7 @@
       <ul>
         {% for supporter in amendment.supporters.all %}
         <li>
-          {{ supporter }}
+          {{ supporter.get_full_name }} - {{supporter.groups.first}}
         </li>
         {% endfor %}
       </ul>
@@ -138,6 +139,7 @@
       </form>
       {% endif %}
     </section>
+    {% endif %}
 
     <!-- Back -->
     <hr>
@@ -147,6 +149,7 @@
 
   <div class="col-md-4">
     <!-- Comment section-->
+    {% if not DISABLE_COMMENTS %}
     <h2 class="h3">{% trans 'Comments' %}</h2>
     <div class="comments">
       {% if not comments %}
@@ -202,6 +205,7 @@
       {% endbuttons %}
     </form>
 
+    {% endif %}
 	<!-- Note section-->
 	<h2 class="h3">{% trans 'Private Notes' %}</h2>
 

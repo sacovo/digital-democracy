@@ -258,3 +258,12 @@ ins {
 .col-4{
     width: 5%;
 }
+
+.toc {
+    display: flex;
+    flex-direction: column;
+}
+
+.toc .H3 {
+    margin-left: 1em;
+}

@@ -67,6 +67,7 @@ TEMPLATES = [
                 "django.template.context_processors.request",
                 "django.contrib.auth.context_processors.auth",
                 "django.contrib.messages.context_processors.messages",
+                "backend.context_processors.disable_comments",
             ]
         },
     }
@@ -209,6 +210,8 @@ Have fun!
 
 PDF_TITLE_FONT = os.environ.get("PDF_TITLE_FONT", "Nimbus")
 PDF_BODY_FONT = os.environ.get("PDF_BODY_FONT", "Nimbus")
+
+DISABLE_COMMENTS = False
 
 if DEBUG:
     EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
