@@ -193,7 +193,7 @@ BLEACH_ALLOWED_TAGS = [
     "sup",
 ]
 
-BLEACH_ALLOWED_ATTRIBUTES = {"a": ["href", "title"]}
+BLEACH_ALLOWED_ATTRIBUTES = {"a": ["href", "title", "name", "id"]}
 
 
 LOGIN_URL = "/members/login"
