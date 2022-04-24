@@ -22,6 +22,7 @@ from django.utils.translation import get_language, gettext as _
 from papers import utils
 from papers.utils import index_of_first_change, index_of_last_change
 
+
 # Create your models here.
 
 PAPER_STATES = (

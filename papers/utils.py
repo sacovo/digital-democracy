@@ -174,7 +174,9 @@ def extract_content(content):
     for sentence in sentences[:3]:
         sentence_after = sentence_after + sentence[0] + sentence[1]
 
-    return sentence_before + content[start_index:end_index] + sentence_after
+    result = sentence_before + content[start_index:end_index] + sentence_after
+    document = BeautifulSoup(result)
+    return document.body.encode_contents().decode()
 
 
 def import_users_from_csv(csv_file):
