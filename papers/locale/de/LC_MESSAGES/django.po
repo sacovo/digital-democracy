@@ -283,7 +283,7 @@ msgstr "Übersetzungen"
 #: papers/templates/papers/amendment_detail.html:80
 #: papers/templates/pdf/amendment_pdf_template.html:29
 msgid "Recommendation"
-msgstr "Kommentar"
+msgstr "Empfehlung"
 
 #: papers/templates/papers/amendment_detail.html:86
 msgid "Edit recommendation"

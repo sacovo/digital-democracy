@@ -112,6 +112,7 @@ def paper_amendmentlist(request, paper_pk):
     )
 
 
+@staff_member_required
 def selected_amendments_view(request, paper_pk, language_code):
     """
     Render a form to select amendments that should be merged into the final paper.
@@ -162,6 +163,7 @@ def translation_delete(request, translation_pk):
     )
 
 
+@login_required
 def comment_delete(request, comment_pk):
     """Deltes the comment, if the user is allowed to do so."""
     comment = models.Comment.objects.get(pk=comment_pk)
@@ -187,6 +189,7 @@ def comment_delete(request, comment_pk):
     )
 
 
+@login_required
 def paper_comment_delete(request, comment_pk):
     """Deletes a comment if the users is allowed to do so."""
     comment = models.PaperComment.objects.get(pk=comment_pk)
@@ -347,7 +350,7 @@ def amendment_create(request, paper_pk, language_code):
     )
 
 
-@login_required
+@staff_member_required
 def recommendation_create(request, amendment_pk):
     """
     Create a recommendation for an amendment.
@@ -372,7 +375,7 @@ def recommendation_create(request, amendment_pk):
     )
 
 
-@login_required
+@staff_member_required
 def recommendation_update(request, recommendation_pk):
     """Update the recommendation of the amendment and of all translations."""
     recommendation = models.Recommendation.objects.get(pk=recommendation_pk)
@@ -738,6 +741,7 @@ def upload_users(request):
     return render(request, "members/user_upload.html", {"form": upload_form})
 
 
+@login_required
 def search_result(request):
     """
     Display all amendments that match the search

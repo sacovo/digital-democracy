@@ -93,11 +93,16 @@
           </em>
           <section class="recommendation">
             {{amendment.recommendation.reason|safe}}
-            <a class="btn btn-sm submitButton" href="{% url 'recommendation-edit' amendment.recommendation.pk %}">{% trans 'Edit recommendation' %}</a>
+            {% if request.user.is_staff %}
+              <a class="btn btn-sm submitButton" href="{% url 'recommendation-edit' amendment.recommendation.pk %}">{% trans 'Edit recommendation' %}</a>
+            {% endif %}
           </section>
         {% else %}
+
           <section class="recommendation">
-            <a class="btn btn-sm submitButton" href="{% url 'recommendation-create' amendment.pk %}">{% trans 'Create recommendation' %}</a>
+            {% if request.user.is_staff %}
+              <a class="btn btn-sm submitButton" href="{% url 'recommendation-create' amendment.pk %}">{% trans 'Create recommendation' %}</a>
+            {% endif %}
           </section>
         {% endif %}
         <hr>
