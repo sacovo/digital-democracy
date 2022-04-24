@@ -48,6 +48,7 @@ PAPER_STATES = (
 
 AMENDMENT_STATES = (
     ("draft", mark_safe(u'<u title="ⓘ This amendment is a draft.">Draft</u>')),
+    ("review", mark_safe(u'<u title="ⓘ Review">Review</u>')),
     ("public", mark_safe(u'<u title="ⓘ This amendment is public.">Published</u>')),
     (
         "retracted",

@@ -16,6 +16,9 @@ from bs4 import BeautifulSoup
 from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.core.validators import validate_email
+from django.core.mail import send_mail
+from django.contrib.auth import get_user_model
+from django.urls.base import reverse
 from django.utils.translation import gettext as _
 from pptx import Presentation
 from pptx.dml.color import RGBColor
@@ -175,7 +178,7 @@ def extract_content(content):
         sentence_after = sentence_after + sentence[0] + sentence[1]
 
     result = sentence_before + content[start_index:end_index] + sentence_after
-    document = BeautifulSoup(result)
+    document = BeautifulSoup(result, features="lxml")
     return document.body.encode_contents().decode()
 
 
@@ -313,3 +316,17 @@ def generate_powerpoint(paper):
             bullet.text = translation.title + "\n"
 
     return prs
+
+
+def notify_amendment(amendment, request):
+    print("Hello!!!")
+    url = request.build_absolute_uri(reverse("amendment-detail", args=(amendment.pk,)))
+
+    emails = get_user_model().objects.values_list("email", flat=True)
+    print(emails)
+    send_mail(
+        "Antrag zum Review freigegeben",
+        f"""Ein Antrag wurde zum Review freigegeben: {url}""",
+        "vote@spschweiz.ch",
+        emails,
+    )

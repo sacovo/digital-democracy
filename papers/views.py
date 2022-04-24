@@ -454,8 +454,14 @@ def amendment_detail(request, amendment_pk):
 
     if request.method == "POST":
 
-        amendment.state = "public"
+        if request.POST.get("action", None) == "publish" and request.user.is_staff:
+            amendment.state = "public"
+        elif request.POST.get("action", None) == "review":
+            amendment.state = "review"
+            utils.notify_amendment(amendment, request)
+
         amendment.save()
+
         form = forms.CommentForm(request.POST)
 
         if form.is_valid():
@@ -499,6 +505,9 @@ def amendment_edit(request, amendment_pk):
     Edit an existing amendment
     """
     amendment = models.Amendment.objects.get(pk=amendment_pk)
+
+    if amendment.author.user != request.user and not request.user.is_staff:
+        raise PermissionDenied(_("You are not allowed to edit this amendment."))
 
     form = forms.AmendmentForm(amendment=amendment)
 
@@ -553,6 +562,7 @@ def amendment_clone(request, amendment_pk):
     )
 
 
+@permission_required("papers.change_translation")
 def translation_update(request, paper_pk, language_code):
     """
     Update the translation of a paper
@@ -580,6 +590,7 @@ def translation_update(request, paper_pk, language_code):
     )
 
 
+@permission_required("papers.add_translation")
 def add_amendment_translation(request, amendment_pk, language_code):
     """
     Shows a form to create a translation in the given language code.
@@ -616,6 +627,7 @@ def add_amendment_translation(request, amendment_pk, language_code):
     )
 
 
+@login_required
 def like_comment(request, comment_pk):
     """
     Function to like and unlike a comment.
@@ -662,7 +674,6 @@ def members_profile(request, user_id=None):
         request,
         "registration/profile.html",
         {
-
             "member": member,
             "papers": papers,
             "comments": comments,
