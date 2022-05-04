@@ -201,7 +201,7 @@ LOGIN_URL = "/members/login"
 LOGIN_REDIRECT_URL = "/members/profile"
 LOGOUT_REDIRECT_URL = "/members/login"
 
-NEW_USER_MAIL = """Hallo {first_name}
+NEW_USER_MAIL = """Hallo {user.first_name}
 
 In diesem Mail erhälst du deine Zugangsdaten zum digitalen Antragstool "Digital Democracy": https://dd.vote.spschweiz.ch/
 
