@@ -201,9 +201,9 @@ LOGIN_URL = "/members/login"
 LOGIN_REDIRECT_URL = "/members/profile"
 LOGOUT_REDIRECT_URL = "/members/login"
 
-NEW_USER_MAIL = """Hallo {user.first_name}
+NEW_USER_MAIL = """Hallo {first_name}
 
-In diesem Mail erhälst du deinen Zugang zu https://dd.vote.spschweiz.ch/
+In diesem Mail erhälst du deine Zugangsdaten zum digitalen Antragstool "Digital Democracy": https://dd.vote.spschweiz.ch/
 
 Benutzername: {user.username}
 Password: {password}
@@ -212,10 +212,11 @@ Password: {password}
 
 Bonjour {user.first_name}
 
-Dans ce mail, tu recevras ton accès à https://dd.vote.spschweiz.ch/
+Dans ce mail, tu recevras tes données d'accès à l’outil numérique de dépôt d’amendements « Digital Democracy »: https://dd.vote.spschweiz.ch/
 
 Nom d'utilisateur : {user.username}
 Mot de passe : {password}
+
 """
 
 PDF_TITLE_FONT = os.environ.get("PDF_TITLE_FONT", "Nimbus")
