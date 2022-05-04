@@ -29,33 +29,33 @@ PAPER_STATES = (
     (
         "draft",
         mark_safe(
-            u'<u title="ⓘ This paper is a private draft and not ready for amendments.">Draft</u>'
+            '<u title="ⓘ This paper is a private draft and not ready for amendments.">Draft</u>'
         ),
     ),
     (
         "public",
         mark_safe(
-            u'<u title="ⓘ This paper is public and ready for amendments.">Published</u>'
+            '<u title="ⓘ This paper is public and ready for amendments.">Published</u>'
         ),
     ),
     (
         "final",
         mark_safe(
-            u'<u title="ⓘ This paper is final no more changes can be made.">Finalized</u>'
+            '<u title="ⓘ This paper is final no more changes can be made.">Finalized</u>'
         ),
     ),
 )
 
 AMENDMENT_STATES = (
-    ("draft", mark_safe(u'<u title="ⓘ This amendment is a draft.">Draft</u>')),
-    ("review", mark_safe(u'<u title="ⓘ Review">Review</u>')),
-    ("public", mark_safe(u'<u title="ⓘ This amendment is public.">Published</u>')),
+    ("draft", mark_safe('<u title="ⓘ This amendment is a draft.">Draft</u>')),
+    ("review", mark_safe('<u title="ⓘ Review">Review</u>')),
+    ("public", mark_safe('<u title="ⓘ This amendment is public.">Published</u>')),
     (
         "retracted",
-        mark_safe(u'<u title="ⓘ This amendment is retracted.">Retracted</u>'),
+        mark_safe('<u title="ⓘ This amendment is retracted.">Retracted</u>'),
     ),
-    ("accepted", mark_safe(u'<u title="ⓘ This amendment is accepted.">Accepted</u>')),
-    ("rejected", mark_safe(u'<u title="ⓘ This amendment is rejected.">Rejected</u>')),
+    ("accepted", mark_safe('<u title="ⓘ This amendment is accepted.">Accepted</u>')),
+    ("rejected", mark_safe('<u title="ⓘ This amendment is rejected.">Rejected</u>')),
 )
 
 
@@ -92,7 +92,7 @@ class Author(models.Model):
         """
         The name of the user
         """
-        return str(self.user)
+        return self.user.get_full_name() or self.user.username
 
     class Meta:
         verbose_name = _("author")
@@ -341,7 +341,6 @@ class Amendment(models.Model):
         The name of the author of this
         """
         return self.author.name
-
 
     class Meta:
         ordering = ["start_index"]

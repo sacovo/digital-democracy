@@ -4,20 +4,22 @@ Misc. functions that are used by the project
 These functions provide functionallity for the application but are not directly linked
 to either models or views.
 """
-from dataclasses import dataclass
 import csv
+from dataclasses import dataclass
 import io
+from itertools import zip_longest
+import logging
 import re
 import secrets
-from itertools import zip_longest
 from typing import List
 
 from bs4 import BeautifulSoup
 from django.conf import settings
 from django.contrib.auth import get_user_model
-from django.core.validators import validate_email
-from django.core.mail import send_mail
 from django.contrib.auth import get_user_model
+from django.contrib.auth.models import Group
+from django.core.mail import send_mail
+from django.core.validators import validate_email
 from django.urls.base import reverse
 from django.utils.translation import gettext as _
 from pptx import Presentation
@@ -26,6 +28,8 @@ from pptx.dml.line import LineFormat
 from pptx.enum.shapes import MSO_CONNECTOR_TYPE
 from pptx.enum.text import MSO_VERTICAL_ANCHOR, PP_PARAGRAPH_ALIGNMENT
 from pptx.util import Cm, Pt
+
+logger = logging.getLogger(__name__)
 
 
 @dataclass
@@ -189,25 +193,53 @@ def import_users_from_csv(csv_file):
     csv_file = io.TextIOWrapper(csv_file)
     csv_reader = csv.DictReader(csv_file)
 
-    imported_users = [get_user_model()(**row) for row in csv_reader]
+    imported_users = []
+    groups = []
 
-    for new_user in imported_users:
-        validate_email(new_user.email)
+    for row in csv_reader:
+        first_name = row.get("first_name", "")
+        last_name = row.get("last_name", "")
+        email = row.get("email", "")
 
-    for new_user in imported_users:
+        if get_user_model().objects.filter(email=email).exists():
+            continue
+
+        group = row.get("group", None)
+
+        user = get_user_model()(
+            first_name=first_name,
+            last_name=last_name,
+            email=email,
+            username=email,
+            is_active=False,
+        )
+
+        if group:
+            group = Group.objects.get_or_create(name=group)[0]
+
+        groups.append(group)
+        imported_users.append(user)
+
+    for new_user, group in zip(imported_users, groups):
         password = secrets.token_urlsafe(17)
         new_user.set_password(password)
         new_user.save()
+
+        if group:
+            new_user.groups.add(group)
 
         new_user.email_user(
             _(
                 "[SP Schweiz] Dein Zugang zu Digital Democracy // [PS Suisse] Ton accès à Digital Democracy"
             ),
             settings.NEW_USER_MAIL.format(user=new_user, password=password),
-            fail_silently=True,
+            fail_silently=False,
         )
+        new_user.is_active = True
+        new_user.save()
+        logger.info(f"Sent access to {user.email}")
 
-    return imported_users
+    return len(imported_users)
 
 
 def generate_powerpoint(paper):
@@ -321,11 +353,11 @@ def generate_powerpoint(paper):
 
 
 def notify_amendment(amendment, request):
-    print("Hello!!!")
     url = request.build_absolute_uri(reverse("amendment-detail", args=(amendment.pk,)))
 
-    emails = get_user_model().objects.values_list("email", flat=True)
-    print(emails)
+    emails = (
+        get_user_model().objects.filter(is_staff=True).values_list("email", flat=True)
+    )
     send_mail(
         "Antrag zum Review freigegeben",
         f"""Ein Antrag wurde zum Review freigegeben: {url}""",
