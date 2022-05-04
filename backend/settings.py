@@ -200,12 +200,21 @@ LOGIN_URL = "/members/login"
 LOGIN_REDIRECT_URL = "/members/profile"
 LOGOUT_REDIRECT_URL = "/members/login"
 
-NEW_USER_MAIL = """Hello {user.first_name},
+NEW_USER_MAIL = """Hallo {user.first_name}
 
-You have a new account on https://digital-democracy.sp-ps.ch/. You can
-login with your username ({user.username}) and password ({password}).
+In diesem Mail erhälst du deinen Zugang zu https://dd.vote.spschweiz.ch/
 
-Have fun!
+Benutzername: {user.username}
+Password: {password}
+
+*****
+
+Bonjour {user.first_name}
+
+Dans ce mail, tu recevras ton accès à https://dd.vote.spschweiz.ch/
+
+Nom d'utilisateur : {user.username}
+Mot de passe : {password}
 """
 
 PDF_TITLE_FONT = os.environ.get("PDF_TITLE_FONT", "Nimbus")
@@ -216,6 +225,6 @@ DISABLE_COMMENTS = os.environ.get("DISABLE_COMMENTS", False)
 if DEBUG:
     EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
 
-SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
 USE_X_FORWARDED_HOST = True
 USE_X_FORWARDED_PORT = True

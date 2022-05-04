@@ -200,7 +200,9 @@ def import_users_from_csv(csv_file):
         new_user.save()
 
         new_user.email_user(
-            _("New digital-democracy account"),
+            _(
+                "[SP Schweiz] Dein Zugang zu Digital Democracy // [PS Suisse] Ton accès à Digital Democracy"
+            ),
             settings.NEW_USER_MAIL.format(user=new_user, password=password),
             fail_silently=True,
         )
