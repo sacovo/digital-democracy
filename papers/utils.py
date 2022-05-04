@@ -4,6 +4,7 @@ Misc. functions that are used by the project
 These functions provide functionallity for the application but are not directly linked
 to either models or views.
 """
+
 import csv
 from dataclasses import dataclass
 import io
@@ -11,6 +12,7 @@ from itertools import zip_longest
 import logging
 import re
 import secrets
+from smtplib import SMTPException
 from typing import List
 
 from bs4 import BeautifulSoup
@@ -28,6 +30,8 @@ from pptx.dml.line import LineFormat
 from pptx.enum.shapes import MSO_CONNECTOR_TYPE
 from pptx.enum.text import MSO_VERTICAL_ANCHOR, PP_PARAGRAPH_ALIGNMENT
 from pptx.util import Cm, Pt
+
+import after_response
 
 logger = logging.getLogger(__name__)
 
@@ -186,11 +190,11 @@ def extract_content(content):
     return document.body.encode_contents().decode()
 
 
+@after_response.enable
 def import_users_from_csv(csv_file):
     """
     Import the given csv file into the database
     """
-    csv_file = io.TextIOWrapper(csv_file)
     csv_reader = csv.DictReader(csv_file)
 
     imported_users = []
@@ -228,13 +232,18 @@ def import_users_from_csv(csv_file):
         if group:
             new_user.groups.add(group)
 
-        new_user.email_user(
-            _(
-                "[SP Schweiz] Dein Zugang zu Digital Democracy // [PS Suisse] Ton accès à Digital Democracy"
-            ),
-            settings.NEW_USER_MAIL.format(user=new_user, password=password),
-            fail_silently=False,
-        )
+        try:
+            new_user.email_user(
+                _(
+                    "[SP Schweiz] Dein Zugang zu Digital Democracy // [PS Suisse] Ton accès à Digital Democracy"
+                ),
+                settings.NEW_USER_MAIL.format(user=new_user, password=password),
+                fail_silently=False,
+            )
+
+        except SMTPException:
+            continue
+
         new_user.is_active = True
         new_user.save()
         logger.info(f"Sent access to {user.email}")

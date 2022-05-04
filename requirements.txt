@@ -74,8 +74,11 @@ deprecated==1.2.13
 django==4.0.3
     # via
     #   -r requirements.in
+    #   django-after-response
     #   django-bootstrap4
     #   django-js-asset
+django-after-response==0.2.2
+    # via -r requirements.in
 django-bootstrap4==22.1
     # via -r requirements.in
 django-celery-results==2.3.0

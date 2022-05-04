@@ -733,8 +733,10 @@ def upload_users(request):
 
         if upload_form.is_valid():
             csv_file = upload_form.cleaned_data["csv_file"].file
-            imported_users = utils.import_users_from_csv(csv_file)
-            messages.success(request, _(f"{imported_users} were imported!"))
+            utils.import_users_from_csv.after_response(
+                io.StringIO(csv_file.read().decode())
+            )
+            messages.success(request, _(f"Import started!"))
 
             return redirect("admin:auth_user_changelist")
 
