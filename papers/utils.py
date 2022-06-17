@@ -186,7 +186,7 @@ def extract_content(content):
         sentence_after = sentence_after + sentence[0] + sentence[1]
 
     result = sentence_before + content[start_index:end_index] + sentence_after
-    document = BeautifulSoup(result, features="lxml")
+    document = BeautifulSoup('<html>' + result + '</html>', features="lxml")
     return document.body.encode_contents().decode()
 
 
