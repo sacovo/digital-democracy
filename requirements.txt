@@ -71,7 +71,7 @@ defusedxml==0.7.1
     #   cairosvg
 deprecated==1.2.13
     # via redis
-django==4.0.3
+django==4.0.9
     # via
     #   -r requirements.in
     #   django-after-response
