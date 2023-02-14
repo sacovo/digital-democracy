@@ -81,7 +81,7 @@ django-after-response==0.2.2
     # via -r requirements.in
 django-bootstrap4==22.1
     # via -r requirements.in
-django-celery-results==2.3.0
+django-celery-results==2.4.0
     # via -r requirements.in
 django-ckeditor==6.2.0
     # via -r requirements.in
